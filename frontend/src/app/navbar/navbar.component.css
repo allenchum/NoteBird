@@ -10,11 +10,30 @@
     background-color:  #008000;
     z-index: 80;
 }
-a{
+.nav-container{
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+} 
+.user-icon img{
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin: 20px;
+  
+    object-fit: cover;
+    object-position: center right;
+}
+#create-btn{
+    height: 50%;
+    align-self: center;
+}
+li a{
     color:#fff;
     transition: all 0.8s ease;
 }
-a:hover{
+li a:hover{
     color: #008000;
     background-color: #efffcc;
 }

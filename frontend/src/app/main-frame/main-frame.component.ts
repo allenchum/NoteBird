@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+declare var $:any;
+
 @Component({
   selector: 'app-main-frame',
   templateUrl: './main-frame.component.html',
@@ -7,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainFrameComponent implements OnInit {
 
+
+
   constructor() { }
 
   ngOnInit() {
   }
-
 }

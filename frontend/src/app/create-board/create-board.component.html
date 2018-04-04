@@ -1,0 +1,64 @@
+<!-- Creat Templates -->
+<template id="textbox-template">
+  <div class="text-container" style="position: absolute">
+    <p class="text-title"></p>
+    <p class="text-content"></p>
+  </div>
+</template>
+
+<template id="image-template">
+  <div class="image-container resizable movable">
+    <img class="imager-test" src="" draggable="false" (mousedown)="selectImage($event)">
+  </div>
+</template>
+
+
+
+
+
+<!-- Note Editor -->
+<div id="edit-container">
+  <div>
+    <h1 id='title'></h1>
+  </div>
+  <div id='main-container'>
+    <!-- Contorl Panel -->
+    <div id='control-bar'>
+      <button class="btn yellow" id="upload-image" (click)="noteImageService.addNew()">Upload Image</button>
+      <button class="btn yellow" id="add-node">Add Node</button>
+      <input id="file" type="file" accept=".jpg, .jpeg, .png" />
+    </div>
+
+    <!-- Canvas -->
+    <div id='canvas-container' (mouseup)="noteImageService.dropImage($event)" (mousemove)="noteImageService.moveImage($event)">
+      <div id='blackboard'>
+        <!-- Image Template -->
+        <div *ngIf="imageList">
+          <div *ngFor='let image of imageList' id="imagers">
+            <div class="image-frame resizable" [ngStyle]="image.style" (mousedown)="noteImageService.selectImage(image,$event)">
+              <img draggable="false" src={{image.url}}>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="textboxesContainer">
+
+    </div>
+
+    <div id="input-area">
+      <form id='text-input'>
+        <input class='btn al-right blue' id="enter" type="submit" value="Enter Text">
+        <input class='coordinate' id="x1" type="number">
+        <input class='coordinate' id="y1" type="number">
+        <input class='coordinate' id="x2" type="number">
+        <input class='coordinate' id="y2" type="number">
+        <textarea name="text" class="input text-input" id='text-title' placeholder="Title" form="text-input"></textarea>
+        <textarea name="text" rows='20' class="input text-input" id="content" placeholder="Content" form="text-input"></textarea>
+      </form>
+      <button class='btn al-right red' id="cancel">Cancel</button>
+      <button class='btn al-right green' id="submit">Submit Note</button>
+    </div>
+  </div>
+</div>
