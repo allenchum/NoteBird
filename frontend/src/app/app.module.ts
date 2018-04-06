@@ -10,6 +10,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RelatedContentComponent } from './related-content/related-content.component';
 import { CreateBoardComponent } from './create-board/create-board.component';
 import { NoteImageService } from './note-image.service';
+import { NotePinService } from './note-pin.service';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { NoteImageService } from './note-image.service';
   ],
   providers: [
     NoteImageService,
+    NotePinService,
   ],
   bootstrap: [AppComponent]
 })

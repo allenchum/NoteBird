@@ -7,7 +7,7 @@ export class NoteImage {
   dragging: boolean = false;
   offs: number[] = [0, 0];
 
-  selectImage(e) {
+  select(e) {
     var coords = this.getCoords(e); //getCoords returns clientX and clientY of the event
     this.offs = [
       coords[0] - parseInt(this.style["left"]) / 100 * window.innerWidth,
@@ -21,25 +21,24 @@ export class NoteImage {
     }else{
       this.dragging = true;
     }
-    console.log(this.dragging);
+;
   }
 
-  moveImage(e) {
+  move(e) {
     this.style["border"] = "1pt solid black";
     var coords = this.getCoords(e);
 
     var x = coords[0] - this.offs[0];
     var y = coords[1] - this.offs[1];
-    this.setImageData(x, y);
+    this.setData(x, y);
 
-    console.log(this.dragging);
+;
   }
-  dropImage(e) {
+  drop(e) {
     this.dragging = false;
     this.style["border"] = "none";
-    console.log(this.dragging);
   }
-  setImageData(x, y) {
+  setData(x, y) {
     this.style["left"] = x / window.innerWidth * 100 + "%";
     this.style["top"] = y / window.innerHeight * 100 + "%";
   }

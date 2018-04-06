@@ -6,11 +6,7 @@
   </div>
 </template>
 
-<template id="image-template">
-  <div class="image-container resizable movable">
-    <img class="imager-test" src="" draggable="false" (mousedown)="selectImage($event)">
-  </div>
-</template>
+
 
 
 
@@ -24,28 +20,41 @@
   <div id='main-container'>
     <!-- Contorl Panel -->
     <div id='control-bar'>
-      <button class="btn yellow" id="upload-image" (click)="noteImageService.addNew()">Upload Image</button>
-      <button class="btn yellow" id="add-node">Add Node</button>
+      <button class="btn yellow" id="upload-image" (click)="noteImageService.addNew()" (click)="switchService('image')">Add Image</button>
+      <button class="btn yellow" id="add-pin" (click)="switchService('pin')">Add Pin</button>
       <input id="file" type="file" accept=".jpg, .jpeg, .png" />
     </div>
 
     <!-- Canvas -->
-    <div id='canvas-container' (mouseup)="noteImageService.dropImage($event)" (mousemove)="noteImageService.moveImage($event)">
+    <div id='canvas-container' (mouseup)="currentService.drop($event)" (mousemove)="currentService.move($event)">
       <div id='blackboard'>
         <!-- Image Template -->
-        <div *ngIf="imageList">
+        <div *ngIf="imageList && currentService == noteImageService" id="imageList">
           <div *ngFor='let image of imageList' id="imagers">
-            <div class="image-frame resizable" [ngStyle]="image.style" (mousedown)="noteImageService.selectImage(image,$event)">
+            <div class="image-frame resizable" [ngStyle]="image.style" (mousedown)="currentService.select(image,$event)">
               <img draggable="false" src={{image.url}}>
             </div>
           </div>
         </div>
+
+        <!-- Pin Note Template -->
+        <div *ngIf="currentService == notePinService" id="pinList" (mousedown)="currentService.select($event)">
+          <div *ngFor='let pin of pinList' id="pins">
+            <div class="pin-point" [ngStyle]="pin.style">
+              <div class="pin-dot">
+              </div>
+              <div class="pin-textbox" [ngStyle] = "pin.textboxStyle">
+                <p>ABCDE</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
       </div>
     </div>
 
-    <div id="textboxesContainer">
 
-    </div>
 
     <div id="input-area">
       <form id='text-input'>

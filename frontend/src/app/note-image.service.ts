@@ -26,22 +26,22 @@ export class NoteImageService {
     this.imageList.push(image);
   }
 
-  selectImage(image: NoteImage, e) {
-    image.selectImage(e);
+  select(image: NoteImage, e) {
+    image.select(e);
     this.selectedImage = image;
   }
 
-  moveImage(e) {
+  move(e) {
     if (this.selectedImage) {
       if (!this.selectedImage.dragging) {
         return;
       }
-        this.selectedImage.moveImage(e);
+        this.selectedImage.move(e);
     }
   }
 
-  dropImage(image: NoteImage, e) {
-    this.selectedImage.dropImage(e);
+  drop(image: NoteImage, e) {
+    this.selectedImage.drop(e);
     this.selectedImage.dragging = false;
   }
 }
