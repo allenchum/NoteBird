@@ -27,7 +27,9 @@ export class NoteImageService {
   }
 
   select(image: NoteImage, e) {
+    console.log("Image selected!")
     image.select(e);
+    //image.dragging = true;
     this.selectedImage = image;
   }
 

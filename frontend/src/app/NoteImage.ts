@@ -14,12 +14,12 @@ export class NoteImage {
       coords[1] - parseInt(this.style["top"]) / 100 * window.innerHeight
     ];
     if (
-      this.offs[0] > parseInt(this.style["width"]) *0.6 ||
-      this.offs[1] > parseInt(this.style["height"]) *0.6
+      this.offs[0] < parseInt(this.style["width"]) *0.6 ||
+      this.offs[1] < parseInt(this.style["height"]) *0.6
     ) {
-      this.dragging = false;
-    }else{
       this.dragging = true;
+    }else{
+      this.dragging = false;
     }
   }
 

@@ -31,7 +31,10 @@
     background: #FEFCD7;
     border-bottom-right-radius: 5pt;
     border-bottom-left-radius: 5pt;
+    transition-duration: 2s;
+    transition-timing-function: ease;
 }
+
 
 .spinner {
     display: flex;
@@ -99,6 +102,16 @@
     -moz-user-select: none;
     -ms-user-select: none;
 }
+#note-name{
+    position: absolute;
+    top:0;
+    width: 100%;
+    text-align: center;
+    z-index: 30;
+    color: #fff;
+    font-family: 'Gaegu', cursive;
+    font-size: 30pt;
+}
 .image-frame{
     position: absolute;
 }
@@ -117,6 +130,8 @@ img{
     border-radius: 5px; 
     position: absolute;
     z-index: 9;
+    top:0;
+    left:0;
     width: 84vw;
     height: 85vh;
     background: linear-gradient(0.125turn,#333,#555,#222); 
@@ -127,6 +142,8 @@ img{
     border: 2px solid;
     border-radius: 5px; 
     position: absolute;
+    top:0;
+    left:0;
     z-index: 10;
     width: 84vw;
     height: 85vh;
@@ -156,7 +173,7 @@ img{
 /* TextBox */
 .text-container{
     position: absolute;
-    width: 100px;
+    min-width: 100px;
     border: solid rgba(255, 191, 128, 1) 1pt;
     border-radius: 3px;
     background-color: rgba(255, 191, 128, 0.3);

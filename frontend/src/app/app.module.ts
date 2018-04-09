@@ -28,7 +28,8 @@ import { TextEditorComponent } from './text-editor/text-editor.component';
   imports: [
     BrowserModule,
     FlexLayoutModule,
-    FormsModule
+    FormsModule,
+    NgbModule.forRoot()
   ],
   providers: [
     NoteImageService,

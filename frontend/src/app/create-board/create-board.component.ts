@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,Input} from '@angular/core';
 
 import { NoteImageService } from '../note-image.service';
 import { NoteImage } from '../NoteImage';
@@ -13,12 +13,17 @@ import { NotePin } from '../NotePin';
 })
 export class CreateBoardComponent implements OnInit {
 
+
   constructor(private noteImageService: NoteImageService, private notePinService: NotePinService) { }
 
   private imageList = this.noteImageService.imageList;
   private pinList = this.notePinService.pinList;
   private selectedPin:NotePin;
   private currentService;
+  noteCollapsed:boolean = true;
+  imageCollapsed:boolean = true;
+  pinCollapsed:boolean = true;
+  note={"name":"League of Leagends"};
   
   ngOnInit() {
     this.currentService = this.notePinService;
@@ -61,6 +66,26 @@ export class CreateBoardComponent implements OnInit {
          } 
       }
     return style;
-
   }
+
+  panelActive(panel:string){
+    if(panel=='note'){
+      this.noteCollapsed = false;
+      this.imageCollapsed = true;
+      this.pinCollapsed = true;
+    }
+    if(panel=='image'){
+      this.noteCollapsed = true;
+      this.imageCollapsed = false;
+      this.pinCollapsed = true;
+    }
+    if(panel=='pin'){
+      this.noteCollapsed = true;
+      this.imageCollapsed = true;
+      this.pinCollapsed = false;
+    }
+  }
+  
+
+
 }
