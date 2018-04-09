@@ -17,6 +17,7 @@ export class CreateBoardComponent implements OnInit {
 
   private imageList = this.noteImageService.imageList;
   private pinList = this.notePinService.pinList;
+  private selectedPin:NotePin;
   private currentService;
   
   ngOnInit() {
@@ -29,5 +30,37 @@ export class CreateBoardComponent implements OnInit {
     }else if(s=="image"){
       this.currentService = this.noteImageService;
     }
+  }
+
+  onSelect(pin:NotePin):void{
+    this.selectedPin = this.notePinService.selectedPin;
+  }
+  setImageLayer(){
+    let style;
+    if(this.currentService == this.noteImageService){
+         style = {
+          "z-index":"10"
+         }
+    }else{
+         style={
+          "z-index":"9"
+         } 
+      }
+    return style;
+    }
+
+  setPinLayer(){
+    let style;
+    if(this.currentService == this.notePinService){
+         style = {
+          "z-index":"10"
+         }
+    }else{
+         style={
+          "z-index":"9"
+         } 
+      }
+    return style;
+
   }
 }

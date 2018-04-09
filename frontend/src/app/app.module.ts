@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { FormsModule } from '@angular/forms';
 
 
 import { AppComponent } from './app.component';
@@ -11,6 +12,8 @@ import { RelatedContentComponent } from './related-content/related-content.compo
 import { CreateBoardComponent } from './create-board/create-board.component';
 import { NoteImageService } from './note-image.service';
 import { NotePinService } from './note-pin.service';
+import { TextEditorComponent } from './text-editor/text-editor.component';
+
 
 
 @NgModule({
@@ -19,11 +22,13 @@ import { NotePinService } from './note-pin.service';
     NavbarComponent,
     MainFrameComponent,
     RelatedContentComponent,
-    CreateBoardComponent
+    CreateBoardComponent,
+    TextEditorComponent,
   ],
   imports: [
     BrowserModule,
     FlexLayoutModule,
+    FormsModule
   ],
   providers: [
     NoteImageService,

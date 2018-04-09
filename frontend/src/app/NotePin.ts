@@ -5,25 +5,25 @@ export class NotePin{
     }
 
     p1:number[] = [0,0];
-    p2:number[] = [0,0];
+    p2:number[] ;
     dragging: boolean = false;
     length:number;
-    rotateAngle:number;
     style: { [s:string]: string };
     angle: number;
-    name: string;
-    content: string;
-    textboxStyle:{ [s:string]: string };
+    title: string = 'Title';
+    content: string ='Content';
+    textboxUpright:{ [s:string]: string };
+    textboxPosition:{ [s:string]: string };
 
     
     select(e){
         let point = this.getCoords(e);
         if(point=this.p2){
+            this.dragging = true;
             this.move(e);
         }else{
-            this.p1 = point;
+            return;
         }
-        this.dragging = true;
     }
     move(e){
         if(!this.dragging){
@@ -52,18 +52,8 @@ export class NotePin{
             'transform-origin':'0% 0%',
         }
 
-        if(p2[0]-p1[0]>0 && p2[1]-p1[1]>0){
-            let reverseAngle = Math.sqrt(Math.pow(this.angle,2))
-
-            this.textboxStyle={
-                'transform':`rotate(${reverseAngle.toString()}deg)`
-               }
-            console.log(this.angle)
-            }else{
-           this.textboxStyle={
-            'transform':`rotate(-${this.angle.toString()}deg)`
-           }
-        }
+        this.upRighting(p1,p2);
+        this.textboxPositioning(p1,p2);
     }
     getLength(p1,p2){
         let dx = p2[0]-p1[0],
@@ -88,5 +78,37 @@ export class NotePin{
     getCoords(e) {
         return [(e.touches || [e])[0].clientX, (e.touches || [e])[0].clientY];
       }
+
+    upRighting(p1,p2){
+        if(p2[0]-p1[0]>0 && p2[1]-p1[1]>0){
+            let reverseAngle = Math.sqrt(Math.pow(this.angle,2))
+            this.textboxUpright={
+                'transform':`rotate(${reverseAngle.toString()}deg)`,
+               }
+            }else{
+           this.textboxUpright={
+            'transform':`rotate(-${this.angle.toString()}deg)`,
+           }
+        }
+    }
+
+    textboxPositioning(p1,p2){
+
+        let x:number=5, y:number=5;
+        if(p1[0]<p2[0]){
+           x+=20;
+        }else if(p1[0]>p2[0]){
+            x-=120;
+        }
+        if(p2[1]>p1[1]){
+            y += 10;
+        }else if(p2[1]<p1[1]){
+            y -= 50;
+        }
+        this.textboxPosition = {
+            'top':  `${y}px`,
+            'left': `${x}px`
+        }
+    }
 
 }

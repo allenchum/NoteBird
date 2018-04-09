@@ -5,7 +5,7 @@ export class NoteImage {
   coords: string[] = ["0%", "0%"];
   style: { [s: string]: string };
   dragging: boolean = false;
-  offs: number[] = [0, 0];
+  offs: number[] = [0,0];
 
   select(e) {
     var coords = this.getCoords(e); //getCoords returns clientX and clientY of the event
@@ -21,18 +21,14 @@ export class NoteImage {
     }else{
       this.dragging = true;
     }
-;
   }
 
   move(e) {
     this.style["border"] = "1pt solid black";
     var coords = this.getCoords(e);
-
     var x = coords[0] - this.offs[0];
     var y = coords[1] - this.offs[1];
     this.setData(x, y);
-
-;
   }
   drop(e) {
     this.dragging = false;

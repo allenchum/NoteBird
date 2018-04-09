@@ -2,17 +2,37 @@
 #edit-container{
     position: relative;
     top: 100px;
-    padding: 20px;
+    padding-top: 20px;
 }
 
 /* Control Bar */
 #control-bar{
     float:left;
-    width: 20%;
+    width: 15vw;
 }
-#file{
-    /* display: none; */
+.panel{
+    margin-bottom:5px; 
 }
+.panel-head{
+    display:flex;
+    align-items:center;
+    border-top-right-radius: 5pt;
+    border-top-left-radius: 5pt;
+    padding-left: 5pt;
+    background: #71B238;
+    color: #fff;
+}
+.panel-icon{
+    font-size: 18pt;
+    margin-right: 10px; 
+
+}
+.panel-collapse{
+    background: #FEFCD7;
+    border-bottom-right-radius: 5pt;
+    border-bottom-left-radius: 5pt;
+}
+
 .spinner {
     display: flex;
     flex-flow: row nowrap;
@@ -70,9 +90,10 @@
     position: absolute;
     top: 0;
     left: 15%;
+    margin-left:8px; 
     z-index: 9;
-    width: 70vw;
-    height: 70vh;
+    width: 84vw;
+    height: 85vh;
     background-color: #0099ff;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -91,15 +112,24 @@ img{
     width:98%;
     height:98%;
 }
+#imageList{
+    border: 2px solid;
+    border-radius: 5px; 
+    position: absolute;
+    z-index: 9;
+    width: 84vw;
+    height: 85vh;
+    background: linear-gradient(0.125turn,#333,#555,#222); 
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
 #pinList{
     border: 2px solid;
     border-radius: 5px; 
     position: absolute;
-    top: 0;
-    left:0;
-    z-index: 21;
-    width: 70vw;
-    height: 70vh;
+    z-index: 10;
+    width: 84vw;
+    height: 85vh;
     background-color:transparent;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -121,6 +151,26 @@ img{
     border: #fff solid;
     border-radius: 50% 50%; 
     z-index: 21;
+}
+
+/* TextBox */
+.text-container{
+    position: absolute;
+    width: 100px;
+    border: solid rgba(255, 191, 128, 1) 1pt;
+    border-radius: 3px;
+    background-color: rgba(255, 191, 128, 0.3);
+    z-index: 100;
+}
+.text-title{
+    font-size: 12pt;
+    font-weight: bold;
+    padding: 0px 3px;
+    margin: 1px 1px;
+}
+.text-content{
+    padding: 0px 3px;
+    margin: 1px 1px;
 }
   
 
