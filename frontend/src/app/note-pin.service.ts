@@ -19,7 +19,7 @@ export class NotePinService {
     let editOldPin: boolean = false;
     //Drag old pin
     this.pinList.map(pin => {
-      if (this.getXYDistance(pin.p2, p2) < 20) {
+      if (this.getXYDistance(pin.p2, p2) < 40) {
         editOldPin = true;
         pin.dragging = true;
         this.selectedPin = pin;
@@ -36,6 +36,7 @@ export class NotePinService {
       newPin.dragging = true;
 
       this.pinList.push(newPin);
+      console.log(window.innerWidth, window.innerHeight);
       this.selectedPin = newPin;
     }
   }
@@ -50,6 +51,7 @@ export class NotePinService {
     if (this.selectedPin) {
       this.selectedPin.drop(e);
     }
+        console.log(this.pinList)
   }
 
   getXYDistance(p1, p2) {
