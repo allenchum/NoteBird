@@ -6,6 +6,7 @@ import { CreateBoardComponent } from './create-board/create-board.component';
 //import { NotedisplayComponent } from './notedisplay/notedisplay.component'
 import { AuthGuard } from './auth-guard.service';
 import { FacebookComponent } from './facebook/facebook.component';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
 //    {path:'notes',component: NotedisplayComponent,canActivate:[AuthGuard]},
     {path:'create',component: CreateBoardComponent, canActivate:[AuthGuard]},
     {path:'users',component: UsersComponent, canActivate:[AuthGuard]},
+    {path:'profile',component:ProfilePageComponent }
 ]
 
 @NgModule({

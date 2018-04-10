@@ -26,6 +26,7 @@ import { AuthGuard } from './auth-guard.service';
 import { OAuthService } from 'angular2-oauth2/oauth-service';
 import { FacebookAuthService } from './facebook-auth.service';
 import { FilterService } from './filter.service';
+import { ProfileControlPanelComponent } from './profile-control-panel/profile-control-panel.component';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { FilterService } from './filter.service';
     LoginComponent,
     UsersComponent,
     SearchBoxComponent,
+    ProfileControlPanelComponent,
   ],
   imports: [
     BrowserModule,

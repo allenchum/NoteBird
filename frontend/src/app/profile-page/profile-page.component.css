@@ -1,0 +1,9 @@
+.profile-container{
+    position: relative;
+    top: 100px;
+    padding-top: 20px;
+}
+
+app-profile-control-panel{
+    width: 20vw;
+}
