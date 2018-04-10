@@ -24,6 +24,7 @@ export class NoteImageService {
     };
     image.coords = [image.style.left, image.style.top];
     this.imageList.push(image);
+    console.log(this.imageList)
   }
 
   select(image: NoteImage, e) {
@@ -38,7 +39,6 @@ export class NoteImageService {
       }
         this.selectedImage.move(e);
     }
-    console.log(this.imageList)
   }
 
   drop(image: NoteImage, e) {
