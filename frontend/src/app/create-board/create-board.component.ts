@@ -20,9 +20,10 @@ export class CreateBoardComponent implements OnInit {
   private pinList = this.notePinService.pinList;
   private selectedPin:NotePin;
   private currentService;
-  noteCollapsed:boolean = true;
+  noteCollapsed:boolean = false;
   imageCollapsed:boolean = true;
   pinCollapsed:boolean = true;
+  publishCollapsed:boolean = true;
   note={"name":"League of Leagends"};
   
   ngOnInit() {
@@ -73,16 +74,25 @@ export class CreateBoardComponent implements OnInit {
       this.noteCollapsed = false;
       this.imageCollapsed = true;
       this.pinCollapsed = true;
+      this.publishCollapsed = true;
     }
     if(panel=='image'){
       this.noteCollapsed = true;
       this.imageCollapsed = false;
       this.pinCollapsed = true;
+      this.publishCollapsed = true;
     }
     if(panel=='pin'){
       this.noteCollapsed = true;
       this.imageCollapsed = true;
       this.pinCollapsed = false;
+      this.publishCollapsed = true;
+    }
+    if(panel=='publish'){
+      this.noteCollapsed = true;
+      this.imageCollapsed = true;
+      this.pinCollapsed = true;
+      this.publishCollapsed = false;
     }
   }
   

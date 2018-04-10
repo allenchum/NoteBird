@@ -31,8 +31,7 @@
     background: #FEFCD7;
     border-bottom-right-radius: 5pt;
     border-bottom-left-radius: 5pt;
-    transition-duration: 2s;
-    transition-timing-function: ease;
+    padding: 2px 8px;
 }
 
 
@@ -213,7 +212,7 @@ img{
 /* Button Style */
 .btn{
     color: white;
-    margin: 10px 10px;
+    margin: 5px 5px 12px 5px;
 }
 .btn:active {
     transform: translate(0px, 5px);
@@ -249,6 +248,13 @@ img{
   
 .red:hover {
     background-color: #FF6656;
+}
+.orange{
+    background-color: #e67e22;
+    box-shadow: 0px 5px 0px 0px #d35400;
+}
+.orange:hover {
+    background-color: #f1c40f;
 }
   
 /* Text Boxes */
