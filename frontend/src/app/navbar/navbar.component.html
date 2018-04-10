@@ -10,7 +10,10 @@
       <i class="fa fa-bars"></i>
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto"> 
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item mx-0 mx-lg-1">
+          <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" routerLink="/users" routerLinkActive="active">Users</a>
+        </li>
         <li class="nav-item mx-0 mx-lg-1">
           <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#library">EXPLORE</a>
         </li>
@@ -20,8 +23,12 @@
         <li class="nav-item mx-0 mx-lg-1">
           <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#contact">MY NOTES</a>
         </li>
+        <li class="nav-item mx-0 mx-lg-1">
+          <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" (click)="onLogout()">Log Out</a>
+        </li>
       </ul>
     </div>
     <div class="user-icon"><a><img src="/assets/img/AmumuSquare.png"></a></div>
   </div>
 </nav>
+

@@ -13,7 +13,6 @@ import { NotePin } from '../NotePin';
 })
 export class CreateBoardComponent implements OnInit {
 
-
   constructor(private noteImageService: NoteImageService, private notePinService: NotePinService) { }
 
   private imageList = this.noteImageService.imageList;
