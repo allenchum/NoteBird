@@ -13,6 +13,7 @@ import { CreateBoardComponent } from './create-board/create-board.component';
 import { NoteImageService } from './note-image.service';
 import { NotePinService } from './note-pin.service';
 import { TextEditorComponent } from './text-editor/text-editor.component';
+import { ProfilePageComponent } from './profile-page/profile-page.component';
 
 
 
@@ -24,6 +25,7 @@ import { TextEditorComponent } from './text-editor/text-editor.component';
     RelatedContentComponent,
     CreateBoardComponent,
     TextEditorComponent,
+    ProfilePageComponent,
   ],
   imports: [
     BrowserModule,
