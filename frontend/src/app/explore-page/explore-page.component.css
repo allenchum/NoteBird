@@ -1,0 +1,16 @@
+.explore-container{
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    top: 100px;
+    padding-top: 40px;
+}
+
+/* Search Bar */
+#search-bar{
+    align-self: flex-end;
+    padding-right:10px; 
+}
+.search-results{
+    width: 100vw;
+}

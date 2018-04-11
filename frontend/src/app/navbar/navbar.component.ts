@@ -3,7 +3,6 @@ import { FacebookAuthService } from '../facebook-auth.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
-import { UserService } from '../user.service';
 
 // double check
 import { User } from './user.model';

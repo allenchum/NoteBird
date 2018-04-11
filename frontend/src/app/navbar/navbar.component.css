@@ -21,9 +21,21 @@
     height: 70px;
     border-radius: 50%;
     margin: 20px;
-  
     object-fit: cover;
     object-position: center right;
+    
+}
+.zoom-in-1{
+    -webkit-transform: scale(1);
+    -webkit-transition: .3s ease-in-out;
+    transform: scale(1);
+    transition: .3s ease-in-out;
+}
+.zoom-in-1:hover{
+    -webkit-transform: scale(1.15);
+    -webkit-transition: .3s ease-in-out;
+    transform: scale(1.15);
+    transition: .3s ease-in-out;            
 }
 #create-btn{
     height: 50%;

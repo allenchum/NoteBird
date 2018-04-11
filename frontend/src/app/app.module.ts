@@ -17,16 +17,16 @@ import { ProfilePageComponent } from './profile-page/profile-page.component';
 
 import { FacebookComponent } from './facebook/facebook.component';
 import { LoginComponent } from './login/login.component';
-import { UsersComponent } from './users/users.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from './auth.service';
-import { UserService } from './user.service';
 import { AuthGuard } from './auth-guard.service';
 import { OAuthService } from 'angular2-oauth2/oauth-service';
 import { FacebookAuthService } from './facebook-auth.service';
 import { FilterService } from './filter.service';
 import { ProfileControlPanelComponent } from './profile-control-panel/profile-control-panel.component';
+import { ProfileDisplayBoardComponent } from './profile-display-board/profile-display-board.component';
+import { ExplorePageComponent } from './explore-page/explore-page.component';
 
 @NgModule({
   declarations: [
@@ -39,9 +39,10 @@ import { ProfileControlPanelComponent } from './profile-control-panel/profile-co
     ProfilePageComponent,
     FacebookComponent,
     LoginComponent,
-    UsersComponent,
     SearchBoxComponent,
     ProfileControlPanelComponent,
+    ProfileDisplayBoardComponent,
+    ExplorePageComponent,
   ],
   imports: [
     BrowserModule,
@@ -55,7 +56,6 @@ import { ProfileControlPanelComponent } from './profile-control-panel/profile-co
     NoteImageService,
     NotePinService,
     AuthService,
-    UserService,
     AuthGuard,
     OAuthService,
     FacebookAuthService,

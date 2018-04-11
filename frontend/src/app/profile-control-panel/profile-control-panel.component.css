@@ -6,6 +6,7 @@
     overflow: hidden;
 
 }
+
 .inner{
     color: #fff;
     margin: 10px;
@@ -36,6 +37,14 @@
 .stats-item p{
     margin: 0 0;
 }
+hr{
+    color: rgba(170, 170, 170, 0.9);
+    size: 1px;
+    width:90%;
+}
+h5{
+    font-family: 'Roboto Condensed', sans-serif;
+}
 .selectors-container{
     margin-top: 10px;
     width: 100%;
@@ -48,9 +57,14 @@
 }
 .selectors li{
     list-style-type: none;
-    background-color: #71B238;
+    background-color:#005A04;
     border-radius: 8px;
     margin: 8px;
     padding: 1px 5px;
-    font-size: 14pt;
+    font-size: 15pt;
+}
+.selectors li:hover{
+    background-color: #CCFFBB;
+    color: #000;
+    cursor: pointer;
 }

@@ -1,6 +1,0 @@
-<search-box (search)="onFilter($event)"></search-box>
-<h1>user info</h1>
-<ul class="list-group" *ngFor="let user of usersObservable | async">
-    <li class="list-group-item">{{user.lastName}} {{user.firstName}} - {{user.email}} -
-      <img src="{{user.profPicLink}}"></li>
-</ul>

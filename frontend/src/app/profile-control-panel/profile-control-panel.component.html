@@ -4,6 +4,7 @@
     <div class="user-icon">
       <img src={{User.iconUrl}}>
     </div>
+    
     <div class="social-stats">
       <div class="stats-item posts">
         <p>
@@ -24,20 +25,21 @@
         <p>following</p>
       </div>
     </div>
+    <hr>
 
     <div class="selectors-container">
       <div class="personal-publish selectors">
         <h5>Your Notes</h5>
         <ul>
-          <li>Draft</li>
-          <li>Published</li>
+          <li><a>Draft</a></li>
+          <li><a>Published</a></li>
         </ul>
       </div>
       <div class="bookmarks selectors">
         <h5>Bookmarks</h5>
         <ul *ngIf="bookmarks">
           <li *ngFor="let bookmark of bookmarks">
-            {{bookmark.name}}
+            <a>{{bookmark.name}}</a>
           </li> 
         </ul>
 
