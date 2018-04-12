@@ -27,6 +27,7 @@ import { FilterService } from './filter.service';
 import { ProfileControlPanelComponent } from './profile-control-panel/profile-control-panel.component';
 import { ProfileDisplayBoardComponent } from './profile-display-board/profile-display-board.component';
 import { ExplorePageComponent } from './explore-page/explore-page.component';
+import { ExploreService } from './explore.service';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { ExplorePageComponent } from './explore-page/explore-page.component';
     AuthGuard,
     OAuthService,
     FacebookAuthService,
-    FilterService
+    FilterService,
+    ExploreService
   ],
   bootstrap: [AppComponent]
 })
