@@ -1,0 +1,18 @@
+<div class="profile-display-container">
+  <div class="title">
+    <h1>{{group.name}}</h1>
+  </div>
+  <hr>
+  <div class="group-items-contianer" *ngIf="group">
+    <div *ngFor="let item of group.elements" class="single-item">
+      <div class="snapshot">
+        <img src="/assets/img/cuttle.jpg">
+      </div>
+      <div class="meta">
+        <h5 class="item-title">{{item}}</h5>
+        <div class="item-author">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,53 @@
+<div class="control-container">
+  <div class="inner">
+    <h3 class="sayhi">Hi, {{User.name}}!</h3>
+    <div class="user-icon">
+      <img src={{User.iconUrl}}>
+    </div>
+    
+    <div class="social-stats">
+      <div class="stats-item posts">
+        <p>
+          <strong>{{User.no_posts}}</strong>
+        </p>
+        <p>posts</p>
+      </div>
+      <div class="stats-item fans">
+        <p>
+          <strong>{{User.no_fans}}</strong>
+        </p>
+        <p>fans</p>
+      </div>
+      <div class="stats-item following">
+        <p>
+          <strong>{{User.no_following}}</strong>
+        </p>
+        <p>following</p>
+      </div>
+    </div>
+    <hr>
+
+    <div class="selectors-container">
+      <div class="personal-publish selectors">
+        <h5>Your Notes</h5>
+        <ul>
+          <li><a>Draft</a></li>
+          <li><a>Published</a></li>
+        </ul>
+      </div>
+      <div class="bookmarks selectors">
+        <h5>Bookmarks</h5>
+        <ul *ngIf="bookmarks">
+          <li *ngFor="let bookmark of bookmarks">
+            <a>{{bookmark.name}}</a>
+          </li> 
+        </ul>
+
+      </div>
+    </div>
+
+  </div>
+
+
+
+</div>
