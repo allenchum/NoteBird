@@ -1,2 +1,2 @@
 #!/bin/bash
-cd backend && npm start & cd frontend && ng serve
+cd backend && npm start & cd frontend && ng serve -open
