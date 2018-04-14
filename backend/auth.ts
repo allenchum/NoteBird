@@ -1,8 +1,7 @@
 import * as passport from 'passport'
 import * as passportJWT from 'passport-jwt';
 import config from './config';
-//import { knex } from './dbConnect'
-import users from './users';
+import { knex } from './dbConnect'
 
 const ExtractJwt = passportJWT.ExtractJwt;
 
@@ -11,14 +10,14 @@ export default function(){
         secretOrKey: config.jwtSecret,
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken()
     },(payload,done)=>{
-        const user = users.find((user)=>{
-            return user.id == payload.id
-        });
-        if (user) {
-            return done(null, {id: user.id});
-        } else {
-            return done(new Error("User not found"), null);
-        }
+        let query = knex.select("*").from("users").where("id", '=', payload.id);
+        query.then((rows)=> {
+          if (rows.length >= 1) {
+              return done(null, {id: payload.id});
+          } else {
+              return done(new Error("User not found"), null);
+          }
+        })
     });
     passport.use(strategy);
 

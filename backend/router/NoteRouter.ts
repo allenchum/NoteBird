@@ -1,13 +1,13 @@
 import * as express from 'express'
-import authClass from './auth';
-import { knex } from './dbConnect'
+import authClass from '../auth';
+import { knex } from '../dbConnect'
 
 const auth = authClass();
 
 class NoteRouter {
   router = () => {
     const router = express.Router();
-    router.get('/', /*auth.authenticate(),*/ this.getUsers);
+    router.get('/', this.getUsers);
     return router;
   }
 

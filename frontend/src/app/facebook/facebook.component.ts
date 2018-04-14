@@ -15,7 +15,7 @@ export class FacebookComponent implements OnInit {
 
     ngOnInit() {
       if(this.authService.isAuthenticated()){
-        this.router.navigate(['users']);
+        this.router.navigate(['create']);
       }
       this.route.fragment.subscribe((fragment:string)=>{
         this.authService.facebookLogin(parse(fragment).access_token);

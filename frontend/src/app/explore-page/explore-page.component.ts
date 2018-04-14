@@ -12,4 +12,6 @@ export class ExplorePageComponent implements OnInit {
   ngOnInit() {
   }
 
+// limit the number of checkbox to only one. Return the search criteria.
+
 }

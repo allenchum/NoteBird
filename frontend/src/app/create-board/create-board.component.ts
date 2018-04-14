@@ -12,11 +12,15 @@ import { NotePin } from '../NotePin';
   styleUrls: ['./create-board.component.css']
 })
 export class CreateBoardComponent implements OnInit {
+  userID: string = null;
 
-  constructor(private noteImageService: NoteImageService, private notePinService: NotePinService) { }
+  constructor(private noteImageService: NoteImageService, private notePinService: NotePinService) {
+          this.userID = localStorage.getItem('userID');
+         }
 
   private imageList = this.noteImageService.imageList;
   private pinList = this.notePinService.pinList;
+//  private tagList =
   private selectedPin:NotePin;
   private currentService;
   noteCollapsed:boolean = false;
@@ -49,7 +53,7 @@ export class CreateBoardComponent implements OnInit {
     }else{
          style={
           "z-index":"9"
-         } 
+         }
       }
     return style;
     }
@@ -63,7 +67,7 @@ export class CreateBoardComponent implements OnInit {
     }else{
          style={
           "z-index":"9"
-         } 
+         }
       }
     return style;
   }
@@ -93,6 +97,30 @@ export class CreateBoardComponent implements OnInit {
       this.pinCollapsed = true;
       this.publishCollapsed = false;
     }
+  }
+
+  saveDraft(){
+    const pinNoteObj = {
+      "userID": this.userID,
+      "status": "draft",
+      "title": this.note.name,
+      "pinList": this.pinList,
+      "imageList": this.imageList,
+//      "tag": this.tagList
+    };
+    this.notePinService.getNotePins(pinNoteObj);
+  }
+
+  savePublish(){
+    const pinNoteObj = {
+      "userID": this.userID,
+      "status": "publish",
+      "title": this.note.name,
+      "pinList": this.pinList,
+      "imageList": this.imageList,
+//      "tag": this.tagList
+    };
+    this.notePinService.getNotePins(pinNoteObj);
   }
   
 

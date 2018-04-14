@@ -1,7 +1,7 @@
 import * as express from 'express';
 import * as multer from 'multer'
 import * as path from 'path'
-import { knex } from './dbConnect'
+import { knex } from '../dbConnect'
 
 // set storage engine
 const storage = multer.diskStorage({

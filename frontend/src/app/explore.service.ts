@@ -7,6 +7,7 @@ import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Note } from './Note';
+import { NotesService } from './note.service';
 
 @Injectable()
 export class ExploreService {

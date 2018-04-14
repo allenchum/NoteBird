@@ -2,7 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
@@ -15,12 +15,16 @@ import { RelatedContentComponent } from './related-content/related-content.compo
 import { CreateBoardComponent } from './create-board/create-board.component';
 import { TextEditorComponent } from './text-editor/text-editor.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
+import { NotesService } from './note.service'
+
+
 import { FacebookComponent } from './facebook/facebook.component';
 import { LoginComponent } from './login/login.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
 import { ProfileControlPanelComponent } from './profile-control-panel/profile-control-panel.component';
 import { ProfileDisplayBoardComponent } from './profile-display-board/profile-display-board.component';
 import { ExplorePageComponent } from './explore-page/explore-page.component';
+import { SearchBarComponent } from './search-bar/search-bar.component';
 
 // Import Services
 import { NoteImageService } from './note-image.service';
@@ -31,9 +35,8 @@ import { OAuthService } from 'angular2-oauth2/oauth-service';
 import { FacebookAuthService } from './facebook-auth.service';
 import { FilterService } from './filter.service';
 import { ExploreService } from './explore.service';
-import { SearchFilterPipe } from './search-filter.pipe';
-import { SearchBarComponent } from './search-bar/search-bar.component';
 
+import { SearchFilterPipe } from './search-filter.pipe';
 
 @NgModule({
   declarations: [
@@ -59,7 +62,8 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
     FormsModule,
     NgbModule.forRoot(),
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [
     NoteImageService,
@@ -69,7 +73,8 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
     OAuthService,
     FacebookAuthService,
     FilterService,
-    ExploreService
+    ExploreService,
+    NotesService
   ],
   bootstrap: [AppComponent]
 })
