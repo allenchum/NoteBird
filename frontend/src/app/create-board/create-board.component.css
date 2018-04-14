@@ -1,5 +1,5 @@
 /* Main */
-#edit-container{
+#create-board-container{
     position: relative;
     top: 100px;
     padding-top: 20px;
@@ -11,7 +11,7 @@
     width: 15vw;
 }
 .panel{
-    margin-bottom:5px; 
+    margin-bottom:5px;
 }
 .panel-head{
     display:flex;
@@ -24,14 +24,16 @@
 }
 .panel-icon{
     font-size: 18pt;
-    margin-right: 10px; 
+    margin-right: 10px;
 
 }
 .panel-collapse{
     background: #FEFCD7;
     border-bottom-right-radius: 5pt;
     border-bottom-left-radius: 5pt;
+    padding: 2px 8px;
 }
+
 
 .spinner {
     display: flex;
@@ -86,11 +88,11 @@
 }
 #blackboard{
     border: 2px solid;
-    border-radius: 5px; 
+    border-radius: 5px;
     position: absolute;
     top: 0;
     left: 15%;
-    margin-left:8px; 
+    margin-left:8px;
     z-index: 9;
     width: 84vw;
     height: 85vh;
@@ -98,6 +100,16 @@
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
+}
+#note-name{
+    position: absolute;
+    top:0;
+    width: 100%;
+    text-align: center;
+    z-index: 30;
+    color: #fff;
+    font-family: 'Gaegu', cursive;
+    font-size: 30pt;
 }
 .image-frame{
     position: absolute;
@@ -114,19 +126,23 @@ img{
 }
 #imageList{
     border: 2px solid;
-    border-radius: 5px; 
+    border-radius: 5px;
     position: absolute;
     z-index: 9;
+    top:0;
+    left:0;
     width: 84vw;
     height: 85vh;
-    background: linear-gradient(0.125turn,#333,#555,#222); 
+    background: linear-gradient(0.125turn,#333,#555,#222);
     -moz-user-select: none;
     -ms-user-select: none;
 }
 #pinList{
     border: 2px solid;
-    border-radius: 5px; 
+    border-radius: 5px;
     position: absolute;
+    top:0;
+    left:0;
     z-index: 10;
     width: 84vw;
     height: 85vh;
@@ -149,14 +165,14 @@ img{
     height: 20px;
     background: #fff;
     border: #fff solid;
-    border-radius: 50% 50%; 
+    border-radius: 50% 50%;
     z-index: 21;
 }
 
 /* TextBox */
 .text-container{
     position: absolute;
-    width: 100px;
+    min-width: 100px;
     border: solid rgba(255, 191, 128, 1) 1pt;
     border-radius: 3px;
     background-color: rgba(255, 191, 128, 0.3);
@@ -172,15 +188,15 @@ img{
     padding: 0px 3px;
     margin: 1px 1px;
 }
-  
+
 
 
 /* Input Area */
 #input-area{
     position: absolute;
     right: 0;
-    margin-left: 10px; 
-    width: 25%;   
+    margin-left: 10px;
+    width: 25%;
     height: 100%;
 }
 .text-input{
@@ -196,7 +212,7 @@ img{
 /* Button Style */
 .btn{
     color: white;
-    margin: 10px 10px;
+    margin: 5px 5px 12px 5px;
 }
 .btn:active {
     transform: translate(0px, 5px);
@@ -207,7 +223,6 @@ img{
     background-color: #f1c40f;
     box-shadow: 0px 5px 0px 0px #D8AB00;
 }
-  
 .yellow:hover {
     background-color: #FFDE29;
 }
@@ -229,11 +244,18 @@ img{
     background-color: #e74c3c;
     box-shadow: 0px 5px 0px 0px #CE3323;
 }
-  
+
 .red:hover {
     background-color: #FF6656;
 }
-  
+.orange{
+    background-color: #e67e22;
+    box-shadow: 0px 5px 0px 0px #d35400;
+}
+.orange:hover {
+    background-color: #f1c40f;
+}
+
 /* Text Boxes */
 .text-container{
     border: solid rgba(255, 191, 128, 1) 1pt;

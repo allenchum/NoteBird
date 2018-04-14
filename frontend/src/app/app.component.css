@@ -1,6 +1,5 @@
-app-main-frame{
-  position: relative;
-  top:200px;
-  height: 500px;
-  width: 60%;
+app-navbar{
+    position: relative;
+    top:0;
+    left: 0;
 }

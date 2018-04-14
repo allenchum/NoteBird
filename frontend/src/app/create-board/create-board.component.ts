@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit ,Input} from '@angular/core';
 
 import { NoteImageService } from '../note-image.service';
 import { NoteImage } from '../NoteImage';
@@ -12,14 +12,23 @@ import { NotePin } from '../NotePin';
   styleUrls: ['./create-board.component.css']
 })
 export class CreateBoardComponent implements OnInit {
+  userID: string = null;
 
-  constructor(private noteImageService: NoteImageService, private notePinService: NotePinService) { }
+  constructor(private noteImageService: NoteImageService, private notePinService: NotePinService) {
+          this.userID = localStorage.getItem('userID');
+         }
 
   private imageList = this.noteImageService.imageList;
   private pinList = this.notePinService.pinList;
+//  private tagList =
   private selectedPin:NotePin;
   private currentService;
-  
+  noteCollapsed:boolean = false;
+  imageCollapsed:boolean = true;
+  pinCollapsed:boolean = true;
+  publishCollapsed:boolean = true;
+  note={"name":"League of Leagends"};
+
   ngOnInit() {
     this.currentService = this.notePinService;
   }
@@ -44,7 +53,7 @@ export class CreateBoardComponent implements OnInit {
     }else{
          style={
           "z-index":"9"
-         } 
+         }
       }
     return style;
     }
@@ -58,9 +67,59 @@ export class CreateBoardComponent implements OnInit {
     }else{
          style={
           "z-index":"9"
-         } 
+         }
       }
     return style;
+  }
 
+  panelActive(panel:string){
+    if(panel=='note'){
+      this.noteCollapsed = false;
+      this.imageCollapsed = true;
+      this.pinCollapsed = true;
+      this.publishCollapsed = true;
+    }
+    if(panel=='image'){
+      this.noteCollapsed = true;
+      this.imageCollapsed = false;
+      this.pinCollapsed = true;
+      this.publishCollapsed = true;
+    }
+    if(panel=='pin'){
+      this.noteCollapsed = true;
+      this.imageCollapsed = true;
+      this.pinCollapsed = false;
+      this.publishCollapsed = true;
+    }
+    if(panel=='publish'){
+      this.noteCollapsed = true;
+      this.imageCollapsed = true;
+      this.pinCollapsed = true;
+      this.publishCollapsed = false;
+    }
+  }
+
+  saveDraft(){
+    const pinNoteObj = {
+      "userID": this.userID,
+      "status": "draft",
+      "title": this.note.name,
+      "pinList": this.pinList,
+      "imageList": this.imageList,
+//      "tag": this.tagList
+    };
+    this.notePinService.getNotePins(pinNoteObj);
+  }
+
+  savePublish(){
+    const pinNoteObj = {
+      "userID": this.userID,
+      "status": "publish",
+      "title": this.note.name,
+      "pinList": this.pinList,
+      "imageList": this.imageList,
+//      "tag": this.tagList
+    };
+    this.notePinService.getNotePins(pinNoteObj);
   }
 }

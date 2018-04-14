@@ -1,0 +1,28 @@
+p{
+    background-color: rgba( 254, 252, 215, 0.7);
+}
+h1{
+    padding: 15px 20px 10px 20px;
+    font-family: 'Roboto Condensed', sans-serif;
+}
+.profile-display-container{
+    height: 87vh;
+    overflow: scroll;
+}
+.group-items-contianer{
+   display: flex;
+   flex-flow: row wrap;
+}
+
+.single-item{
+   width: 32%;
+   margin: 5px;
+   border: 1pt solid #000;
+   border-radius: 5px;
+}
+.single-item .snapshot img{
+    width: 100%;
+}
+.meta{
+    padding:0 5px;
+}

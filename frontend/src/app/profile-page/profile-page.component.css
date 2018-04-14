@@ -1,0 +1,14 @@
+.profile-container{
+    position: relative;
+    top: 100px;
+    padding-top: 20px;
+    display: flex;
+    flex-flow: row;
+}
+
+app-profile-control-panel{
+    width: 20vw;
+}
+app-display-board{
+    width: 80vw;
+}
