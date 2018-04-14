@@ -26,3 +26,28 @@ h1{
 .meta{
     padding:0 5px;
 }
+
+
+/* Search Bar */
+#search-bar-container{
+    display: flex;
+    justify-content: flex-end;
+    margin-right:10px; 
+}
+#search-bar{
+    border: #8FC357 5px solid;
+    border-radius: 3px;
+    background-color:  #8FC357;
+}
+#search-term{
+    width: 50vw;
+}
+#search-button{
+    background-color:#8FC357;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+#search-button i:hover{
+    font-size: 5pt;
+}
