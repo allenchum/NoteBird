@@ -2,19 +2,17 @@
   <div id="search-bar-container">
     <form>
       <div id="search-bar">
-        <input type="text" id="search-term" placeholder="Enter your search term...">
+        <input type="text" id="search-term" name="search-term" placeholder="Enter your search term..." [(ngModel)]="term">
         <button type="submit" id="search-button">
           <i class="fa fa-search"></i>
         </button>
       </div>
-      <div id="search-by">
-        <input type="checkbox" id="by-title" placeholder="by title">
-        <label for="by-title">by title</label>
-        <input type="checkbox" id="by-author">
-        <label for="by-author">by author</label>
-        <input type="checkbox" id="by-tags" placeholder="by tags">
-        <label for="by-tags">by tags</label>
-      </div>
+      <label for="search-by">Search by :</label>
+      <select name="search-by" id="search-by" (change)="searchByChange($event)">
+        <option value="title">Title</option>
+        <option value="author">Author</option>
+        <option value="tags">Tags</option>
+      </select>
     </form>
   </div>
   <div class="search-results">

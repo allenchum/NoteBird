@@ -15,8 +15,8 @@ import { NotesService } from '../note.service'
 })
 export class ProfileDisplayBoardComponent implements OnInit {
 
-  term:string;
-  searchSelector:string = "title";
+  private term:string;
+  private searchSelector:string = "title";
 
   group = {
     name:"English",
@@ -61,7 +61,6 @@ export class ProfileDisplayBoardComponent implements OnInit {
     //     offs_0_: 0,
     //     offs_1_: 0 } ]
     //
-
   }
   searchByChange(args){
     let val = args.target.value;
