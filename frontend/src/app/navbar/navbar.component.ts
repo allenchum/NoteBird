@@ -35,14 +35,16 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {}
 
-  // ngAfterViewChecked() {
-  //   if (this.token) {
-  //     this.userInformService.getUserInfo().subscribe(res => {
-  //       this.User = res[0];
-  //       console.log(this.User);
-  //     });
-  //   }
-  // }
+
+  ngAfterViewInit() {
+    if (this.token){
+      this.userInformService.getUserInfo().subscribe(res => {
+        this.User = res[0];
+        console.log(this.User);
+      });
+    }
+  }
+  
 
   onLogout() {
     this.authService.logOut();

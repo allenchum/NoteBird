@@ -46,7 +46,7 @@
     display: inline-block;
     margin: 3px;
     padding: 3px;
-    background-color: rgba(0, 128, 0, 0.5);
+    background-color: rgba(0, 128, 0, 0.2);
     border: transparent ;
     border-radius: 3px;
 }
