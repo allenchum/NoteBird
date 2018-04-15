@@ -32,7 +32,7 @@ export class NotesService {
         // For Authentication
         let headers = new HttpHeaders({ 'Authorization': 'Bearer ' + this.authService.token });
         let options = {headers:headers};
-        return this.http.get(`${environment.apiServer}/api/noteAndPin/${id}`, options).map((res:any)=>{
+        return this.http.get(`${environment.apiServer}/api/noteAndPin/note/${id}`, options).map((res:any)=>{
           return res.map(res => res);
         });
     }

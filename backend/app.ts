@@ -24,5 +24,4 @@ app.use('/api/noteAndPin', auth.authenticate(), new NoteAndPinRouter().router())
 app.use('/api/getUserInfo', auth.authenticate(), new GetUserRouter().router());
 app.use('/multer', auth.authenticate(), new Upload().router())
 
-
 app.listen(8080);

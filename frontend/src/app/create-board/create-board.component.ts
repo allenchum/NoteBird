@@ -4,6 +4,7 @@ import { NoteImageService } from '../note-image.service';
 import { NoteImage } from '../NoteImage';
 import { environment } from "../../environments/environment";
 import { AuthService } from "../auth.service";
+import { Router } from '@angular/router';
 import 'rxjs/Rx';
 import { Observable } from 'rxjs';
 import { NotePinService } from '../note-pin.service';
@@ -17,16 +18,17 @@ import { NotePin } from '../NotePin';
 })
 
 export class CreateBoardComponent implements OnInit {
-  userID: string = null;
 
   constructor(private noteImageService: NoteImageService,
     private notePinService: NotePinService,
     private http: HttpClient,
     private authService: AuthService,
-    private uploadService: UploadService) {
+    private uploadService: UploadService,
+    private router: Router) {
     this.userID = localStorage.getItem('userID');
   }
 
+  userID: string = null;
   private imageList = this.noteImageService.imageList;
   private pinList = this.notePinService.pinList;
   //  private tagList =
@@ -38,6 +40,8 @@ export class CreateBoardComponent implements OnInit {
   pinCollapsed: boolean = true;
   publishCollapsed: boolean = true;
   note = { "name": "League of Leagends" };
+  noteID: number = null;
+  status = "init";
 
   ngOnInit() {
     this.currentService = this.notePinService;
@@ -123,13 +127,30 @@ export class CreateBoardComponent implements OnInit {
   saveDraft() {
     const pinNoteObj = {
       "userID": this.userID,
+      "noteID": this.noteID,
       "status": "draft",
       "title": this.note.name,
       "pinList": this.pinList,
       "imageList": this.imageList,
-      //      "tag": this.tagList
+      //"tag": this.tagList
     };
-    this.notePinService.getNotePins(pinNoteObj);
+    console.log("current", this.noteID);
+    if(this.pinList.length != 0 && this.imageList.length != 0){
+      this.notePinService.getNotePins(pinNoteObj).subscribe((res:any) =>{
+        if(confirm(`Note is saved as ${res.status} with note ID ${res.noteID}`)){
+          // reset create canvas
+          this.noteID = null;
+          this.pinList = [];
+          this.imageList = [];
+          this.status = "init";
+          this.router.navigate(['profile'])
+        } else {
+          this.noteID = res.noteID;
+        }
+      });
+    } else {
+      alert("Either no PIN or IMAGE is inserted! Draft note is not saved.")
+    }
   }
 
   savePublish() {
@@ -141,9 +162,22 @@ export class CreateBoardComponent implements OnInit {
       "imageList": this.imageList,
       //      "tag": this.tagList
     };
-    this.notePinService.getNotePins(pinNoteObj);
+    if(this.pinList.length != 0 && this.imageList.length != 0){
+        this.notePinService.getNotePins(pinNoteObj).subscribe((res:any) =>{
+          if(confirm(`Note is saved as ${res.status} with note ID ${res.noteID}`)){
+            // reset create canvas
+            this.noteID = null;
+            this.pinList = [];
+            this.imageList = [];
+            this.status = "init";
+            this.router.navigate(['profile'])
+          } else {
+            this.noteID = res.noteID;
+          }
+        });
+    } else {
+      alert("Either no PIN or IMAGE is inserted! Note cannot be published.")
+    }
   }
-
-
 
 }

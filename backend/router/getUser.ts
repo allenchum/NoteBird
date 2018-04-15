@@ -4,7 +4,8 @@ import { knex } from '../dbConnect'
 class GetUserRouter {
   router = () => {
     const router = express.Router();
-    router.get("/", this.getInfo)
+    router.get("/", this.getInfo);
+    router.get('/user/:id', this.getSpecificUser)
     return router;
   }
 
@@ -14,6 +15,15 @@ class GetUserRouter {
         res.json(rows);
       })
   }
+
+  private getSpecificUser = (req: express.Request, res: express.Response) => {
+    knex.select("*").from("users").where("users.id", "=", req.params.id)
+      .then((rows) => {
+        res.json(rows);
+      })
+  }
+
+
 }
 
 export { GetUserRouter }

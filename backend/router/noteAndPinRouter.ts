@@ -6,86 +6,173 @@ class NoteAndPinRouter {
     const router = express.Router();
     router.post('/', this.writeNPs);
     router.get('/userNote', this.userNotes)
-    router.get('/:id', this.getNPs)
+    router.get('/note/:id', this.getNPs)
     return router;
   }
 
   private writeNPs = (req: express.Request, res: express.Response) => {
-    knex.transaction((trx) => {
-      console.log(req.body)
-      knex.insert({
-        note_title: req.body.title,
-        //        note_description: req.body.description, // there's no such thing in object yet
-        status: req.body.status,
-        userID: (req.user) ? req.user.id : null,
-      }, "id").into("notes")
-        .transacting(trx)
-        .then((ids) => {
-          const imageListArrayRow = [];
-          const batchSize = 30;
+    if (req.body.noteID == null) { // first insert
+      console.log("first")
+      return knex.transaction((trx) => {
+        knex.insert({
+          note_title: req.body.title,
+          //        note_description: req.body.description, // there's no such thing in object yet
+          status: req.body.status,
+          userID: (req.user) ? req.user.id : null,
+        }, "id").into("notes")
+          .transacting(trx)
+          .then((ids) => {
+            const imageListArrayRow = [];
+            const batchSize = 30;
 
-          for (let i = 0; i < req.body.imageList.length; i++) {
-            imageListArrayRow.push({
-              coords_0: req.body.imageList[i].coords[0],
-              coords_1: req.body.imageList[i].coords[1],
-              dragging: req.body.imageList[i].dragging,
-              offs_0_: req.body.imageList[i].offs[0],
-              offs_1_: req.body.imageList[i].offs[1],
-              image_Url: req.body.imageList[i].url,
-              style_top: req.body.imageList[i].style.height,
-              style_left: req.body.imageList[i].style.left,
-              style_height: req.body.imageList[i].style.height,
-              style_width: req.body.imageList[i].style.width,
-              style_border: req.body.imageList[i].style.border,
-              noteID: ids[0],
-            })
-          };
+            for (let i = 0; i < req.body.imageList.length; i++) {
+              imageListArrayRow.push({
+                coords_0: req.body.imageList[i].coords[0],
+                coords_1: req.body.imageList[i].coords[1],
+                dragging: req.body.imageList[i].dragging,
+                offs_0_: req.body.imageList[i].offs[0],
+                offs_1_: req.body.imageList[i].offs[1],
+                image_Url: req.body.imageList[i].url,
+                style_top: req.body.imageList[i].style.height,
+                style_left: req.body.imageList[i].style.left,
+                style_height: req.body.imageList[i].style.height,
+                style_width: req.body.imageList[i].style.width,
+                style_border: req.body.imageList[i].style.border,
+                noteID: ids[0],
+              })
+            };
 
-          return knex.batchInsert("notes_Image", imageListArrayRow, batchSize)
-            .transacting(trx)
-            .returning("noteID")
-        }).then((ids) => {
-          const pinListArrayRow = [];
-          const batchSize = 50;
+            return knex.batchInsert("notes_Image", imageListArrayRow, batchSize)
+              .transacting(trx)
+              .returning("noteID")
+          }).then((ids) => {
+            const pinListArrayRow = [];
+            const batchSize = 50;
 
-          for (let i = 0; i < req.body.pinList.length; i++) {
-            pinListArrayRow.push({
-              p1_0_: req.body.pinList[i].p1[0],
-              p1_1_: req.body.pinList[i].p1[1],
-              pt_dragging: req.body.pinList[i].dragging,
-              title: req.body.pinList[i].title,
-              content: req.body.pinList[i].content,
-              p2_0_: req.body.pinList[i].p2[0],
-              p2_1_: req.body.pinList[i].p2[1],
-              length: req.body.pinList[i].length,
-              angle: req.body.pinList[i].angle,
-              pt_style_Height: req.body.pinList[i].style.height,
-              pt_style_Width: req.body.pinList[i].style.width,
-              style_backgroud_Color: req.body.pinList[i].style["background-color"],
-              style_position: req.body.pinList[i].style.position,
-              pt_style_Top: req.body.pinList[i].style.top,
-              pt_style_Left: req.body.pinList[i].style.left,
-              style_transform: req.body.pinList[i].style.transform,
-              style_transform_origin: req.body.pinList[i].style["transform-origin"],
-              style_textboxUpright: req.body.pinList[i].textboxUpright,
-              style_textPosition: req.body.pinList[i].textboxPosition,
-              noteID: ids[0],
-            })
-          };
-          return knex.batchInsert("points", pinListArrayRow, batchSize)
-            .transacting(trx).returning("noteID")
-        }).then(trx.commit)
-        .catch(trx.rollback)
-    }).then((ids) => {
-      res.json({
-        status: req.body.status,
-        noteID: ids[0]
+            for (let i = 0; i < req.body.pinList.length; i++) {
+              pinListArrayRow.push({
+                p1_0_: req.body.pinList[i].p1[0],
+                p1_1_: req.body.pinList[i].p1[1],
+                pt_dragging: req.body.pinList[i].dragging,
+                title: req.body.pinList[i].title,
+                content: req.body.pinList[i].content,
+                p2_0_: req.body.pinList[i].p2[0],
+                p2_1_: req.body.pinList[i].p2[1],
+                length: req.body.pinList[i].length,
+                angle: req.body.pinList[i].angle,
+                pt_style_Height: req.body.pinList[i].style.height,
+                pt_style_Width: req.body.pinList[i].style.width,
+                style_backgroud_Color: req.body.pinList[i].style["background-color"],
+                style_position: req.body.pinList[i].style.position,
+                pt_style_Top: req.body.pinList[i].style.top,
+                pt_style_Left: req.body.pinList[i].style.left,
+                style_transform: req.body.pinList[i].style.transform,
+                style_transform_origin: req.body.pinList[i].style["transform-origin"],
+                style_textboxUpright: req.body.pinList[i].textboxUpright,
+                style_textPosition: req.body.pinList[i].textboxPosition,
+                noteID: ids[0],
+              })
+            };
+            return knex.batchInsert("points", pinListArrayRow, batchSize)
+              .transacting(trx).returning("noteID")
+          }).then(trx.commit)
+          .catch(trx.rollback)
+      }).then((ids) => {
+        res.json({
+          status: req.body.status,
+          noteID: ids[0]
+        })
+      }).catch((err) => {
+        console.log(err);
+        res.json(err)
       })
 
-    }).catch((err) => {
-      console.log(err);
-      res.json(err)
-    })
+    } else { // delete all entries and update tables
+      // delete first
+      return knex.transaction((trx) => {
+        console.log("second", req.body.noteID)
+        return knex("notes_Image").transacting(trx).where("noteID", req.body.noteID).del()
+          .then(() => knex("points").where("noteID", req.body.noteID).del()
+              .transacting(trx)
+          ).then(() => knex("notes").where("id", req.body.noteID).del()
+              .transacting(trx)
+            //update
+          ).then(() => {
+            console.log("can i get to here?", req.body)
+            return knex.insert({
+              note_title: req.body.title,
+              //        note_description: req.body.description, // there's no such thing in object yet
+              status: req.body.status,
+              userID: (req.user) ? req.user.id : null,
+            }, "id").into("notes")
+              .transacting(trx)
+          }).then((ids) => {
+            console.log("after first trx", ids)
+            const imageListArrayRow = [];
+            const batchSize = 30;
+
+            for (let i = 0; i < req.body.imageList.length; i++) {
+              imageListArrayRow.push({
+                coords_0: req.body.imageList[i].coords[0],
+                coords_1: req.body.imageList[i].coords[1],
+                dragging: req.body.imageList[i].dragging,
+                offs_0_: req.body.imageList[i].offs[0],
+                offs_1_: req.body.imageList[i].offs[1],
+                image_Url: req.body.imageList[i].url,
+                style_top: req.body.imageList[i].style.height,
+                style_left: req.body.imageList[i].style.left,
+                style_height: req.body.imageList[i].style.height,
+                style_width: req.body.imageList[i].style.width,
+                style_border: req.body.imageList[i].style.border,
+                noteID: ids[0],
+              })
+            };
+
+            return knex.batchInsert("notes_Image", imageListArrayRow, batchSize)
+              .transacting(trx)
+              .returning("noteID")
+          }).then((ids) => {
+            const pinListArrayRow = [];
+            const batchSize = 50;
+
+            for (let i = 0; i < req.body.pinList.length; i++) {
+              pinListArrayRow.push({
+                p1_0_: req.body.pinList[i].p1[0],
+                p1_1_: req.body.pinList[i].p1[1],
+                pt_dragging: req.body.pinList[i].dragging,
+                title: req.body.pinList[i].title,
+                content: req.body.pinList[i].content,
+                p2_0_: req.body.pinList[i].p2[0],
+                p2_1_: req.body.pinList[i].p2[1],
+                length: req.body.pinList[i].length,
+                angle: req.body.pinList[i].angle,
+                pt_style_Height: req.body.pinList[i].style.height,
+                pt_style_Width: req.body.pinList[i].style.width,
+                style_backgroud_Color: req.body.pinList[i].style["background-color"],
+                style_position: req.body.pinList[i].style.position,
+                pt_style_Top: req.body.pinList[i].style.top,
+                pt_style_Left: req.body.pinList[i].style.left,
+                style_transform: req.body.pinList[i].style.transform,
+                style_transform_origin: req.body.pinList[i].style["transform-origin"],
+                style_textboxUpright: req.body.pinList[i].textboxUpright,
+                style_textPosition: req.body.pinList[i].textboxPosition,
+                noteID: ids[0],
+              })
+            };
+            return knex.batchInsert("points", pinListArrayRow, batchSize)
+              .transacting(trx).returning("noteID")
+          }).then(trx.commit)
+          .catch(trx.rollback)
+      }).then((ids) => {
+        res.json({
+          status: req.body.status,
+          noteID: ids[0]
+        })
+      }).catch((err) => {
+        console.log(err);
+        res.json(err)
+      })
+    }
   }
 
   private userNotes = (req: express.Request, res: express.Response) => {
