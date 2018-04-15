@@ -28,7 +28,7 @@
         </div>
         <div class="panel-collapse" [ngbCollapse]="imageCollapsed">
           <form action="/multer" method="post" enctype="multipart/form-data">
-            <button class="btn yellow" id="upload-image" (click)="noteImageService.addNew()" (click)="switchService('image')">Add Image</button>
+            <button class="btn yellow" id="upload-image">Add Image(inactive)</button>
             <input id="file" type="file" accept=".jpg, .jpeg, .gif, .png" (change)="fileChangeEvent($event)" />
           </form>
         </div>
@@ -40,8 +40,8 @@
           <i class="fas fa-thumbtack panel-icon"></i>
           <h3>Pins</h3>
         </div>
-        <div class="panel-collapse" [ngbCollapse]="pinCollapsed">
-          <button class="btn yellow" id="add-pin" (click)="switchService('pin')">Add Pin</button>
+        <div class="panel-collapse" [ngbCollapse] ="pinCollapsed" >
+          <button class="btn yellow" id="add-pin">Add Pin</button>
           <app-text-editor [pin]="selectedPin"></app-text-editor>
         </div>
       </div>
@@ -89,7 +89,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
 

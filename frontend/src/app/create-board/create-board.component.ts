@@ -32,14 +32,12 @@ export class CreateBoardComponent implements OnInit {
   //  private tagList =
   private selectedPin: NotePin;
   private currentService;
+
   noteCollapsed: boolean = false;
   imageCollapsed: boolean = true;
   pinCollapsed: boolean = true;
   publishCollapsed: boolean = true;
   note = { "name": "League of Leagends" };
-
-  imageObservable: Observable<any>
-  imageNormal: any
 
   ngOnInit() {
     this.currentService = this.notePinService;
@@ -96,12 +94,18 @@ export class CreateBoardComponent implements OnInit {
       this.imageCollapsed = false;
       this.pinCollapsed = true;
       this.publishCollapsed = true;
+
+      //switch service to image
+      this.switchService("image");
     }
     if (panel == 'pin') {
       this.noteCollapsed = true;
       this.imageCollapsed = true;
       this.pinCollapsed = false;
       this.publishCollapsed = true;
+
+      //switch service to pin
+      this.switchService("pin");
     }
     if (panel == 'publish') {
       this.noteCollapsed = true;
@@ -114,10 +118,6 @@ export class CreateBoardComponent implements OnInit {
   // upload from image-upload service
   fileChangeEvent(event) {
     this.noteImageService.uploadAvatar(event);
-  }
-
-  upload() {
-
   }
 
   saveDraft() {
@@ -143,4 +143,7 @@ export class CreateBoardComponent implements OnInit {
     };
     this.notePinService.getNotePins(pinNoteObj);
   }
+
+
+
 }

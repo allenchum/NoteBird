@@ -1,16 +1,8 @@
-.explore-container{
-    position: relative;
-    display: flex;
-    flex-flow: column;
-    top: 100px;
-    padding-top: 40px;
-}
-
 /* Search Bar */
 #search-bar-container{
-    align-self: center;
+    display: flex;
+    justify-content: flex-end;
     margin-right:10px; 
-
 }
 #search-bar{
     border: #8FC357 5px solid;
@@ -28,7 +20,4 @@
 }
 #search-button i:hover{
     font-size: 5pt;
-}
-.search-results{
-    width: 100vw;
 }

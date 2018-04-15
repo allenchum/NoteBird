@@ -12,9 +12,10 @@ class NoteAndPinRouter {
 
   private writeNPs = (req: express.Request, res: express.Response) => {
     knex.transaction((trx) => {
+      console.log(req.body)
       knex.insert({
         note_title: req.body.title,
-//        note_description: req.body.description, // there's no such thing in object yet
+        //        note_description: req.body.description, // there's no such thing in object yet
         status: req.body.status,
         userID: (req.user) ? req.user.id : null,
       }, "id").into("notes")
@@ -89,7 +90,7 @@ class NoteAndPinRouter {
 
   private userNotes = (req: express.Request, res: express.Response) => {
     let query = knex.from("notes").where("userID", '=', (req.user) ? req.user.id : null)
-                    .innerJoin("notes_Image", "notes.id", "notes_Image.noteID")
+      .innerJoin("notes_Image", "notes.id", "notes_Image.noteID")
     return query.then((rows) => {
       let duplicates: any = [];
       const notesReturn = rows.filter((element: any) => {
@@ -170,7 +171,7 @@ class NoteAndPinRouter {
         userPic: rows[0].profPicLink,
         status: rows[0].status,
         title: rows[0].note_title,
-//        description: rows[0].note_description,  // there's no such thing in object yet
+        //        description: rows[0].note_description,  // there's no such thing in object yet
         pinList: pinListArray,
         imageList: imageListArray,
       })

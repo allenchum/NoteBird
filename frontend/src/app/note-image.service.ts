@@ -20,7 +20,6 @@ export class NoteImageService {
   //Store the selectedImage
   selectedImage: NoteImage;
 
-
   uploadAvatar(event) {
     let fileList: FileList = event.target.files;
     if (fileList.length > 0) {
@@ -33,7 +32,7 @@ export class NoteImageService {
         .map((res:any) => this.addNew(`${environment.apiServer}${res.filePath}`))
         .catch(function(err) {
           throw err;
-        })
+        }).subscribe()
     }
   }
   //push a new image to the list
@@ -49,7 +48,6 @@ export class NoteImageService {
     };
     image.coords = [image.style.left, image.style.top];
     this.imageList.push(image);
-    console.log(this.imageList)
   }
 
   select(image: NoteImage, e) {

@@ -17,8 +17,6 @@ export class ProfileControlPanelComponent implements OnInit {
     "no_following":"356"
   }
   bookmarks: Bookmark[]=[];
-  
-
     
   
 
