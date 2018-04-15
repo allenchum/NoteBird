@@ -27,7 +27,7 @@
           <h3>Images</h3>
         </div>
         <div class="panel-collapse" [ngbCollapse]="imageCollapsed">
-          <button class="btn yellow" id="upload-image" (click)="noteImageService.addNew()" (click)="switchService('image')">Add Image</button>
+          <button class="btn yellow" id="upload-image" (click)="noteImageService.addNew()">Add Image</button>
           <input id="file" type="file" accept=".jpg, .jpeg, .png" />
         </div>
       </div>
@@ -39,7 +39,7 @@
           <h3>Pins</h3>
         </div>
         <div class="panel-collapse" [ngbCollapse] ="pinCollapsed" >
-          <button class="btn yellow" id="add-pin" (click)="switchService('pin')">Add Pin</button>
+          <button class="btn yellow" id="add-pin">Add Pin</button>
           <app-text-editor [pin]="selectedPin"></app-text-editor>
         </div>
       </div>

@@ -15,9 +15,6 @@ import { RelatedContentComponent } from './related-content/related-content.compo
 import { CreateBoardComponent } from './create-board/create-board.component';
 import { TextEditorComponent } from './text-editor/text-editor.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
-import { NotesService } from './note.service'
-
-
 import { FacebookComponent } from './facebook/facebook.component';
 import { LoginComponent } from './login/login.component';
 import { SearchBoxComponent } from './search-box/search-box.component';
@@ -34,8 +31,11 @@ import { AuthGuard } from './auth-guard.service';
 import { OAuthService } from 'angular2-oauth2/oauth-service';
 import { FacebookAuthService } from './facebook-auth.service';
 import { FilterService } from './filter.service';
+import { NotesService } from './note.service'
 import { ExploreService } from './explore.service';
+import { UserInformService } from './user-inform.service';
 
+// Import Pipe
 import { SearchFilterPipe } from './search-filter.pipe';
 
 @NgModule({

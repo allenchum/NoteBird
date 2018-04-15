@@ -10,4 +10,5 @@ export class Note{
     imageList: NoteImage [];
     pinList: NotePin[];
     tags: string[];
+    
 }

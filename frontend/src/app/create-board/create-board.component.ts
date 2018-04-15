@@ -84,12 +84,18 @@ export class CreateBoardComponent implements OnInit {
       this.imageCollapsed = false;
       this.pinCollapsed = true;
       this.publishCollapsed = true;
+      
+      //switch service to image
+      this.switchService("image");
     }
     if(panel=='pin'){
       this.noteCollapsed = true;
       this.imageCollapsed = true;
       this.pinCollapsed = false;
       this.publishCollapsed = true;
+
+      //switch service to pin
+      this.switchService("pin");
     }
     if(panel=='publish'){
       this.noteCollapsed = true;

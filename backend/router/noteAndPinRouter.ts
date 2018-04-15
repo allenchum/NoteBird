@@ -112,8 +112,8 @@ class NoteAndPinRouter {
       "notes.id": req.params.id
     })
       .innerJoin("notes_Image", "notes.id", "notes_Image.noteID")
-      .innerJoin("points", "notes.id", "points.noteID");
-
+      .innerJoin("points", "notes.id", "points.noteID")
+      .innerJoin("users", "notes.userID", "users.id")
     // should only return one note as it is bounded by ID
 
     return query.then((rows) => {
@@ -165,6 +165,9 @@ class NoteAndPinRouter {
 
       specificNote.push({
         userID: rows[0].userID,
+        userFirstName: rows[0].firstName,
+        userLastName: rows[0].lastName,
+        userPic: rows[0].profPicLink,
         status: rows[0].status,
         title: rows[0].note_title,
 //        description: rows[0].note_description,  // there's no such thing in object yet
