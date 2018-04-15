@@ -14,6 +14,7 @@ import { NotePinService } from './note-pin.service';
 import { TextEditorComponent } from './text-editor/text-editor.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { NotesService } from './note.service'
+import { UploadService } from './image-upload.service'
 
 
 import { FacebookComponent } from './facebook/facebook.component';
@@ -64,7 +65,8 @@ import { ExploreService } from './explore.service';
     FacebookAuthService,
     FilterService,
     ExploreService,
-    NotesService
+    NotesService,
+    UploadService
   ],
   bootstrap: [AppComponent]
 })

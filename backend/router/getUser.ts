@@ -1,7 +1,4 @@
 import * as express from 'express'
-import * as jwt from 'jwt-simple';
-import axios from 'axios';
-import config from '../config';
 import { knex } from '../dbConnect'
 
 class GetUserRouter {
@@ -12,9 +9,10 @@ class GetUserRouter {
   }
 
   private getInfo = (req: express.Request, res: express.Response) => {
-    knex.select("*").from("users").orderBy("id").then((rows) => {
-     res.json(rows);
-   })
+    knex.select("*").from("users").where("users.id", "=", (req.user) ? req.user.id : null)
+      .then((rows) => {
+        res.json(rows);
+      })
   }
 }
 

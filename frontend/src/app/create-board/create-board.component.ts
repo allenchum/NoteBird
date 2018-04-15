@@ -1,9 +1,13 @@
-import { Component, OnInit ,Input} from '@angular/core';
-
+import { Component, OnInit, Input } from '@angular/core';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { NoteImageService } from '../note-image.service';
 import { NoteImage } from '../NoteImage';
-
+import { environment } from "../../environments/environment";
+import { AuthService } from "../auth.service";
+import 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { NotePinService } from '../note-pin.service';
+import { UploadService } from '../image-upload.service'
 import { NotePin } from '../NotePin';
 
 @Component({
@@ -11,87 +15,95 @@ import { NotePin } from '../NotePin';
   templateUrl: './create-board.component.html',
   styleUrls: ['./create-board.component.css']
 })
+
 export class CreateBoardComponent implements OnInit {
   userID: string = null;
 
-  constructor(private noteImageService: NoteImageService, private notePinService: NotePinService) {
-          this.userID = localStorage.getItem('userID');
-         }
+  constructor(private noteImageService: NoteImageService,
+    private notePinService: NotePinService,
+    private http: HttpClient,
+    private authService: AuthService,
+    private uploadService: UploadService) {
+    this.userID = localStorage.getItem('userID');
+  }
 
   private imageList = this.noteImageService.imageList;
   private pinList = this.notePinService.pinList;
-//  private tagList =
-  private selectedPin:NotePin;
+  //  private tagList =
+  private selectedPin: NotePin;
   private currentService;
-  noteCollapsed:boolean = false;
-  imageCollapsed:boolean = true;
-  pinCollapsed:boolean = true;
-  publishCollapsed:boolean = true;
-  note={"name":"League of Leagends"};
+  noteCollapsed: boolean = false;
+  imageCollapsed: boolean = true;
+  pinCollapsed: boolean = true;
+  publishCollapsed: boolean = true;
+  note = { "name": "League of Leagends" };
+
+  imageObservable: Observable<any>
+  imageNormal: any
 
   ngOnInit() {
     this.currentService = this.notePinService;
   }
 
-  switchService(s:string){
-    if(s=="pin"){
+  switchService(s: string) {
+    if (s == "pin") {
       this.currentService = this.notePinService;
-    }else if(s=="image"){
+    } else if (s == "image") {
       this.currentService = this.noteImageService;
     }
   }
 
-  onSelect(pin:NotePin):void{
+  onSelect(pin: NotePin): void {
     this.selectedPin = this.notePinService.selectedPin;
   }
-  setImageLayer(){
+  setImageLayer() {
     let style;
-    if(this.currentService == this.noteImageService){
-         style = {
-          "z-index":"10"
-         }
-    }else{
-         style={
-          "z-index":"9"
-         }
+    if (this.currentService == this.noteImageService) {
+      style = {
+        "z-index": "10"
       }
-    return style;
+    } else {
+      style = {
+        "z-index": "9"
+      }
     }
-
-  setPinLayer(){
-    let style;
-    if(this.currentService == this.notePinService){
-         style = {
-          "z-index":"10"
-         }
-    }else{
-         style={
-          "z-index":"9"
-         }
-      }
     return style;
   }
 
-  panelActive(panel:string){
-    if(panel=='note'){
+  setPinLayer() {
+    let style;
+    if (this.currentService == this.notePinService) {
+      style = {
+        "z-index": "10"
+      }
+    } else {
+      style = {
+        "z-index": "9"
+      }
+    }
+    return style;
+  }
+
+  panelActive(panel: string) {
+    if (panel == 'note') {
       this.noteCollapsed = false;
       this.imageCollapsed = true;
       this.pinCollapsed = true;
       this.publishCollapsed = true;
     }
-    if(panel=='image'){
+    if (panel == 'image') {
       this.noteCollapsed = true;
       this.imageCollapsed = false;
       this.pinCollapsed = true;
       this.publishCollapsed = true;
     }
-    if(panel=='pin'){
+    if (panel == 'pin') {
       this.noteCollapsed = true;
       this.imageCollapsed = true;
       this.pinCollapsed = false;
       this.publishCollapsed = true;
     }
-    if(panel=='publish'){
+    if (panel == 'publish') {
       this.noteCollapsed = true;
       this.imageCollapsed = true;
       this.pinCollapsed = true;
@@ -99,26 +111,35 @@ export class CreateBoardComponent implements OnInit {
     }
   }
 
-  saveDraft(){
+  // upload from image-upload service
+  fileChangeEvent(event) {
+    this.noteImageService.uploadAvatar(event);
+  }
+
+  upload() {
+
+  }
+
+  saveDraft() {
     const pinNoteObj = {
       "userID": this.userID,
       "status": "draft",
       "title": this.note.name,
       "pinList": this.pinList,
       "imageList": this.imageList,
-//      "tag": this.tagList
+      //      "tag": this.tagList
     };
     this.notePinService.getNotePins(pinNoteObj);
   }
 
-  savePublish(){
+  savePublish() {
     const pinNoteObj = {
       "userID": this.userID,
       "status": "publish",
       "title": this.note.name,
       "pinList": this.pinList,
       "imageList": this.imageList,
-//      "tag": this.tagList
+      //      "tag": this.tagList
     };
     this.notePinService.getNotePins(pinNoteObj);
   }

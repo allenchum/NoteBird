@@ -2,7 +2,6 @@ import * as express from 'express'
 import { knex } from '../dbConnect'
 
 class NoteAndPinRouter {
-
   router = () => {
     const router = express.Router();
     router.post('/', this.writeNPs);
@@ -89,7 +88,8 @@ class NoteAndPinRouter {
   }
 
   private userNotes = (req: express.Request, res: express.Response) => {
-    let query = knex.from("notes").where("userID", '=', (req.user) ? req.user.id : null).innerJoin("notes_Image", "notes.id", "notes_Image.noteID");
+    let query = knex.from("notes").where("userID", '=', (req.user) ? req.user.id : null)
+                    .innerJoin("notes_Image", "notes.id", "notes_Image.noteID")
     return query.then((rows) => {
       let duplicates: any = [];
       const notesReturn = rows.filter((element: any) => {
@@ -111,7 +111,8 @@ class NoteAndPinRouter {
       "notes.id": req.params.id
     })
       .innerJoin("notes_Image", "notes.id", "notes_Image.noteID")
-      .innerJoin("points", "notes.id", "points.noteID");
+      .innerJoin("points", "notes.id", "points.noteID")
+      .innerJoin("users", "notes.userID", "users.id")
 
     // should only return one note as it is bounded by ID
 
@@ -164,6 +165,9 @@ class NoteAndPinRouter {
 
       specificNote.push({
         userID: rows[0].userID,
+        userFirstName: rows[0].firstName,
+        userLastName: rows[0].lastName,
+        userPic: rows[0].profPicLink,
         status: rows[0].status,
         title: rows[0].note_title,
 //        description: rows[0].note_description,  // there's no such thing in object yet
