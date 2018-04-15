@@ -35,6 +35,7 @@ import { NotesService } from './note.service'
 import { ExploreService } from './explore.service';
 import { UserInformService } from './user-inform.service';
 
+
 // Import Pipe
 import { SearchFilterPipe } from './search-filter.pipe';
 
@@ -74,7 +75,8 @@ import { SearchFilterPipe } from './search-filter.pipe';
     FacebookAuthService,
     FilterService,
     ExploreService,
-    NotesService
+    NotesService,
+    UserInformService
   ],
   bootstrap: [AppComponent]
 })

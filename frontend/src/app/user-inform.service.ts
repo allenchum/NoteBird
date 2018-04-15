@@ -6,15 +6,19 @@ import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { environment } from '../environments/environment';
+import { AuthService } from "./auth.service";
 
 @Injectable()
 export class UserInformService {
 
-  constructor(private http:HttpClient) { }
+  userInfo: any ;
 
-  getUserIcon(){
-    this.http.get(`${environment.apiServer}/api/noteAndPin/userNote`)
+  constructor(private http:HttpClient,private authService: AuthService) { }
 
+  getUserInfo(){
+    let headers = new HttpHeaders({'Authorization':'Bearer ' + this.authService.token})
+    let options = { headers: headers };
+    return this.http.get(`${environment.apiServer}/api/getUserInfo`,options);
   }
 
 }

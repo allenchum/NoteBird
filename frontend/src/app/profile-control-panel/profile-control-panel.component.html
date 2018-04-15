@@ -1,11 +1,11 @@
 <div class="control-container">
-  <div class="inner">
-    <h3 class="sayhi">Hi, {{User.name}}!</h3>
+  <div class="inner" *ngIf="User">
+    <h3 class="sayhi">Hi, {{User.firstName}}!</h3>
     <div class="user-icon">
-      <img src={{User.iconUrl}}>
+      <img src={{User.profPicLink}}>
     </div>
     
-    <div class="social-stats">
+    <!-- <div class="social-stats">
       <div class="stats-item posts">
         <p>
           <strong>{{User.no_posts}}</strong>
@@ -24,7 +24,7 @@
         </p>
         <p>following</p>
       </div>
-    </div>
+    </div> -->
     <hr>
 
     <div class="selectors-container">

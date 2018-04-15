@@ -20,13 +20,15 @@ export class CreateBoardComponent implements OnInit {
 
   private imageList = this.noteImageService.imageList;
   private pinList = this.notePinService.pinList;
-//  private tagList =
+  private tagsList: string[]=[];
+  private newTag: string;
   private selectedPin:NotePin;
   private currentService;
   noteCollapsed:boolean = false;
   imageCollapsed:boolean = true;
   pinCollapsed:boolean = true;
   publishCollapsed:boolean = true;
+  tagsCollapsed:boolean = true;
   note={"name":"League of Leagends"};
   
   ngOnInit() {
@@ -78,12 +80,14 @@ export class CreateBoardComponent implements OnInit {
       this.imageCollapsed = true;
       this.pinCollapsed = true;
       this.publishCollapsed = true;
+      this.tagsCollapsed = true;
     }
     if(panel=='image'){
       this.noteCollapsed = true;
       this.imageCollapsed = false;
       this.pinCollapsed = true;
       this.publishCollapsed = true;
+      this.tagsCollapsed = true;
       
       //switch service to image
       this.switchService("image");
@@ -93,6 +97,7 @@ export class CreateBoardComponent implements OnInit {
       this.imageCollapsed = true;
       this.pinCollapsed = false;
       this.publishCollapsed = true;
+      this.tagsCollapsed = true;
 
       //switch service to pin
       this.switchService("pin");
@@ -102,6 +107,14 @@ export class CreateBoardComponent implements OnInit {
       this.imageCollapsed = true;
       this.pinCollapsed = true;
       this.publishCollapsed = false;
+      this.tagsCollapsed = true;
+    }
+    if(panel=="tags"){
+      this.noteCollapsed = true;
+      this.imageCollapsed = true;
+      this.pinCollapsed = true;
+      this.publishCollapsed = true;
+      this.tagsCollapsed = false;
     }
   }
 
@@ -127,6 +140,13 @@ export class CreateBoardComponent implements OnInit {
 //      "tag": this.tagList
     };
     this.notePinService.getNotePins(pinNoteObj);
+  }
+
+  addNewTag(){
+    if(this.newTag){
+    this.tagsList.push(this.newTag);
+    this.newTag = "";
+    }
   }
   
 
