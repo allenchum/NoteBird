@@ -1,13 +1,11 @@
 import * as express from 'express'
-import authClass from '../auth';
 import { knex } from '../dbConnect'
-
-const auth = authClass();
 
 class NoteRouter {
   router = () => {
     const router = express.Router();
     router.get('/', this.getUsers);
+    router.get('/user', this.getSpecificUser)
     return router;
   }
 
@@ -16,6 +14,13 @@ class NoteRouter {
       res.json(rows);
     })
   }
+
+  private getSpecificUser = (req: express.Request, res: express.Response) => {
+    knex.select("*").from("users").then((rows) => {
+      res.json(rows);
+    })
+  }
+
 }
 
 export { NoteRouter };

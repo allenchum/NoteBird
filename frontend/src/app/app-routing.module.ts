@@ -7,6 +7,7 @@ import { AuthGuard } from './auth-guard.service';
 import { FacebookComponent } from './facebook/facebook.component';
 import { ProfilePageComponent } from './profile-page/profile-page.component';
 import { ExplorePageComponent } from './explore-page/explore-page.component';
+import { DisplayPageComponent } from './display-page/display-page.component';
 
 
 const routes: Routes = [
@@ -14,7 +15,8 @@ const routes: Routes = [
     {path:'auth/facebook/callback', component: FacebookComponent},
     {path:'create',component: CreateBoardComponent, canActivate:[AuthGuard]},
     {path:'explore',component: ExplorePageComponent, canActivate:[AuthGuard]},
-    {path:'profile',component: ProfilePageComponent,canActivate:[AuthGuard]}
+    {path:'profile',component: ProfilePageComponent,canActivate:[AuthGuard]},
+    {path:'display/user/:userID/note/:id',component: DisplayPageComponent,canActivate:[AuthGuard]}
 ]
 
 @NgModule({

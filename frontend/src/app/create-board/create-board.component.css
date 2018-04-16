@@ -1,7 +1,7 @@
 /* Main */
 #create-board-container{
     position: relative;
-    top: 100px;
+    top: 110px;
     padding-top: 20px;
 }
 
@@ -32,6 +32,10 @@
     border-bottom-right-radius: 5pt;
     border-bottom-left-radius: 5pt;
     padding: 2px 8px;
+}
+#image-panel #file{
+
+
 }
 #tags-panel .tags-input{
    display: flex; 
@@ -118,7 +122,7 @@
     -moz-user-select: none;
     -ms-user-select: none;
 }
-#note-name{
+#note-title{
     position: absolute;
     top:0;
     width: 100%;

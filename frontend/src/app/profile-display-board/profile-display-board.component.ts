@@ -6,7 +6,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AuthService } from "../auth.service";
 import 'rxjs/Rx';
 import { Observable } from 'rxjs';
-import { NotesService } from '../note.service'
+import { NotesService } from '../notes.service'
 
 @Component({
   selector: 'app-profile-display-board',
@@ -17,14 +17,10 @@ export class ProfileDisplayBoardComponent implements OnInit {
 
   private term:string;
   private searchSelector:string = "title";
+  private Notes:any;
 
-  group = {
-    name:"English",
-    elements: [{title:"ABC",author:"allen"},{title:"DEF",author:"allen"},{title:"HJK",author:"allen"},{title:"UIO",author:"allen"},{title:"OPL",author:"gordan"},{title:"NMB",author:"gordan"},{title:"QWE",author:"gordan"},{title:"BVC",author:"gordan"},{title:"QSA",author:"tommy"},{title:"TYE",author:"tommy"}]
-  };
 
   notesObservable: Observable<any>
-  notesNormal: any
 
   constructor(private http: HttpClient, private authService: AuthService, private notesService:NotesService) {
 
@@ -34,7 +30,7 @@ export class ProfileDisplayBoardComponent implements OnInit {
     this.notesObservable = this.notesService.getNotes();
 
     this.notesService.getNotes().subscribe((notes)=>{
-      this.notesNormal = notes;
+      this.Notes = notes;
       console.log("FE:", notes)
     });
   }

@@ -1,10 +1,7 @@
 <!-- Note Editor -->
 <div id="create-board-container">
-  <div>
-    <h1 id='title'></h1>
-  </div>
-  <div id='main-container'>
 
+  <div id='main-container'>
     <!-- Contorl Panel -->
     <div id='control-bar'>
       
@@ -16,10 +13,10 @@
         </div>
         <div class="panel-collapse" [ngbCollapse]="noteCollapsed">
           <label>
-            <strong>Name of Note</strong>
+            <strong>Title of Note</strong>
           </label>
           <br/>
-          <input type="text" name="note-name" [(ngModel)]="note.name">
+          <input type="text" name="note-title" [(ngModel)]="note.title">
         </div>
       </div>
 
@@ -30,8 +27,9 @@
           <h3>Images</h3>
         </div>
         <div class="panel-collapse" [ngbCollapse]="imageCollapsed">
-          <button class="btn yellow" id="upload-image" (click)="noteImageService.addNew()">Add Image</button>
-          <input id="file" type="file" accept=".jpg, .jpeg, .png" />
+          <form action="/multer" method="post" enctype="multipart/form-data">
+            <input id="file" type="file" accept=".jpg, .jpeg, .gif, .png" (change)="fileChangeEvent($event)" />
+          </form>
         </div>
       </div>
 
@@ -42,7 +40,7 @@
           <h3>Pins</h3>
         </div>
         <div class="panel-collapse" [ngbCollapse]="pinCollapsed">
-          <button class="btn yellow" id="add-pin">Add Pin</button>
+          <p>Drag on blackboard to add pin.</p>
           <app-text-editor [pin]="selectedPin"></app-text-editor>
         </div>
       </div>
@@ -56,7 +54,7 @@
         <div class="panel-collapse" [ngbCollapse]="tagsCollapsed">
           <div class="tags-input">
             <input type="text" size="15" name="tag" [(ngModel)]="newTag">
-            <input type="submit" id="add-tag" value="Add Tag" (click)="addNewTag()">
+            <input type="submit" class="btn green " id="add-tag" value="Add Tag" (click)="addNewTag()">
           </div>
           <div class="tags-container" *ngIf="tagsList" >
             <ul >
@@ -82,7 +80,7 @@
     <!-- Canvas -->
     <div id='canvas-container' (mouseup)="currentService.drop($event)" (mousemove)="currentService.move($event)">
       <div id='blackboard'>
-        <div id="note-name">{{note.name}}</div>
+        <div id="note-title">{{note.title}}</div>
 
         <!-- Image Template -->
         <div *ngIf="imageList" id="imageList" [ngStyle]="setImageLayer()">

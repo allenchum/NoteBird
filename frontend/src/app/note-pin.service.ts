@@ -6,11 +6,14 @@ import { element } from "protractor";
 import { environment } from "../environments/environment";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AuthService } from "./auth.service";
+import { Router } from '@angular/router';
 import 'rxjs/Rx';
 
 @Injectable()
 export class NotePinService {
-  constructor(private http: HttpClient, private authService: AuthService) { }
+  constructor(private http: HttpClient,
+    private authService: AuthService,
+    private router: Router) { }
 
   //Store all the pins in this list
   pinList: NotePin[] = [];
@@ -68,11 +71,7 @@ export class NotePinService {
     // For Authentication
     let headers = new HttpHeaders({ 'Authorization': 'Bearer ' + this.authService.token });
     let options = { headers: headers };
-    return this.http.post(`${environment.apiServer}/api/noteAndPin`, notePinObj, options).subscribe((res: any) => {
-      console.log(res)
-      alert(`Note is saved as ${res.status} with note ID ${res.noteID}`)
-      // need some logic to differentiate "draft" and "publish"
-      // like re-direct? disable certain button.
-    });
+    return this.http.post(`${environment.apiServer}/api/noteAndPin`, notePinObj, options);
   }
+
 }

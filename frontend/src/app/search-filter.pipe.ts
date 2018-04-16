@@ -11,7 +11,7 @@ export class SearchFilterPipe implements PipeTransform {
       return notes;
     }else if(selector == "title"){
       return notes.filter(function(note){
-        return note.title.toLowerCase().includes(term.toLowerCase());
+        return note.note_title.toLowerCase().includes(term.toLowerCase());
       })
     }else if(selector == "author"){
       return notes.filter(function(note){

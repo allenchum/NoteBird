@@ -31,13 +31,18 @@ import { AuthGuard } from './auth-guard.service';
 import { OAuthService } from 'angular2-oauth2/oauth-service';
 import { FacebookAuthService } from './facebook-auth.service';
 import { FilterService } from './filter.service';
-import { NotesService } from './note.service'
+import { NotesService } from './notes.service';
+import { UploadService } from './image-upload.service';
 import { ExploreService } from './explore.service';
 import { UserInformService } from './user-inform.service';
+import { NoteInitService } from './note-init.service';
 
 
 // Import Pipe
 import { SearchFilterPipe } from './search-filter.pipe';
+import { DisplayPageComponent } from './display-page/display-page.component';
+
+
 
 @NgModule({
   declarations: [
@@ -56,6 +61,7 @@ import { SearchFilterPipe } from './search-filter.pipe';
     ExplorePageComponent,
     SearchFilterPipe,
     SearchBarComponent,
+    DisplayPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,7 +82,9 @@ import { SearchFilterPipe } from './search-filter.pipe';
     FilterService,
     ExploreService,
     NotesService,
-    UserInformService
+    UserInformService,
+    UploadService,
+    NoteInitService
   ],
   bootstrap: [AppComponent]
 })

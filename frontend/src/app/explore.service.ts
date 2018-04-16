@@ -7,14 +7,14 @@ import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 
 import { Note } from './Note';
-import { NotesService } from './note.service';
+import { NotesService } from './notes.service';
 
 @Injectable()
 export class ExploreService {
 
   constructor(private http: HttpClient) { }
 
-    /* GET notes whose name contains search term */
+    /* GET notes whose title contains search term */
     searchNotes(term: string): Observable<Note[]> {
       if (!term.trim()) {
         // if not search term, return empty hero array.
