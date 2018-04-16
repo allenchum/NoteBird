@@ -31,9 +31,9 @@ class NoteAndPinRouter {
                 coords_0: req.body.imageList[i].coords[0],
                 coords_1: req.body.imageList[i].coords[1],
                 dragging: req.body.imageList[i].dragging,
-                offs_0_: req.body.imageList[i].offs[0],
-                offs_1_: req.body.imageList[i].offs[1],
-                image_Url: req.body.imageList[i].url,
+                offs_0: req.body.imageList[i].offs[0],
+                offs_1: req.body.imageList[i].offs[1],
+                imageurl: req.body.imageList[i].url,
                 style_top: req.body.imageList[i].style.height,
                 style_left: req.body.imageList[i].style.left,
                 style_height: req.body.imageList[i].style.height,
@@ -43,7 +43,7 @@ class NoteAndPinRouter {
               })
             };
 
-            return knex.batchInsert("notes_Image", imageListArrayRow, batchSize)
+            return knex.batchInsert("notesimage", imageListArrayRow, batchSize)
               .transacting(trx)
               .returning("noteID")
           }).then((ids) => {
@@ -84,7 +84,7 @@ class NoteAndPinRouter {
 
               for (let i = 0; i < req.body.tagsList.length; i++) {
                 tagsListArray.push({
-                  noteTag: req.body.tagsList[i],
+                  notetags: req.body.tagsList[i],
                   noteID: ids[0],
                 })
               }
@@ -108,7 +108,7 @@ class NoteAndPinRouter {
     } else { // delete all entries and update tables
       // delete first
       return knex.transaction((trx) => {
-        return knex("notes_Image").transacting(trx).where("noteID", req.body.noteID).del()
+        return knex("notesimage").transacting(trx).where("noteID", req.body.noteID).del()
           .then(() => knex("points").where("noteID", req.body.noteID).del()
             .transacting(trx)
           ).then(() => {
@@ -142,9 +142,9 @@ class NoteAndPinRouter {
                 coords_0: req.body.imageList[i].coords[0],
                 coords_1: req.body.imageList[i].coords[1],
                 dragging: req.body.imageList[i].dragging,
-                offs_0_: req.body.imageList[i].offs[0],
-                offs_1_: req.body.imageList[i].offs[1],
-                image_Url: req.body.imageList[i].url,
+                offs_0: req.body.imageList[i].offs[0],
+                offs_1: req.body.imageList[i].offs[1],
+                imageurl: req.body.imageList[i].url,
                 style_top: req.body.imageList[i].style.height,
                 style_left: req.body.imageList[i].style.left,
                 style_height: req.body.imageList[i].style.height,
@@ -154,7 +154,7 @@ class NoteAndPinRouter {
               })
             };
 
-            return knex.batchInsert("notes_Image", imageListArrayRow, batchSize)
+            return knex.batchInsert("notesimage", imageListArrayRow, batchSize)
               .transacting(trx)
               .returning("noteID")
           }).then((ids) => {
@@ -195,7 +195,7 @@ class NoteAndPinRouter {
 
               for (let i = 0; i < req.body.tagsList.length; i++) {
                 tagsListArray.push({
-                  noteTag: req.body.tagsList[i],
+                  notetags: req.body.tagsList[i],
                   noteID: ids[0],
                 })
               }
@@ -222,10 +222,10 @@ class NoteAndPinRouter {
 
 
   private allNotes = (req: express.Request, res: express.Response) => {
-    return knex.select("notes.id as noteID", "notes.created_at", "notes.status", "notes.note_title", "users.id as userID", "users.lastName", "users.firstName", "notes_Image.image_Url")
+    return knex.select("notes.id as noteID", "notes.created_at", "notes.status", "notes.note_title", "users.id as userID", "users.lastName", "users.firstName", "notesimage.imageurl")
       .from("notes")
       .innerJoin("users", "notes.userID", "users.id")
-      .innerJoin("notes_Image", "notes.id", "notes_Image.noteID")
+      .innerJoin("notesimage", "notes.id", "notesimage.noteID")
       .then((rows) => {
         res.json(rows)
       }).catch((err) => {
@@ -234,39 +234,15 @@ class NoteAndPinRouter {
   }
 
   private userNotes = (req: express.Request, res: express.Response) => {
-    let query = knex.select("notes.id", "notes.created_at", "notes.userID", "notes.status", "notes.note_title", "users.firstName", "users.lastName", "notes_Image.image_Url", "tags.id as tagID", "tags.noteTag")
+    let query = knex.select("notes.id", "notes.created_at", "notes.userID", "notes.status", "notes.note_title", "users.firstName", "users.lastName", knex.raw('array_agg(notesimage.imageurl) as imagelink'), knex.raw('array_agg(tags.notetags) as tags'))
       .from("notes")
       .where("userID", '=', (req.user) ? req.user.id : null)
-      .innerJoin("notes_Image", "notes.id", "notes_Image.noteID")
+      .innerJoin("notesimage", "notes.id", "notesimage.noteID")
       .innerJoin("users", "notes.userID", "users.id")
       .innerJoin("tags", "notes.id", "tags.noteID")
-    // let query = knex('tags').select('tags.noteID')
-    //   .innerJoin(
-    //     knex.select("notes.id", "notes.created_at", "notes.userID", "notes.status", "notes.note_title", "users.firstName", "users.lastName", "notes_Image.image_Url")
-    //       .from("notes")
-    //       .where("userID", '=', (req.user) ? req.user.id : null)
-    //       .innerJoin("notes_Image", "notes.id", "notes_Image.noteID")
-    //       .innerJoin("users", "notes.userID", "users.id").as('n'), 'n.id', 'tags.noteID'
-    //     )
+      .groupBy("notes.id", "notes.created_at", "notes.userID", "notes.status", "notes.note_title", "users.firstName", "users.lastName")
     return query.then((rows) => {
-
-      return rows;
-
-      // console.log(rows)
-      // let duplicates: any = [];
-      // const notesReturn = rows.filter((element: any) => {
-      //   // If it is not a duplicate, return true
-      //   if (duplicates.indexOf(element.noteID) == -1) {
-      //     duplicates.push(element.noteID);
-      //     // return only the first match in rows returned from knex query
-      //     return true;
-      //   }
-      //   return false;
-      // });
-      // console.log(notesReturn)
-      // return notesReturn;
-    }).then((notesReturn) => {
-      res.json(notesReturn)
+      res.json(rows)
     }).catch((err) => {
       console.log(err)
       res.json(err);
@@ -279,7 +255,7 @@ class NoteAndPinRouter {
       "userID": (req.user) ? req.user.id : null,
       "notes.id": req.params.id
     })
-      .innerJoin("notes_Image", "notes.id", "notes_Image.noteID");
+      .innerJoin("notesimage", "notes.id", "notesimage.noteID");
     return query.then((rows) => {
 
       let pinListArray: any = [];
@@ -315,14 +291,14 @@ class NoteAndPinRouter {
         }
       }).then(() => {
         // create imageListArray for object
-        let imageQuery = knex.select("*").from("notes_Image").where("noteID", '=', req.params.id);
+        let imageQuery = knex.select("*").from("notesimage").where("noteID", '=', req.params.id);
         return imageQuery.then((rows) => {
           for (let i = 0; i < rows.length; i++) {
             imageListArray.push({
               coords: [rows[i].coords_0, rows[i].coords_1],
               dragging: rows[i].dragging,
-              offs: [rows[i].offs_0_, rows[i].offs_1_],
-              url: rows[i].image_Url,
+              offs: [rows[i].offs_0, rows[i].offs_1],
+              url: rows[i].imageurl,
               style: [{
                 top: rows[i].style_top,
                 left: rows[i].style_left,
@@ -338,7 +314,7 @@ class NoteAndPinRouter {
         let tagQuery = knex.select("*").from("tags").where("noteID", '=', req.params.id);
         return tagQuery.then((rows) => {
           for (let i = 0; i < rows.length; i++) {
-            tagListArray.push(rows[i].noteTag)
+            tagListArray.push(rows[i].notetags)
           }
         })
       }).then(() => {
@@ -370,7 +346,7 @@ class NoteAndPinRouter {
       userID: req.params.userID,
       noteID: req.params.noteID
     })
-      .innerJoin("notes_Image", "notes.id", "notes_Image.noteID");
+      .innerJoin("notesimage", "notes.id", "notesimage.noteID");
     return query.then((rows) => {
       if(rows.length >= 1 ){
 
@@ -407,14 +383,14 @@ class NoteAndPinRouter {
         }
       }).then(() => {
         // create imageListArray for object
-        let imageQuery = knex.select("*").from("notes_Image").where("noteID", '=', req.params.noteID);
+        let imageQuery = knex.select("*").from("notesimage").where("noteID", '=', req.params.noteID);
         return imageQuery.then((rows) => {
           for (let i = 0; i < rows.length; i++) {
             imageListArray.push({
               coords: [rows[i].coords_0, rows[i].coords_1],
               dragging: rows[i].dragging,
-              offs: [rows[i].offs_0_, rows[i].offs_1_],
-              url: rows[i].image_Url,
+              offs: [rows[i].offs_0, rows[i].offs_1],
+              url: rows[i].imageurl,
               style: [{
                 top: rows[i].style_top,
                 left: rows[i].style_left,
@@ -430,7 +406,7 @@ class NoteAndPinRouter {
         let tagQuery = knex.select("*").from("tags").where("noteID", '=', req.params.note);
         return tagQuery.then((rows) => {
           for (let i = 0; i < rows.length; i++) {
-            tagListArray.push(rows[i].noteTag)
+            tagListArray.push(rows[i].notetags)
           }
         })
       }).then(() => {
