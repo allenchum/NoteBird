@@ -13,6 +13,8 @@ class GetUserRouter {
     knex.select("*").from("users").where("users.id", "=", (req.user) ? req.user.id : null)
       .then((rows) => {
         res.json(rows);
+      }).catch((err) => {
+        res.json(err)
       })
   }
 
@@ -20,6 +22,8 @@ class GetUserRouter {
     knex.select("*").from("users").where("users.id", "=", req.params.id)
       .then((rows) => {
         res.json(rows);
+      }).catch((err) => {
+        res.json(err)
       })
   }
 

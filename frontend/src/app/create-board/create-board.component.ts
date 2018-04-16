@@ -59,7 +59,7 @@ export class CreateBoardComponent implements OnInit {
       this.currentService = this.noteImageService;
     } else{
       this.currentService = this.noteInitService;
-    } 
+    }
   }
 
   onSelect(pin: NotePin): void {
