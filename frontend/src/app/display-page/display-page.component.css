@@ -5,3 +5,194 @@
     top: 100px;
     padding-top: 40px;
 }
+/* Canvas */
+#canvas-container{
+    position: relative;
+}
+#blackboard{
+    border: 2px solid;
+    border-radius: 5px;
+    position: absolute;
+    top: 0;
+    left: 15%;
+    margin-left:8px;
+    z-index: 9;
+    width: 84vw;
+    height: 85vh;
+    background-color: #0099ff;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+#note-title{
+    position: absolute;
+    top:0;
+    width: 100%;
+    text-align: center;
+    z-index: 30;
+    color: #fff;
+    font-family: 'Gaegu', cursive;
+    font-size: 30pt;
+}
+.image-frame{
+    position: absolute;
+}
+.resizable {
+    resize: both;
+    overflow: hidden;
+    border: 1px solid black;
+    z-index: 20;
+}
+img{
+    width:98%;
+    height:98%;
+}
+#imageList{
+    border: 2px solid;
+    border-radius: 5px;
+    position: absolute;
+    z-index: 9;
+    top:0;
+    left:0;
+    width: 84vw;
+    height: 85vh;
+    background: linear-gradient(0.125turn,#333,#555,#222);
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+#pinList{
+    border: 2px solid;
+    border-radius: 5px;
+    position: absolute;
+    top:0;
+    left:0;
+    z-index: 10;
+    width: 84vw;
+    height: 85vh;
+    background-color:transparent;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.pin-point{
+        display: flex;
+        flex-flow: column;
+        justify-content: flex-end;
+}
+
+.pin-dot{
+    position: absolute;
+    align-self: center;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border: #fff solid;
+    border-radius: 50% 50%;
+    z-index: 21;
+}
+
+/* TextBox */
+.text-container{
+    position: absolute;
+    min-width: 100px;
+    border: solid rgba(255, 191, 128, 1) 1pt;
+    border-radius: 3px;
+    background-color: rgba(255, 191, 128, 0.3);
+    z-index: 100;
+}
+.text-title{
+    font-size: 12pt;
+    font-weight: bold;
+    padding: 0px 3px;
+    margin: 1px 1px;
+}
+.text-content{
+    padding: 0px 3px;
+    margin: 1px 1px;
+}
+
+
+
+/* Input Area */
+#input-area{
+    position: absolute;
+    right: 0;
+    margin-left: 10px;
+    width: 25%;
+    height: 100%;
+}
+.text-input{
+    width: 100%;
+}
+.al-right{
+    float: right;
+}
+.coordinate{
+    display:none;
+}
+
+/* Button Style */
+.btn{
+    color: white;
+    margin: 5px 5px 12px 5px;
+}
+.btn:active {
+    transform: translate(0px, 5px);
+    -webkit-transform: translate(0px, 5px);
+    box-shadow: 0px 1px 0px 0px;
+}
+.yellow {
+    background-color: #f1c40f;
+    box-shadow: 0px 5px 0px 0px #D8AB00;
+}
+.yellow:hover {
+    background-color: #FFDE29;
+}
+.blue {
+    background-color: #55acee;
+    box-shadow: 0px 5px 0px 0px #3C93D5;
+}
+.blue:hover {
+    background-color: #6FC6FF;
+}
+.green{
+    background-color: #2ecc71;
+    box-shadow: 0px 5px 0px 0px #15B358;
+}
+.green:hover {
+    background-color: #48E68B;
+}
+.red {
+    background-color: #e74c3c;
+    box-shadow: 0px 5px 0px 0px #CE3323;
+}
+
+.red:hover {
+    background-color: #FF6656;
+}
+.orange{
+    background-color: #e67e22;
+    box-shadow: 0px 5px 0px 0px #d35400;
+}
+.orange:hover {
+    background-color: #f1c40f;
+}
+  
+/* Text Boxes */
+.text-container{
+    border: solid rgba(255, 191, 128, 1) 1pt;
+    border-radius: 3px;
+    background-color: rgba(255, 191, 128, 0.3);
+    z-index: 100;
+}
+.text-title{
+    font-size: 12pt;
+    font-weight: bold;
+    padding: 0px 3px;
+    margin: 1px 1px;
+}
+.text-content{
+    padding: 0px 3px;
+    margin: 1px 1px;
+}

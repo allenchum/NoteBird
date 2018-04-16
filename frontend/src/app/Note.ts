@@ -6,9 +6,15 @@ export class Note{
     constructor(){
 
     }
+
+    
     title:string;
     imageList: NoteImage [];
     pinList: NotePin[];
-    tags: string[];
-    
+    tagsList: string[];
+    userID: number;
+    noteID: number;
+    status: string;
+
+
 }

@@ -403,7 +403,7 @@ class NoteAndPinRouter {
         })
       }).then(() => {
         // create imageListArray for object
-        let tagQuery = knex.select("*").from("tags").where("noteID", '=', req.params.note);
+        let tagQuery = knex.select("*").from("tags").where("noteID", '=', req.params.noteID);
         return tagQuery.then((rows) => {
           for (let i = 0; i < rows.length; i++) {
             tagListArray.push(rows[i].notetags)

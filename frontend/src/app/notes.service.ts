@@ -28,13 +28,22 @@ export class NotesService {
 
     // not yet called in component, this is to get a specific note.
     // need to pass in noteID ${id} in link.
-    getSpecificNote(id){
+    getNoteByID(id){
         // For Authentication
         let headers = new HttpHeaders({ 'Authorization': 'Bearer ' + this.authService.token });
         let options = {headers:headers};
         return this.http.get(`${environment.apiServer}/api/noteAndPin/note/${id}`, options).map((res:any)=>{
           return res.map(res => res);
         });
+    }
+
+    getOthersNoteByID(userID,noteID){
+        // For Authentication
+        let headers = new HttpHeaders({ 'Authorization': 'Bearer ' + this.authService.token });
+        let options = {headers:headers};
+        console.log(userID,noteID);
+        return this.http.get(`${environment.apiServer}/api/noteAndPin/user/${userID}/note/${noteID}`, options)
+        
     }
 
 
