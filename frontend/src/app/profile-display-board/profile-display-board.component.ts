@@ -19,8 +19,15 @@ export class ProfileDisplayBoardComponent implements OnInit {
   private searchSelector:string = "title";
   private Notes:any;
 
+  
+
+  group = {
+    name:"English",
+    elements: [{title:"ABC",author:"allen"},{title:"DEF",author:"allen"},{title:"HJK",author:"allen"},{title:"UIO",author:"allen"},{title:"OPL",author:"gordan"},{title:"NMB",author:"gordan"},{title:"QWE",author:"gordan"},{title:"BVC",author:"gordan"},{title:"QSA",author:"tommy"},{title:"TYE",author:"tommy"}]
+  };
 
   notesObservable: Observable<any>
+  notesNormal: any
 
   constructor(private http: HttpClient, private authService: AuthService, private notesService:NotesService) {
 

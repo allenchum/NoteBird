@@ -22,6 +22,7 @@ import { ProfileControlPanelComponent } from './profile-control-panel/profile-co
 import { ProfileDisplayBoardComponent } from './profile-display-board/profile-display-board.component';
 import { ExplorePageComponent } from './explore-page/explore-page.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
+import { DisplayPageComponent } from './display-page/display-page.component';
 
 // Import Services
 import { NoteImageService } from './note-image.service';
@@ -40,7 +41,7 @@ import { NoteInitService } from './note-init.service';
 
 // Import Pipe
 import { SearchFilterPipe } from './search-filter.pipe';
-import { DisplayPageComponent } from './display-page/display-page.component';
+
 
 
 
@@ -82,8 +83,8 @@ import { DisplayPageComponent } from './display-page/display-page.component';
     FilterService,
     ExploreService,
     NotesService,
-    UserInformService,
     UploadService,
+    UserInformService,
     NoteInitService
   ],
   bootstrap: [AppComponent]

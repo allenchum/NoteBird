@@ -109,7 +109,6 @@ export class CreateBoardComponent implements OnInit {
       this.pinCollapsed = true;
       this.publishCollapsed = true;
       this.tagsCollapsed = true;
-      
       //switch service to image
       this.switchService("image");
     }
@@ -156,9 +155,8 @@ export class CreateBoardComponent implements OnInit {
       "title": this.note.title,
       "pinList": this.pinList,
       "imageList": this.imageList,
-      //"tag": this.tagList
+      "tagsList": this.tagsList,
     };
-    console.log("current", this.noteID);
     if(this.pinList.length != 0 && this.imageList.length != 0){
       this.notePinService.getNotePins(pinNoteObj).subscribe((res:any) =>{
         if(confirm(`Note is saved as ${res.status} with note ID ${res.noteID}`)){
@@ -166,6 +164,7 @@ export class CreateBoardComponent implements OnInit {
           this.noteID = null;
           this.pinList = [];
           this.imageList = [];
+          this.tagsList = [];
           this.status = "init";
           this.router.navigate(['profile'])
         } else {
@@ -180,11 +179,12 @@ export class CreateBoardComponent implements OnInit {
   savePublish() {
     const pinNoteObj = {
       "userID": this.userID,
+      "noteID": this.noteID,
       "status": "publish",
       "title": this.note.title,
       "pinList": this.pinList,
       "imageList": this.imageList,
-      //      "tag": this.tagList
+      "tagsList": this.tagsList,
     };
     if(this.pinList.length != 0 && this.imageList.length != 0){
         this.notePinService.getNotePins(pinNoteObj).subscribe((res:any) =>{
@@ -193,6 +193,7 @@ export class CreateBoardComponent implements OnInit {
             this.noteID = null;
             this.pinList = [];
             this.imageList = [];
+            this.tagsList = [];
             this.status = "init";
             this.router.navigate(['profile'])
           } else {
@@ -208,9 +209,8 @@ export class CreateBoardComponent implements OnInit {
     if(this.newTag){
     this.tagsList.push(this.newTag);
     this.newTag = "";
+    console.log(this.tagsList)
     }
   }
-  
-
 
 }
