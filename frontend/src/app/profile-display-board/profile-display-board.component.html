@@ -24,13 +24,15 @@
   <div class="items-contianer" *ngIf="Notes">
     <a *ngFor="let item of Notes | searchFilter:term:searchSelector" class="single-item" routerLink="/display/user/{{item.userID}}/note/{{item.id}}">
       <div class="snapshot">
-        <img src={{item.imagelink}}>
+        <img src={{item.imagelink[0]}}>
       </div>
       <div class="meta">
         <h5 class="item-title">{{item.note_title}}</h5>
         <div class="item-author">
           <h6>By {{item.firstName}} {{item.lastName}} </h6>
-          <h6>tags</h6>
+          <div>
+            <span class="tag" *ngFor="let tag of item.tags">#{{tag}} </span>
+          </div>
         </div>
       </div>
     </a>
