@@ -64,20 +64,22 @@ class NoteAndPinRouter {
                 angle: req.body.pinList[i].angle,
                 pt_style_Height: req.body.pinList[i].style.height,
                 pt_style_Width: req.body.pinList[i].style.width,
-                style_backgroud_Color: req.body.pinList[i].style["background-color"],
+                style_background_color: req.body.pinList[i].style["background-color"],
                 style_position: req.body.pinList[i].style.position,
                 pt_style_Top: req.body.pinList[i].style.top,
                 pt_style_Left: req.body.pinList[i].style.left,
                 style_transform: req.body.pinList[i].style.transform,
                 style_transform_origin: req.body.pinList[i].style["transform-origin"],
-                style_textboxUpright: req.body.pinList[i].textboxUpright,
-                style_textPosition: req.body.pinList[i].textboxPosition,
+                style_textboxupright_transform: req.body.pinList[i].textboxUpright.transform,
+                style_textboxposition_top: req.body.pinList[i].textboxPosition.top,
+                style_textboxposition_left: req.body.pinList[i].textboxPosition.left,
                 noteID: ids[0],
               })
             };
             return knex.batchInsert("points", pinListArrayRow, batchSize)
               .transacting(trx).returning("noteID")
           }).then((ids) => {
+            console.log(req.body.tagsList)
             if (req.body.tagsList.length > 0) {
 
               const tagsListArray = [];
@@ -108,23 +110,28 @@ class NoteAndPinRouter {
 
     } else { // delete all entries and update tables
       // delete first
+      console.log('noteId is, ', req.body.noteID);
       return knex.transaction((trx) => {
         return knex("notesimage").transacting(trx).where("noteID", req.body.noteID).del()
           .then(() => knex("points").where("noteID", req.body.noteID).del()
             .transacting(trx)
           ).then(() => {
-            let query = knex.select("*").from("tags").where("noteID", req.body.noteID);
+            let query = knex.select("*").from("tags").where("noteID", "=", req.body.noteID);
             return query.then((rows) => {
+              console.log('rows of tag is, ', rows, rows.length);
               if (rows.length > 0) {
                 return knex("tags").where("noteID", req.body.noteID).del()
                   .transacting(trx)
               } else {
-                return knex.transacting(trx);
+                return ;
               }
             })
-          }).then(() => knex("notes").where("id", req.body.noteID).del()
+          }).then(() => {
+            console.log("catch here?")
+            knex("notes").where("id", req.body.noteID).del()
             .transacting(trx)
             //update
+          }
           ).then(() => {
             return knex.insert({
               note_title: req.body.title,
@@ -175,14 +182,15 @@ class NoteAndPinRouter {
                 angle: req.body.pinList[i].angle,
                 pt_style_Height: req.body.pinList[i].style.height,
                 pt_style_Width: req.body.pinList[i].style.width,
-                style_backgroud_Color: req.body.pinList[i].style["background-color"],
+                style_background_color: req.body.pinList[i].style["background-color"],
                 style_position: req.body.pinList[i].style.position,
                 pt_style_Top: req.body.pinList[i].style.top,
                 pt_style_Left: req.body.pinList[i].style.left,
                 style_transform: req.body.pinList[i].style.transform,
                 style_transform_origin: req.body.pinList[i].style["transform-origin"],
-                style_textboxUpright: req.body.pinList[i].textboxUpright,
-                style_textPosition: req.body.pinList[i].textboxPosition,
+                style_textboxupright_transform: req.body.pinList[i].textboxUpright.transform,
+                style_textboxposition_top: req.body.pinList[i].textboxPosition.top,
+                style_textboxposition_left: req.body.pinList[i].textboxPosition.left,
                 noteID: ids[0],
               })
             };
@@ -293,15 +301,15 @@ class NoteAndPinRouter {
             style: {
               height: rows[i].pt_style_Height,
               width: rows[i].pt_style_Width,
-              ['backgroud-color']: rows[i].style_background_Color,
+              ['background-color']: rows[i].style_background_Color,
               position: rows[i].style_position,
               top: rows[i].pt_style_Top,
               left: rows[i].pt_style_Left,
               transform: rows[i].style_transform,
-              ['transform-origin']: rows[i].style_origin,
+              ['transform-origin']: rows[i].style_transform_origin,
             },
-            textboxUpright: rows[i].style_textboxUpright,
-            textboxPosition: rows[i].style_textPosition
+            textboxUpright: {transform: rows[i].style_textboxupright_transform},
+            textboxPosition: {top: rows[i].style_textboxposition_top, left: rows[i].style_textboxposition_left}
           })
         }
       }).then(() => {
@@ -376,25 +384,25 @@ class NoteAndPinRouter {
         return pinQuery.then((rows) => {
           for (let i = 0; i < rows.length; i++) {
             pinListArray.push({
-              p1: [rows[i].p1_0_, rows[i].p1_1_],
-              dragging: rows[i].pt_dragging,
-              title: rows[i].title,
-              content: rows[i].content,
-              p2: [rows[i].p2_0_, rows[i].p2_1_],
-              length: rows[i].length,
-              angle: rows[i].angle,
+              p1: [rows[i].p1_0_, rows[i].p1_1_], //
+              dragging: rows[i].pt_dragging, //
+              title: rows[i].title, //
+              content: rows[i].content, //
+              p2: [rows[i].p2_0_, rows[i].p2_1_],//
+              length: rows[i].length, //
+              angle: rows[i].angle, //
               style: {
-                height: rows[i].pt_style_Height,
-                width: rows[i].pt_style_Width,
-                ['backgroud-color']: rows[i].style_background_Color,
-                position: rows[i].style_position,
-                top: rows[i].pt_style_Top,
-                left: rows[i].pt_style_Left,
-                transform: rows[i].style_transform,
-                ['transform-origin']: rows[i].style_origin,
+                height: rows[i].pt_style_Height, //
+                width: rows[i].pt_style_Width, //
+                ['background-color']: rows[i].style_background_color, //
+                position: rows[i].style_position, //
+                top: rows[i].pt_style_Top, //
+                left: rows[i].pt_style_Left, //
+                transform: rows[i].style_transform, //
+                ['transform-origin']: rows[i].style_transform_origin, //
               },
-              textboxUpright: rows[i].style_textboxUpright,
-              textboxPosition: rows[i].style_textPosition
+              textboxUpright: {transform: rows[i].style_textboxupright_transform},
+              textboxPosition: {top: rows[i].style_textboxposition_top, left: rows[i].style_textboxposition_left}
             })
           }
         }).then(() => {
@@ -403,16 +411,16 @@ class NoteAndPinRouter {
           return imageQuery.then((rows) => {
             for (let i = 0; i < rows.length; i++) {
               imageListArray.push({
-                coords: [rows[i].coords_0, rows[i].coords_1],
-                dragging: rows[i].dragging,
-                offs: [rows[i].offs_0, rows[i].offs_1],
-                url: rows[i].imageurl,
+                coords: [rows[i].coords_0, rows[i].coords_1], //
+                dragging: rows[i].dragging, //
+                offs: [rows[i].offs_0, rows[i].offs_1], //
+                url: rows[i].imageurl, //
                 style: {
-                  top: rows[i].style_top,
-                  left: rows[i].style_left,
-                  height: rows[i].style_height,
-                  width: rows[i].style_width,
-                  border: rows[i].style_border,
+                  top: rows[i].style_top, //
+                  left: rows[i].style_left, //
+                  height: rows[i].style_height, //
+                  width: rows[i].style_width, //
+                  border: rows[i].style_border, //
                 },
               })
             }
