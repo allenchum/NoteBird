@@ -33,6 +33,23 @@
     border-bottom-left-radius: 5pt;
     padding: 2px 8px;
 }
+#tags-panel .tags-input{
+   display: flex; 
+   flex-flow:row wrap; 
+}
+#tags-panel ul{
+    width: 100%;
+    padding: 0;
+}
+#tags-panel li{
+    list-style-type:none; 
+    display: inline-block;
+    margin: 3px;
+    padding: 3px;
+    background-color: rgba(0, 128, 0, 0.5);
+    border: transparent ;
+    border-radius: 3px;
+}
 
 
 .spinner {

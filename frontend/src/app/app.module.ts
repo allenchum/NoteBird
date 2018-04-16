@@ -36,6 +36,7 @@ import { UploadService } from './image-upload.service';
 import { ExploreService } from './explore.service';
 import { UserInformService } from './user-inform.service';
 
+
 // Import Pipe
 import { SearchFilterPipe } from './search-filter.pipe';
 
@@ -76,7 +77,8 @@ import { SearchFilterPipe } from './search-filter.pipe';
     FilterService,
     ExploreService,
     NotesService,
-    UploadService
+    UploadService,
+    UserInformService
   ],
   bootstrap: [AppComponent]
 })

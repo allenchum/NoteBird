@@ -14,9 +14,11 @@
           <h3>Note</h3>
         </div>
         <div class="panel-collapse" [ngbCollapse]="noteCollapsed">
-          <label><strong>Name of Note</strong></label>
+          <label>
+            <strong>Name of Note</strong>
+          </label>
           <br/>
-          <input type="text" [(ngModel)]="note.name">
+          <input type="text" name="note-name" [(ngModel)]="note.name">
         </div>
       </div>
 
@@ -40,9 +42,28 @@
           <i class="fas fa-thumbtack panel-icon"></i>
           <h3>Pins</h3>
         </div>
-        <div class="panel-collapse" [ngbCollapse] ="pinCollapsed" >
+        <div class="panel-collapse" [ngbCollapse]="pinCollapsed">
           <button class="btn yellow" id="add-pin">Add Pin</button>
           <app-text-editor [pin]="selectedPin"></app-text-editor>
+        </div>
+      </div>
+
+      <!-- Tags -->
+      <div id="tags-panel" class="panel">
+        <div class="panel-head" (click)="panelActive('tags')">
+          <i class="fas fa-tags"></i>
+          <h3>Tags</h3>
+        </div>
+        <div class="panel-collapse" [ngbCollapse]="tagsCollapsed">
+          <div class="tags-input">
+            <input type="text" size="15" name="tag" [(ngModel)]="newTag">
+            <input type="submit" id="add-tag" value="Add Tag" (click)="addNewTag()">
+          </div>
+          <div class="tags-container" *ngIf="tagsList" >
+            <ul >
+              <li *ngFor="let tag of tagsList">#{{tag}}</li>
+            </ul>
+          </div>
         </div>
       </div>
 

@@ -31,15 +31,16 @@ export class CreateBoardComponent implements OnInit {
   userID: string = null;
   private imageList = this.noteImageService.imageList;
   private pinList = this.notePinService.pinList;
-  //  private tagList =
-  private selectedPin: NotePin;
+  private tagsList: string[]=[];
+  private newTag: string;
+  private selectedPin:NotePin;
   private currentService;
-
-  noteCollapsed: boolean = false;
-  imageCollapsed: boolean = true;
-  pinCollapsed: boolean = true;
-  publishCollapsed: boolean = true;
-  note = { "name": "League of Leagends" };
+  noteCollapsed:boolean = false;
+  imageCollapsed:boolean = true;
+  pinCollapsed:boolean = true;
+  publishCollapsed:boolean = true;
+  tagsCollapsed:boolean = true;
+  note={"name":"League of Leagends"};
   noteID: number = null;
   status = "init";
 
@@ -92,12 +93,14 @@ export class CreateBoardComponent implements OnInit {
       this.imageCollapsed = true;
       this.pinCollapsed = true;
       this.publishCollapsed = true;
+      this.tagsCollapsed = true;
     }
     if (panel == 'image') {
       this.noteCollapsed = true;
       this.imageCollapsed = false;
       this.pinCollapsed = true;
       this.publishCollapsed = true;
+      this.tagsCollapsed = true;
 
       //switch service to image
       this.switchService("image");
@@ -107,6 +110,7 @@ export class CreateBoardComponent implements OnInit {
       this.imageCollapsed = true;
       this.pinCollapsed = false;
       this.publishCollapsed = true;
+      this.tagsCollapsed = true;
 
       //switch service to pin
       this.switchService("pin");
@@ -116,6 +120,14 @@ export class CreateBoardComponent implements OnInit {
       this.imageCollapsed = true;
       this.pinCollapsed = true;
       this.publishCollapsed = false;
+      this.tagsCollapsed = true;
+    }
+    if(panel=="tags"){
+      this.noteCollapsed = true;
+      this.imageCollapsed = true;
+      this.pinCollapsed = true;
+      this.publishCollapsed = true;
+      this.tagsCollapsed = false;
     }
   }
 
@@ -132,9 +144,8 @@ export class CreateBoardComponent implements OnInit {
       "title": this.note.name,
       "pinList": this.pinList,
       "imageList": this.imageList,
-      //"tag": this.tagList
+      "tagsList": this.tagsList,
     };
-    console.log("current", this.noteID);
     if(this.pinList.length != 0 && this.imageList.length != 0){
       this.notePinService.getNotePins(pinNoteObj).subscribe((res:any) =>{
         if(confirm(`Note is saved as ${res.status} with note ID ${res.noteID}`)){
@@ -142,6 +153,7 @@ export class CreateBoardComponent implements OnInit {
           this.noteID = null;
           this.pinList = [];
           this.imageList = [];
+          this.tagsList = [];
           this.status = "init";
           this.router.navigate(['profile'])
         } else {
@@ -156,11 +168,12 @@ export class CreateBoardComponent implements OnInit {
   savePublish() {
     const pinNoteObj = {
       "userID": this.userID,
+      "noteID": this.noteID,
       "status": "publish",
       "title": this.note.name,
       "pinList": this.pinList,
       "imageList": this.imageList,
-      //      "tag": this.tagList
+      "tagsList": this.tagsList,
     };
     if(this.pinList.length != 0 && this.imageList.length != 0){
         this.notePinService.getNotePins(pinNoteObj).subscribe((res:any) =>{
@@ -169,6 +182,7 @@ export class CreateBoardComponent implements OnInit {
             this.noteID = null;
             this.pinList = [];
             this.imageList = [];
+            this.tagsList = [];
             this.status = "init";
             this.router.navigate(['profile'])
           } else {
@@ -177,6 +191,14 @@ export class CreateBoardComponent implements OnInit {
         });
     } else {
       alert("Either no PIN or IMAGE is inserted! Note cannot be published.")
+    }
+  }
+
+  addNewTag(){
+    if(this.newTag){
+    this.tagsList.push(this.newTag);
+    this.newTag = "";
+    console.log(this.tagsList)
     }
   }
 

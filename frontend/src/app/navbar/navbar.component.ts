@@ -1,51 +1,51 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Component, OnInit } from '@angular/core';
-import { FacebookAuthService } from '../facebook-auth.service';
-import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
-import { environment } from '../../environments/environment';
+import { Component, OnInit } from "@angular/core";
+import { FacebookAuthService } from "../facebook-auth.service";
+import { Observable } from "rxjs";
+import { Router } from "@angular/router";
+import { AuthService } from "../auth.service";
+import { environment } from "../../environments/environment";
 // double check
-import { FilterService } from '../filter.service';
-import { filter } from 'rxjs/operator/filter';
+import { FilterService } from "../filter.service";
+import { filter } from "rxjs/operator/filter";
 
+import { UserInformService } from "../user-inform.service";
+
+import { AfterViewChecked } from "@angular/core";
 
 @Component({
-  selector: 'app-navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css']
+  selector: "app-navbar",
+  templateUrl: "./navbar.component.html",
+  styleUrls: ["./navbar.component.css"]
 })
 export class NavbarComponent implements OnInit {
   token: string = null;
   userID: string = null;
-  getuser: object;
+  private User: any;
 
-  constructor(private http:HttpClient,
-              private authService:AuthService,
-              private router:Router) {
-              this.userID = localStorage.getItem('userID');
-              this.token = localStorage.getItem('myToken')
-             }
-
-  ngOnInit() {
-
+  constructor(
+    private http: HttpClient,
+    private authService: AuthService,
+    private router: Router,
+    private userInformService: UserInformService
+  ) {
+    this.userID = localStorage.getItem("userID");
+    this.token = localStorage.getItem("myToken");
   }
 
-  isLoggedIn() {
-    return this.token = null;
-  }
+  ngOnInit() {}
 
-  getUserInfo(){
-    // For Authentication
-    // let headers = new HttpHeaders({ 'Authorization': 'Bearer ' + this.authService.token });
-    // let options = {headers:headers};
-    // return this.http.post(`${environment.apiServer}/api/getUserInfo`, options).map((res:any)=>{
-    //   return res.map(res);
-    // });
-  }
+  // ngAfterViewChecked() {
+  //   if (this.token) {
+  //     this.userInformService.getUserInfo().subscribe(res => {
+  //       this.User = res[0];
+  //       console.log(this.User);
+  //     });
+  //   }
+  // }
 
-  onLogout(){
+  onLogout() {
     this.authService.logOut();
-    this.router.navigate(['/'])
+    this.router.navigate(["/"]);
   }
 }
