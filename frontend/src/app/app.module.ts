@@ -22,6 +22,7 @@ import { ProfileControlPanelComponent } from './profile-control-panel/profile-co
 import { ProfileDisplayBoardComponent } from './profile-display-board/profile-display-board.component';
 import { ExplorePageComponent } from './explore-page/explore-page.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
+import { DisplayPageComponent } from './display-page/display-page.component';
 
 // Import Services
 import { NoteImageService } from './note-image.service';
@@ -31,14 +32,18 @@ import { AuthGuard } from './auth-guard.service';
 import { OAuthService } from 'angular2-oauth2/oauth-service';
 import { FacebookAuthService } from './facebook-auth.service';
 import { FilterService } from './filter.service';
-import { NotesService } from './note.service';
+import { NotesService } from './notes.service';
 import { UploadService } from './image-upload.service';
 import { ExploreService } from './explore.service';
 import { UserInformService } from './user-inform.service';
+import { NoteInitService } from './note-init.service';
 
 
 // Import Pipe
 import { SearchFilterPipe } from './search-filter.pipe';
+
+
+
 
 @NgModule({
   declarations: [
@@ -57,6 +62,7 @@ import { SearchFilterPipe } from './search-filter.pipe';
     ExplorePageComponent,
     SearchFilterPipe,
     SearchBarComponent,
+    DisplayPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,7 +84,8 @@ import { SearchFilterPipe } from './search-filter.pipe';
     ExploreService,
     NotesService,
     UploadService,
-    UserInformService
+    UserInformService,
+    NoteInitService
   ],
   bootstrap: [AppComponent]
 })

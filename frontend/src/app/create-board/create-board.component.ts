@@ -10,6 +10,8 @@ import { Observable } from 'rxjs';
 import { NotePinService } from '../note-pin.service';
 import { UploadService } from '../image-upload.service'
 import { NotePin } from '../NotePin';
+import { NoteInitService } from '../note-init.service';
+
 
 @Component({
   selector: 'app-create-board',
@@ -21,6 +23,7 @@ export class CreateBoardComponent implements OnInit {
 
   constructor(private noteImageService: NoteImageService,
     private notePinService: NotePinService,
+    private noteInitService: NoteInitService,
     private http: HttpClient,
     private authService: AuthService,
     private uploadService: UploadService,
@@ -28,6 +31,7 @@ export class CreateBoardComponent implements OnInit {
     this.userID = localStorage.getItem('userID');
   }
 
+//Set up variables
   userID: string = null;
   private imageList = this.noteImageService.imageList;
   private pinList = this.notePinService.pinList;
@@ -40,12 +44,12 @@ export class CreateBoardComponent implements OnInit {
   pinCollapsed:boolean = true;
   publishCollapsed:boolean = true;
   tagsCollapsed:boolean = true;
-  note={"name":"League of Leagends"};
+  note={"title":"Enter the title here"};
   noteID: number = null;
   status = "init";
 
   ngOnInit() {
-    this.currentService = this.notePinService;
+    this.currentService = this.noteInitService;
   }
 
   switchService(s: string) {
@@ -53,7 +57,9 @@ export class CreateBoardComponent implements OnInit {
       this.currentService = this.notePinService;
     } else if (s == "image") {
       this.currentService = this.noteImageService;
-    }
+    } else{
+      this.currentService = this.noteInitService;
+    } 
   }
 
   onSelect(pin: NotePin): void {
@@ -94,6 +100,8 @@ export class CreateBoardComponent implements OnInit {
       this.pinCollapsed = true;
       this.publishCollapsed = true;
       this.tagsCollapsed = true;
+
+      this.switchService("");
     }
     if (panel == 'image') {
       this.noteCollapsed = true;
@@ -101,7 +109,6 @@ export class CreateBoardComponent implements OnInit {
       this.pinCollapsed = true;
       this.publishCollapsed = true;
       this.tagsCollapsed = true;
-
       //switch service to image
       this.switchService("image");
     }
@@ -121,6 +128,8 @@ export class CreateBoardComponent implements OnInit {
       this.pinCollapsed = true;
       this.publishCollapsed = false;
       this.tagsCollapsed = true;
+
+      this.switchService("");
     }
     if(panel=="tags"){
       this.noteCollapsed = true;
@@ -128,6 +137,8 @@ export class CreateBoardComponent implements OnInit {
       this.pinCollapsed = true;
       this.publishCollapsed = true;
       this.tagsCollapsed = false;
+
+      this.switchService("");
     }
   }
 
@@ -141,7 +152,7 @@ export class CreateBoardComponent implements OnInit {
       "userID": this.userID,
       "noteID": this.noteID,
       "status": "draft",
-      "title": this.note.name,
+      "title": this.note.title,
       "pinList": this.pinList,
       "imageList": this.imageList,
       "tagsList": this.tagsList,
@@ -170,7 +181,7 @@ export class CreateBoardComponent implements OnInit {
       "userID": this.userID,
       "noteID": this.noteID,
       "status": "publish",
-      "title": this.note.name,
+      "title": this.note.title,
       "pinList": this.pinList,
       "imageList": this.imageList,
       "tagsList": this.tagsList,

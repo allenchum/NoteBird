@@ -1,7 +1,7 @@
 /* Main */
 #create-board-container{
     position: relative;
-    top: 100px;
+    top: 110px;
     padding-top: 20px;
 }
 
@@ -46,7 +46,7 @@
     display: inline-block;
     margin: 3px;
     padding: 3px;
-    background-color: rgba(0, 128, 0, 0.5);
+    background-color: rgba(0, 128, 0, 0.2);
     border: transparent ;
     border-radius: 3px;
 }
@@ -118,7 +118,7 @@
     -moz-user-select: none;
     -ms-user-select: none;
 }
-#note-name{
+#note-title{
     position: absolute;
     top:0;
     width: 100%;

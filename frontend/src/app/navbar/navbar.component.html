@@ -15,9 +15,9 @@
         <li class="nav-item mx-0 mx-lg-1">
           <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" routerLink="/explore" routerLinkActive="active">EXPLORE</a>
         </li>
-        <li class="nav-item mx-0 mx-lg-1">
+        <!-- <li class="nav-item mx-0 mx-lg-1">
           <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">SAVE BOARD</a>
-        </li>
+        </li> -->
         <li class="nav-item mx-0 mx-lg-1">
           <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" (click)="onLogout()">Log Out</a>
         </li>
@@ -25,7 +25,7 @@
     </div>
     <div class="user-icon zoom-in-1">
       <a routerLink="/profile">
-        <img *ngIf="User" src={{User.profPicLink}}>
+        <img *ngIf="User | async; let user" src="{{user.profPicLink}}">
       </a>
     </div>
   </div>
