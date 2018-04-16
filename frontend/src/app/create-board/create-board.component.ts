@@ -207,7 +207,7 @@ export class CreateBoardComponent implements OnInit {
 
   addNewTag(){
     if(this.newTag){
-    this.tagsList.push(this.newTag);
+    this.tagsList.push(this.newTag.replace(/\s/g,''));
     this.newTag = "";
     console.log(this.tagsList)
     }
