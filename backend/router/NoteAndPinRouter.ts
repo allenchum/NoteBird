@@ -5,7 +5,7 @@ class NoteAndPinRouter {
   router = () => {
     const router = express.Router();
     router.post('/', this.writeNPs); // wrting and updating the note from create route
-    router.get('/allUser', this.allNotes) // return all notes of all users
+    router.get('/allUsers/allNotes', this.allNotes) // return all notes of all users
     router.get('/userNote', this.userNotes) // return first match of each notes of current user
     router.get('/note/:id', this.getNPs) // current user's specific note with id
     router.get('/user/:userID/note/:noteID', this.getUserNote) // other user's spcific note with id
