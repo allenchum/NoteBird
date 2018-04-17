@@ -9,6 +9,9 @@ export class NoteImage {
   offs: number[] = [0,0];
 
   select(e) {
+    console.log("e", e)
+    // e.path[0].clientHeight
+    // e.path[0].clientWidth
     var coords = this.getCoords(e); //getCoords returns clientX and clientY of the event
     this.offs = [
       coords[0] - parseInt(this.style["left"]) / 100 * window.innerWidth,
@@ -30,16 +33,18 @@ export class NoteImage {
     var x = coords[0] - this.offs[0];
     var y = coords[1] - this.offs[1];
     this.setData(x, y);
-    console.log(this.style)
   }
+
   drop(e) {
     this.dragging = false;
     this.style["border"] = "none";
   }
+
   setData(x, y) {
     this.style["left"] = x / window.innerWidth * 100 + "%";
     this.style["top"] = y / window.innerHeight * 100 + "%";
   }
+
   getCoords(e) {
     return [(e.touches || [e])[0].clientX, (e.touches || [e])[0].clientY];
   }
