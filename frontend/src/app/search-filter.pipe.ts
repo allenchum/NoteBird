@@ -13,17 +13,25 @@ export class SearchFilterPipe implements PipeTransform {
       });
     } else if (selector == "author") {
       return notes.filter(function(note) {
-        return note.author.toLowerCase().includes(term.toLowerCase());
+        let includeFirstName = note.firstName
+          .toLowerCase()
+          .includes(term.toLowerCase());
+        let includeLastName = note.lastName
+          .toLowerCase()
+          .includes(term.toLowerCase());
+        return includeFirstName || includeLastName;
       });
     } else if (selector == "tags") {
       return notes.filter(function(note) {
         let haveTag: boolean = false;
-        for (let i = 0; i < note.tags.length; i++) {
-          if (note.tags[i].toLowerCase().includes(term.toLowerCase())) {
-            haveTag = true;
-            i = note.tags.length;
-          } else {
-            haveTag = false;
+        if (note.tags) {
+          for (let i = 0; i < note.tags.length; i++) {
+            if (note.tags[i].toLowerCase().includes(term.toLowerCase())) {
+              haveTag = true;
+              i = note.tags.length;
+            } else {
+              haveTag = false;
+            }
           }
         }
         return haveTag;

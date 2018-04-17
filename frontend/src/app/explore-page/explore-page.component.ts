@@ -21,10 +21,9 @@ export class ExplorePageComponent implements OnInit {
 
   ngOnInit() {
     this.notesObservable = this.notesService.getNotes();
-
-    this.notesService.getNotes().subscribe((notes)=>{
+    this.notesService.getUniversalNotes().subscribe((notes)=>{
       this.Notes = notes;
-      console.log("FE:", notes)
+      console.log("FE:", notes[1].tags)
     });
   }
 
@@ -33,5 +32,6 @@ export class ExplorePageComponent implements OnInit {
   searchByChange(args){
     let val = args.target.value;
     this.searchSelector = val;
+    console.log(this.searchSelector)
   }
 }
