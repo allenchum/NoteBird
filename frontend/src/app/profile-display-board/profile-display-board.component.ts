@@ -19,7 +19,7 @@ export class ProfileDisplayBoardComponent implements OnInit {
   private searchSelector:string = "title";
   private Notes:any;
 
-  
+
 
   group = {
     name:"English",
@@ -41,7 +41,7 @@ export class ProfileDisplayBoardComponent implements OnInit {
       console.log("FE:", notes)
     });
   }
-  
+
   searchByChange(args){
     let val = args.target.value;
     this.searchSelector = val;

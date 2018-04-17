@@ -59,7 +59,7 @@ export class CreateBoardComponent implements OnInit {
       this.currentService = this.noteImageService;
     } else{
       this.currentService = this.noteInitService;
-    } 
+    }
   }
 
   onSelect(pin: NotePin): void {
@@ -186,6 +186,8 @@ export class CreateBoardComponent implements OnInit {
       "imageList": this.imageList,
       "tagsList": this.tagsList,
     };
+    console.log(this.pinList)
+    console.log(this.imageList)
     if(this.pinList.length != 0 && this.imageList.length != 0){
         this.notePinService.getNotePins(pinNoteObj).subscribe((res:any) =>{
           if(confirm(`Note is saved as ${res.status} with note ID ${res.noteID}`)){
@@ -207,7 +209,7 @@ export class CreateBoardComponent implements OnInit {
 
   addNewTag(){
     if(this.newTag){
-    this.tagsList.push(this.newTag);
+    this.tagsList.push(this.newTag.replace(/\s/g,''));
     this.newTag = "";
     console.log(this.tagsList)
     }

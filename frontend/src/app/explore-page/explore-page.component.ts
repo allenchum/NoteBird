@@ -16,8 +16,8 @@ export class ExplorePageComponent implements OnInit {
 
 // limit the number of checkbox to only one. Return the search criteria.
 
-searchByChange(args){
-  let val = args.target.value;
-  this.searchSelector = val;
-}
+  searchByChange(args){
+    let val = args.target.value;
+    this.searchSelector = val;
+  }
 }

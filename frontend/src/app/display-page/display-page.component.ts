@@ -29,7 +29,7 @@ export class DisplayPageComponent implements OnInit {
        this.imageList = this.reqNote.imageList;
        this.pinList = this.reqNote.pinList;
        console.log(this.imageList)
-       console.log(this.pinList)
+       console.log("PinList:",this.pinList)
        //this.tagsList = this.reqNote.t
       }
     );

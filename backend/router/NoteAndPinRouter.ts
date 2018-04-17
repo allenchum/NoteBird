@@ -12,6 +12,7 @@ class NoteAndPinRouter {
     return router;
   }
 
+  //    router.post('/', this.writeNPs); // wrting and updating the note from create route
   private writeNPs = (req: express.Request, res: express.Response) => {
     if (req.body.noteID == null) { // first insert
       return knex.transaction((trx) => {
@@ -63,20 +64,22 @@ class NoteAndPinRouter {
                 angle: req.body.pinList[i].angle,
                 pt_style_Height: req.body.pinList[i].style.height,
                 pt_style_Width: req.body.pinList[i].style.width,
-                style_backgroud_Color: req.body.pinList[i].style["background-color"],
+                style_background_color: req.body.pinList[i].style["background-color"],
                 style_position: req.body.pinList[i].style.position,
                 pt_style_Top: req.body.pinList[i].style.top,
                 pt_style_Left: req.body.pinList[i].style.left,
                 style_transform: req.body.pinList[i].style.transform,
                 style_transform_origin: req.body.pinList[i].style["transform-origin"],
-                style_textboxUpright: req.body.pinList[i].textboxUpright,
-                style_textPosition: req.body.pinList[i].textboxPosition,
+                style_textboxupright_transform: req.body.pinList[i].textboxUpright.transform,
+                style_textboxposition_top: req.body.pinList[i].textboxPosition.top,
+                style_textboxposition_left: req.body.pinList[i].textboxPosition.left,
                 noteID: ids[0],
               })
             };
             return knex.batchInsert("points", pinListArrayRow, batchSize)
               .transacting(trx).returning("noteID")
           }).then((ids) => {
+            console.log(req.body.tagsList)
             if (req.body.tagsList.length > 0) {
 
               const tagsListArray = [];
@@ -107,23 +110,28 @@ class NoteAndPinRouter {
 
     } else { // delete all entries and update tables
       // delete first
+      console.log('noteId is, ', req.body.noteID);
       return knex.transaction((trx) => {
         return knex("notesimage").transacting(trx).where("noteID", req.body.noteID).del()
           .then(() => knex("points").where("noteID", req.body.noteID).del()
             .transacting(trx)
           ).then(() => {
-            let query = knex.select("*").from("tags").where("noteID", req.body.noteID);
+            let query = knex.select("*").from("tags").where("noteID", "=", req.body.noteID);
             return query.then((rows) => {
+              console.log('rows of tag is, ', rows, rows.length);
               if (rows.length > 0) {
                 return knex("tags").where("noteID", req.body.noteID).del()
                   .transacting(trx)
               } else {
-                return knex.transacting(trx);
+                return ;
               }
             })
-          }).then(() => knex("notes").where("id", req.body.noteID).del()
+          }).then(() => {
+            console.log("catch here?")
+            knex("notes").where("id", req.body.noteID).del()
             .transacting(trx)
             //update
+          }
           ).then(() => {
             return knex.insert({
               note_title: req.body.title,
@@ -174,14 +182,15 @@ class NoteAndPinRouter {
                 angle: req.body.pinList[i].angle,
                 pt_style_Height: req.body.pinList[i].style.height,
                 pt_style_Width: req.body.pinList[i].style.width,
-                style_backgroud_Color: req.body.pinList[i].style["background-color"],
+                style_background_color: req.body.pinList[i].style["background-color"],
                 style_position: req.body.pinList[i].style.position,
                 pt_style_Top: req.body.pinList[i].style.top,
                 pt_style_Left: req.body.pinList[i].style.left,
                 style_transform: req.body.pinList[i].style.transform,
                 style_transform_origin: req.body.pinList[i].style["transform-origin"],
-                style_textboxUpright: req.body.pinList[i].textboxUpright,
-                style_textPosition: req.body.pinList[i].textboxPosition,
+                style_textboxupright_transform: req.body.pinList[i].textboxUpright.transform,
+                style_textboxposition_top: req.body.pinList[i].textboxPosition.top,
+                style_textboxposition_left: req.body.pinList[i].textboxPosition.left,
                 noteID: ids[0],
               })
             };
@@ -220,26 +229,39 @@ class NoteAndPinRouter {
     }
   }
 
-
+  //    router.get('/allUser', this.allNotes) // return all notes of all users
   private allNotes = (req: express.Request, res: express.Response) => {
-    return knex.select("notes.id as noteID", "notes.created_at", "notes.status", "notes.note_title", "users.id as userID", "users.lastName", "users.firstName", "notesimage.imageurl")
+    return knex.select("notes.id as noteID", "users.firstName", "users.lastName", "users.id as userID", "t1.imagelinks", "t2.tags")
       .from("notes")
       .innerJoin("users", "notes.userID", "users.id")
-      .innerJoin("notesimage", "notes.id", "notesimage.noteID")
+      .innerJoin(knex.select("notes.id", knex.raw('array_agg(notesimage.imageurl) as imagelinks'))
+        .from("notes")
+        .innerJoin("notesimage", "notes.id", "notesimage.noteID")
+        .groupBy("notes.id")
+        .as("t1"), 'notes.id', 't1.id')
+      .leftJoin(knex.select("notes.id", knex.raw('array_agg(tags.notetags) as tags'))
+        .from("notes")
+        .innerJoin("tags", "notes.id", "tags.noteID")
+        .groupBy("notes.id")
+        .as("t2"), 'notes.id', 't2.id')
+      .groupBy("notes.id", "users.firstName", "users.lastName", "users.id", "t1.imagelinks", "t2.tags")
+      .orderBy("notes.id")
       .then((rows) => {
         res.json(rows)
       }).catch((err) => {
+        console.log(err)
         res.json(err)
       })
   }
 
+  //    router.get('/userNote', this.userNotes) // return first match of each notes of current user
   private userNotes = (req: express.Request, res: express.Response) => {
-    let query = knex.select("notes.id", "notes.created_at", "notes.userID", "notes.status", "notes.note_title", "users.firstName", "users.lastName", knex.raw('array_agg(notesimage.imageurl) as imagelink'), knex.raw('array_agg(tags.notetags) as tags'))
+    let query = knex.select("notes.id", "notes.created_at", "notes.userID", "notes.status", "notes.note_title", "users.lastName", "users.firstName", knex.raw('array_agg(notesimage.imageurl) as imagelink'), knex.raw('array_agg(tags.notetags) as tags'))
       .from("notes")
       .where("userID", '=', (req.user) ? req.user.id : null)
       .innerJoin("notesimage", "notes.id", "notesimage.noteID")
       .innerJoin("users", "notes.userID", "users.id")
-      .innerJoin("tags", "notes.id", "tags.noteID")
+      .leftJoin("tags", "notes.id", "tags.noteID")
       .groupBy("notes.id", "notes.created_at", "notes.userID", "notes.status", "notes.note_title", "users.firstName", "users.lastName")
     return query.then((rows) => {
       res.json(rows)
@@ -249,6 +271,7 @@ class NoteAndPinRouter {
     })
   }
 
+  //    router.get('/note/:id', this.getNPs) // current user's specific note with id
   private getNPs = (req: express.Request, res: express.Response) => {
     // should only return one note as it is bounded by ID
     let query = knex.select("*").from("notes").where({
@@ -275,18 +298,18 @@ class NoteAndPinRouter {
             p2: [rows[i].p2_0_, rows[i].p2_1_],
             length: rows[i].length,
             angle: rows[i].angle,
-            style: [{
+            style: {
               height: rows[i].pt_style_Height,
               width: rows[i].pt_style_Width,
-              ['backgroud-color']: rows[i].style_background_Color,
+              ['background-color']: rows[i].style_background_Color,
               position: rows[i].style_position,
               top: rows[i].pt_style_Top,
               left: rows[i].pt_style_Left,
               transform: rows[i].style_transform,
-              ['transform-origin']: rows[i].style_origin,
-            }],
-            textboxUpright: [rows[i].style_textboxUpright],
-            textboxPosition: [rows[i].style_textPosition]
+              ['transform-origin']: rows[i].style_transform_origin,
+            },
+            textboxUpright: {transform: rows[i].style_textboxupright_transform},
+            textboxPosition: {top: rows[i].style_textboxposition_top, left: rows[i].style_textboxposition_left}
           })
         }
       }).then(() => {
@@ -341,6 +364,7 @@ class NoteAndPinRouter {
       })
   }
 
+  //    router.get('/user/:userID/note/:noteID', this.getUserNote) // other user's spcific note with id
   private getUserNote = (req: express.Request, res: express.Response) => {
     let query = knex.select("*").from("notes").where({
       userID: req.params.userID,
@@ -348,85 +372,85 @@ class NoteAndPinRouter {
     })
       .innerJoin("notesimage", "notes.id", "notesimage.noteID");
     return query.then((rows) => {
-      if(rows.length >= 1 ){
+      if (rows.length >= 1) {
 
-      let pinListArray: any = [];
-      let imageListArray: any = [];
-      let tagListArray: any = [];
-      let specificNote: any = [];
+        let pinListArray: any = [];
+        let imageListArray: any = [];
+        let tagListArray: any = [];
+        let specificNote: any = [];
 
-      // create pinListArray for object
-      let pinQuery = knex.select("*").from("points").where("noteID", '=', req.params.noteID)
-      return pinQuery.then((rows) => {
-        for (let i = 0; i < rows.length; i++) {
-          pinListArray.push({
-            p1: [rows[i].p1_0_, rows[i].p1_1_],
-            dragging: rows[i].pt_dragging,
-            title: rows[i].title,
-            content: rows[i].content,
-            p2: [rows[i].p2_0_, rows[i].p2_1_],
-            length: rows[i].length,
-            angle: rows[i].angle,
-            style: [{
-              height: rows[i].pt_style_Height,
-              width: rows[i].pt_style_Width,
-              ['backgroud-color']: rows[i].style_background_Color,
-              position: rows[i].style_position,
-              top: rows[i].pt_style_Top,
-              left: rows[i].pt_style_Left,
-              transform: rows[i].style_transform,
-              ['transform-origin']: rows[i].style_origin,
-            }],
-            textboxUpright: [rows[i].style_textboxUpright],
-            textboxPosition: [rows[i].style_textPosition]
-          })
-        }
-      }).then(() => {
-        // create imageListArray for object
-        let imageQuery = knex.select("*").from("notesimage").where("noteID", '=', req.params.noteID);
-        return imageQuery.then((rows) => {
+        // create pinListArray for object
+        let pinQuery = knex.select("*").from("points").where("noteID", '=', req.params.noteID)
+        return pinQuery.then((rows) => {
           for (let i = 0; i < rows.length; i++) {
-            imageListArray.push({
-              coords: [rows[i].coords_0, rows[i].coords_1],
-              dragging: rows[i].dragging,
-              offs: [rows[i].offs_0, rows[i].offs_1],
-              url: rows[i].imageurl,
-              style: [{
-                top: rows[i].style_top,
-                left: rows[i].style_left,
-                height: rows[i].style_height,
-                width: rows[i].style_width,
-                border: rows[i].style_border,
-              }],
+            pinListArray.push({
+              p1: [rows[i].p1_0_, rows[i].p1_1_], //
+              dragging: rows[i].pt_dragging, //
+              title: rows[i].title, //
+              content: rows[i].content, //
+              p2: [rows[i].p2_0_, rows[i].p2_1_],//
+              length: rows[i].length, //
+              angle: rows[i].angle, //
+              style: {
+                height: rows[i].pt_style_Height, //
+                width: rows[i].pt_style_Width, //
+                ['background-color']: rows[i].style_background_color, //
+                position: rows[i].style_position, //
+                top: rows[i].pt_style_Top, //
+                left: rows[i].pt_style_Left, //
+                transform: rows[i].style_transform, //
+                ['transform-origin']: rows[i].style_transform_origin, //
+              },
+              textboxUpright: {transform: rows[i].style_textboxupright_transform},
+              textboxPosition: {top: rows[i].style_textboxposition_top, left: rows[i].style_textboxposition_left}
             })
           }
+        }).then(() => {
+          // create imageListArray for object
+          let imageQuery = knex.select("*").from("notesimage").where("noteID", '=', req.params.noteID);
+          return imageQuery.then((rows) => {
+            for (let i = 0; i < rows.length; i++) {
+              imageListArray.push({
+                coords: [rows[i].coords_0, rows[i].coords_1], //
+                dragging: rows[i].dragging, //
+                offs: [rows[i].offs_0, rows[i].offs_1], //
+                url: rows[i].imageurl, //
+                style: {
+                  top: rows[i].style_top, //
+                  left: rows[i].style_left, //
+                  height: rows[i].style_height, //
+                  width: rows[i].style_width, //
+                  border: rows[i].style_border, //
+                },
+              })
+            }
+          })
+        }).then(() => {
+          // create imageListArray for object
+          let tagQuery = knex.select("*").from("tags").where("noteID", '=', req.params.noteID);
+          return tagQuery.then((rows) => {
+            for (let i = 0; i < rows.length; i++) {
+              tagListArray.push(rows[i].notetags)
+            }
+          })
+        }).then(() => {
+          specificNote.push({
+            userID: rows[0].userID,
+            userFirstName: rows[0].firstName,
+            userLastName: rows[0].lastName,
+            userPic: rows[0].profPicLink,
+            status: rows[0].status,
+            title: rows[0].note_title,
+            //        description: rows[0].note_description,  // there's no such thing in object yet
+            pinList: pinListArray,
+            imageList: imageListArray,
+            tagsList: tagListArray
+          })
+          return specificNote;
         })
-      }).then(() => {
-        // create imageListArray for object
-        let tagQuery = knex.select("*").from("tags").where("noteID", '=', req.params.noteID);
-        return tagQuery.then((rows) => {
-          for (let i = 0; i < rows.length; i++) {
-            tagListArray.push(rows[i].notetags)
-          }
-        })
-      }).then(() => {
-        specificNote.push({
-          userID: rows[0].userID,
-          userFirstName: rows[0].firstName,
-          userLastName: rows[0].lastName,
-          userPic: rows[0].profPicLink,
-          status: rows[0].status,
-          title: rows[0].note_title,
-          //        description: rows[0].note_description,  // there's no such thing in object yet
-          pinList: pinListArray,
-          imageList: imageListArray,
-          tagsList: tagListArray
-        })
-        return specificNote;
-      })
-    } else{
-      return {};
-    }
+      } else {
+        return {};
+      }
     }).then((specificNote) => {
       res.json(specificNote)
     })

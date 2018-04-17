@@ -15,7 +15,6 @@ class LoginRouter {
   private loginFn = (req: express.Request, res: express.Response) => {
     if (req.body.access_token) {
       var accessToken = req.body.access_token;
-      console.log(accessToken)
       axios.get(`https://graph.facebook.com/me?access_token=${accessToken}&fields=id,name,email,gender,last_name,first_name,picture.width(960).height(960)`)
         .then((data) => {
           if (!data.data.error) {
@@ -27,7 +26,6 @@ class LoginRouter {
                   id: rows[0].id //use facebookID as payload
                 }
                 var token = jwt.encode(payload, config.jwtSecret);
-                console.log(token)
                 res.json({
                   token: token,
                   userID: rows[0].id,
