@@ -1,4 +1,32 @@
 <div id="display-container">
-  <div>
+  <div id='canvas-container'>
+    <div id='blackboard'>
+      <div id="note-title" *ngIf="reqNote" >{{reqNote.title}}</div>
+
+      <!-- Image Template -->
+      <div *ngIf="imageList" id="imageList" >
+        <div *ngFor='let image of imageList' id="imagers">
+          <div class="image-frame resizable" [ngStyle]="image.style[0]" >
+            <img draggable="false" src={{image.url}}>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pin Note Template -->
+      <div *ngIf="pinList" id="pinList">
+        <div *ngFor='let pin of pinList' id="pins" [class.selected]="pin === selectedPin">
+          <div class="pin-point" [ngStyle]="pin.style">
+            <div class="pin-dot">
+            </div>
+            <div class="pin-textbox" [ngStyle]="pin.textboxUpright">
+              <div class="text-container" [ngStyle]="pin.textboxPosition">
+                <p class="text-title">{{pin.title}}</p>
+                <p class="text-content">{{pin.content}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

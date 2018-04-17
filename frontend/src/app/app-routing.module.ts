@@ -16,7 +16,7 @@ const routes: Routes = [
     {path:'create',component: CreateBoardComponent, canActivate:[AuthGuard]},
     {path:'explore',component: ExplorePageComponent, canActivate:[AuthGuard]},
     {path:'profile',component: ProfilePageComponent,canActivate:[AuthGuard]},
-    {path:'display/user/:userID/note/:id',component: DisplayPageComponent,canActivate:[AuthGuard]}
+    {path:'display/user/:userID/note/:noteID',component: DisplayPageComponent,canActivate:[AuthGuard]}
 ]
 
 @NgModule({

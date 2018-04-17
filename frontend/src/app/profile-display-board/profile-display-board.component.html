@@ -30,7 +30,9 @@
         <h5 class="item-title">{{item.note_title}}</h5>
         <div class="item-author">
           <h6>By {{item.firstName}} {{item.lastName}} </h6>
-          <h6>{{item.tags}}</h6>
+          <div>
+            <span class="tag" *ngFor="let tag of item.tags">#{{tag}} </span>
+          </div>
         </div>
       </div>
     </a>
