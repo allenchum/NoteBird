@@ -1,4 +1,5 @@
 export class NoteImage {
+
   constructor() {}
 
   url: string;
@@ -18,7 +19,7 @@ export class NoteImage {
       this.offs[1] < parseInt(this.style["height"]) *0.6
     ) {
       this.dragging = true;
-    }else{
+    } else {
       this.dragging = false;
     }
   }

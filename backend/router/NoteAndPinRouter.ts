@@ -228,7 +228,7 @@ class NoteAndPinRouter {
 
   //    router.get('/allUser', this.allNotes) // return all notes of all users except current user
   private allNotes = (req: express.Request, res: express.Response) => {
-    return knex.select("notes.id as noteID", "notes.note_title", "users.firstName", "users.lastName", "users.id as userID", "t1.imagelinks", "t2.tags")
+    return knex.select("notes.id as noteID", "notes.status", "notes.note_title", "users.firstName", "users.lastName", "users.id as userID", "t1.imagelinks", "t2.tags")
       .from("notes")
       .innerJoin("users", "notes.userID", "users.id")
       .innerJoin(knex.select("notes.id", knex.raw('array_agg(notesimage.imageurl) as imagelinks'))
@@ -241,8 +241,8 @@ class NoteAndPinRouter {
         .innerJoin("tags", "notes.id", "tags.noteID")
         .groupBy("notes.id")
         .as("t2"), 'notes.id', 't2.id')
-      .groupBy("notes.id", "notes.note_title", "users.firstName", "users.lastName", "users.id", "t1.imagelinks", "t2.tags")
-      .whereNot("users.id", (req.user) ? req.user.id : null)
+      .groupBy("notes.id", "notes.status", "notes.note_title", "users.firstName", "users.lastName", "users.id", "t1.imagelinks", "t2.tags")
+      .whereNot("notes.status", "draft")
       .orderBy("notes.id")
       .then((rows) => {
         res.json(rows)
