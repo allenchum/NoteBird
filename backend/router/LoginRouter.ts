@@ -23,7 +23,7 @@ class LoginRouter {
               if (rows.length >= 1) {
                 console.log("user exists, update profile pic link..")
                 var payload = {
-                  id: rows[0].id //use facebookID as payload
+                  id: rows[0].id //use userID as payload
                 }
                 var token = jwt.encode(payload, config.jwtSecret);
                 res.json({

@@ -5,7 +5,7 @@ class NoteAndPinRouter {
   router = () => {
     const router = express.Router();
     router.post('/', this.writeNPs); // wrting and updating the note from create route
-    router.get('/allUser', this.allNotes) // return all notes of all users
+    router.get('/allUsers/allNotes', this.allNotes) // return all notes of all users
     router.get('/userNote', this.userNotes) // return first match of each notes of current user
     router.get('/note/:id', this.getNPs) // current user's specific note with id
     router.get('/user/:userID/note/:noteID', this.getUserNote) // other user's spcific note with id
@@ -79,7 +79,6 @@ class NoteAndPinRouter {
             return knex.batchInsert("points", pinListArrayRow, batchSize)
               .transacting(trx).returning("noteID")
           }).then((ids) => {
-            console.log(req.body.tagsList)
             if (req.body.tagsList.length > 0) {
 
               const tagsListArray = [];
@@ -118,18 +117,16 @@ class NoteAndPinRouter {
           ).then(() => {
             let query = knex.select("*").from("tags").where("noteID", "=", req.body.noteID);
             return query.then((rows) => {
-              console.log('rows of tag is, ', rows, rows.length);
               if (rows.length > 0) {
                 return knex("tags").where("noteID", req.body.noteID).del()
                   .transacting(trx)
               } else {
-                return ;
+                return;
               }
             })
           }).then(() => {
-            console.log("catch here?")
-            knex("notes").where("id", req.body.noteID).del()
-            .transacting(trx)
+            return knex("notes").where("id", req.body.noteID).del()
+              .transacting(trx)
             //update
           }
           ).then(() => {
@@ -229,9 +226,9 @@ class NoteAndPinRouter {
     }
   }
 
-  //    router.get('/allUser', this.allNotes) // return all notes of all users
+  //    router.get('/allUser', this.allNotes) // return all notes of all users except current user
   private allNotes = (req: express.Request, res: express.Response) => {
-    return knex.select("notes.id as noteID", "users.firstName", "users.lastName", "users.id as userID", "t1.imagelinks", "t2.tags")
+    return knex.select("notes.id as noteID", "notes.status", "notes.note_title", "users.firstName", "users.lastName", "users.id as userID", "t1.imagelinks", "t2.tags")
       .from("notes")
       .innerJoin("users", "notes.userID", "users.id")
       .innerJoin(knex.select("notes.id", knex.raw('array_agg(notesimage.imageurl) as imagelinks'))
@@ -244,7 +241,8 @@ class NoteAndPinRouter {
         .innerJoin("tags", "notes.id", "tags.noteID")
         .groupBy("notes.id")
         .as("t2"), 'notes.id', 't2.id')
-      .groupBy("notes.id", "users.firstName", "users.lastName", "users.id", "t1.imagelinks", "t2.tags")
+      .groupBy("notes.id", "notes.status", "notes.note_title", "users.firstName", "users.lastName", "users.id", "t1.imagelinks", "t2.tags")
+      .whereNot("notes.status", "draft")
       .orderBy("notes.id")
       .then((rows) => {
         res.json(rows)
@@ -308,8 +306,8 @@ class NoteAndPinRouter {
               transform: rows[i].style_transform,
               ['transform-origin']: rows[i].style_transform_origin,
             },
-            textboxUpright: {transform: rows[i].style_textboxupright_transform},
-            textboxPosition: {top: rows[i].style_textboxposition_top, left: rows[i].style_textboxposition_left}
+            textboxUpright: { transform: rows[i].style_textboxupright_transform },
+            textboxPosition: { top: rows[i].style_textboxposition_top, left: rows[i].style_textboxposition_left }
           })
         }
       }).then(() => {
@@ -401,8 +399,8 @@ class NoteAndPinRouter {
                 transform: rows[i].style_transform, //
                 ['transform-origin']: rows[i].style_transform_origin, //
               },
-              textboxUpright: {transform: rows[i].style_textboxupright_transform},
-              textboxPosition: {top: rows[i].style_textboxposition_top, left: rows[i].style_textboxposition_left}
+              textboxUpright: { transform: rows[i].style_textboxupright_transform },
+              textboxPosition: { top: rows[i].style_textboxposition_top, left: rows[i].style_textboxposition_left }
             })
           }
         }).then(() => {
