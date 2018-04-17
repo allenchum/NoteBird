@@ -46,6 +46,13 @@ export class NotesService {
         
     }
 
+    getUniversalNotes(){
+        //Authentication
+        let headers = new HttpHeaders({ 'Authorization': 'Bearer ' + this.authService.token });
+        let options = {headers:headers};
+        return this.http.get(`${environment.apiServer}/api/noteAndPin/allUsers/allNotes`,options)
+    }
+
 
 
 }
