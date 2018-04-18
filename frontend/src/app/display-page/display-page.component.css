@@ -2,8 +2,9 @@
     position: relative;
     display: flex;
     flex-flow: column;
-    top: 100px;
-    padding-top: 40px;
+    top: 110px;
+    padding-top: 20px;
+
 }
 /* Canvas */
 #canvas-container{

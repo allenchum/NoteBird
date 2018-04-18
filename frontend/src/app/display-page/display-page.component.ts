@@ -28,7 +28,7 @@ export class DisplayPageComponent implements OnInit {
        this.reqNote = res[0];
        this.imageList = this.reqNote.imageList;
        this.pinList = this.reqNote.pinList;
-       console.log(this.imageList)
+       console.log("ImageList:",this.imageList)
        console.log("PinList:",this.pinList)
        //this.tagsList = this.reqNote.t
       }

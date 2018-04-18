@@ -6,7 +6,7 @@
       <!-- Image Template -->
       <div *ngIf="imageList" id="imageList" >
         <div *ngFor='let image of imageList' id="imagers">
-          <div class="image-frame resizable" [ngStyle]="image.style[0]" >
+          <div class="image-frame resizable" [ngStyle]="image.style" >
             <img draggable="false" src={{image.url}}>
           </div>
         </div>

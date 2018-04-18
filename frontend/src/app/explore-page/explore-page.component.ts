@@ -23,7 +23,6 @@ export class ExplorePageComponent implements OnInit {
     this.notesObservable = this.notesService.getNotes();
     this.notesService.getUniversalNotes().subscribe((notes)=>{
       this.Notes = notes;
-      console.log("FE:", notes[1].tags)
     });
   }
 

@@ -64,7 +64,8 @@ export class NoteImageService {
     }
   }
 
-  drop(image: NoteImage, e) {
+  drop(e) {
+    console.log(e);
     this.selectedImage.drop(e);
     this.selectedImage.dragging = false;
   }

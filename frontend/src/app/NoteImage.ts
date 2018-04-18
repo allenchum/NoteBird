@@ -9,9 +9,11 @@ export class NoteImage {
   offs: number[] = [0,0];
 
   select(e) {
-    console.log("e", e)
+    console.log("select e:", e)
     // e.path[0].clientHeight
     // e.path[0].clientWidth
+    this.style["height"] = e.path[0].clientHeight;
+    this.style["width"] = e.path[0].clientWidth;
     var coords = this.getCoords(e); //getCoords returns clientX and clientY of the event
     this.offs = [
       coords[0] - parseInt(this.style["left"]) / 100 * window.innerWidth,
@@ -36,8 +38,11 @@ export class NoteImage {
   }
 
   drop(e) {
+    console.log("Drop e:",e)
     this.dragging = false;
     this.style["border"] = "none";
+    this.style["height"] = e.path[0].clientHeight;
+    this.style["width"] = e.path[0].clientWidth;
   }
 
   setData(x, y) {
