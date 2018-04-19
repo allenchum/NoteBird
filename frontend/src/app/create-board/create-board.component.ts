@@ -11,7 +11,7 @@ import { NotePinService } from '../note-pin.service';
 import { UploadService } from '../image-upload.service'
 import { NotePin } from '../NotePin';
 import { NoteInitService } from '../note-init.service';
-
+import swal from 'sweetalert2'
 
 @Component({
   selector: 'app-create-board',
@@ -31,25 +31,27 @@ export class CreateBoardComponent implements OnInit {
     this.userID = localStorage.getItem('userID');
   }
 
-//Set up variables
+  //Set up variables
   userID: string = null;
   private imageList = this.noteImageService.imageList;
   private pinList = this.notePinService.pinList;
-  private tagsList: string[]=[];
+  private tagsList: string[] = [];
   private newTag: string;
-  private selectedPin:NotePin;
+  private selectedPin: NotePin;
   private currentService;
-  noteCollapsed:boolean = false;
-  imageCollapsed:boolean = true;
-  pinCollapsed:boolean = true;
-  publishCollapsed:boolean = true;
-  tagsCollapsed:boolean = true;
-  note={"title":"Enter the title here"};
+  noteCollapsed: boolean = false;
+  imageCollapsed: boolean = true;
+  pinCollapsed: boolean = true;
+  publishCollapsed: boolean = true;
+  tagsCollapsed: boolean = true;
+  note = { "title": "Enter the title here" };
   noteID: number = null;
   status = "init";
 
   ngOnInit() {
     this.currentService = this.noteInitService;
+    console.log("image list:", this.imageList);
+    console.log("pin list:", this.pinList)
   }
 
   switchService(s: string) {
@@ -57,7 +59,7 @@ export class CreateBoardComponent implements OnInit {
       this.currentService = this.notePinService;
     } else if (s == "image") {
       this.currentService = this.noteImageService;
-    } else{
+    } else {
       this.currentService = this.noteInitService;
     }
   }
@@ -131,7 +133,7 @@ export class CreateBoardComponent implements OnInit {
 
       this.switchService("");
     }
-    if(panel=="tags"){
+    if (panel == "tags") {
       this.noteCollapsed = true;
       this.imageCollapsed = true;
       this.pinCollapsed = true;
@@ -157,24 +159,43 @@ export class CreateBoardComponent implements OnInit {
       "imageList": this.imageList,
       "tagsList": this.tagsList,
     };
-    console.log(this.imageList)
-    if(this.pinList.length != 0 && this.imageList.length != 0){
-      this.notePinService.getNotePins(pinNoteObj).subscribe((res:any) =>{
-        if(confirm(`Note is saved as ${res.status} with note ID ${res.noteID}`)){
-          // reset create canvas
-          this.noteID = null;
-          this.pinList = [];
-          this.imageList = [];
-          this.tagsList = [];
-          this.status = "init";
-          this.router.navigate(['profile'])
+    console.log("draft pin list", this.pinList)
+    console.log("Draft image list", this.imageList)
+    swal({
+      title: 'Do you want to save your note as draft?',
+      text: "Confirm and continue.",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Save Draft'
+    }).then((result) => { // true or false
+      if (result.value) {
+        if (this.pinList.length != 0 && this.imageList.length != 0) {
+          this.notePinService.getNotePins(pinNoteObj).subscribe((res: any) => {
+            this.noteID = null;
+            this.pinList = [];
+            this.imageList = [];
+            this.tagsList = [];
+            this.status = "init";
+            console.log("image list:", this.imageList)
+            swal(
+              `'Draft saved! NoteID ${res.noteID}`,
+              'Going to your profile page.',
+              'success'
+            ).then(() => {
+              this.router.navigate(['profile'])
+            })
+          })
         } else {
-          this.noteID = res.noteID;
+          swal(
+            'You missed something...',
+            'There are no pins or images in your notes.',
+            'warning'
+          )
         }
-      });
-    } else {
-      alert("Either no PIN or IMAGE is inserted! Draft note is not saved.")
-    }
+      }
+    })
   }
 
   savePublish() {
@@ -187,32 +208,51 @@ export class CreateBoardComponent implements OnInit {
       "imageList": this.imageList,
       "tagsList": this.tagsList,
     };
-    console.log(this.pinList)
-    console.log(this.imageList)
-    if(this.pinList.length != 0 && this.imageList.length != 0){
-        this.notePinService.getNotePins(pinNoteObj).subscribe((res:any) =>{
-          if(confirm(`Note is saved as ${res.status} with note ID ${res.noteID}`)){
-            // reset create canvas
+    console.log("Publish pin list", this.pinList)
+    console.log("Publish image list", this.imageList)
+    swal({
+      title: 'Do you want to publish your note?',
+      text: "Confirm and continue.",
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Publish'
+    }).then((result) => { // true or false
+      if (result.value) {
+        if (this.pinList.length != 0 && this.imageList.length != 0) {
+          this.notePinService.getNotePins(pinNoteObj).subscribe((res: any) => {
             this.noteID = null;
             this.pinList = [];
             this.imageList = [];
             this.tagsList = [];
             this.status = "init";
-            this.router.navigate(['profile'])
-          } else {
-            this.noteID = res.noteID;
-          }
-        });
-    } else {
-      alert("Either no PIN or IMAGE is inserted! Note cannot be published.")
-    }
+            console.log("image list:", this.imageList)
+            swal(
+              `'Published! NoteID ${res.noteID}`,
+              'Going to your profile page.',
+              'success'
+            ).then(() =>{
+              this.router.navigate(['profile'])
+            })
+
+          })
+        } else {
+          swal(
+            'You missed something...',
+            'There are no pins or images in your notes.',
+            'warning'
+          )
+        }
+      }
+    })
   }
 
-  addNewTag(){
-    if(this.newTag){
-    this.tagsList.push(this.newTag.replace(/\s/g,''));
-    this.newTag = "";
-    console.log(this.tagsList)
+  addNewTag() {
+    if (this.newTag) {
+      this.tagsList.push(this.newTag.replace(/\s/g, ''));
+      this.newTag = "";
+      console.log(this.tagsList)
     }
   }
 

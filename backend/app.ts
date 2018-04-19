@@ -8,6 +8,7 @@ import { LoginRouter } from './router/LoginRouter'
 import { NoteAndPinRouter } from './router/NoteAndPinRouter'
 import { GetUserRouter } from  './router/GetUser'
 import { Upload } from './router/Upload'
+import { Bookmark } from './router/Bookmark'
 
 const app = express();
 const auth = authClass();
@@ -22,6 +23,7 @@ app.use("/static", express.static(path.join(__dirname, 'upload')));
 app.use("/api/login/facebook", new LoginRouter().router());
 app.use('/api/noteAndPin', auth.authenticate(), new NoteAndPinRouter().router());
 app.use('/api/getUserInfo', auth.authenticate(), new GetUserRouter().router());
-app.use('/multer', auth.authenticate(), new Upload().router())
+app.use('/multer', auth.authenticate(), new Upload().router());
+app.use('/api/bookmark', auth.authenticate(), new Bookmark().router());
 
 app.listen(8080);
