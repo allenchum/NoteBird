@@ -7,6 +7,7 @@ class NoteAndPinRouter {
     router.post('/', this.writeNPs); // wrting and updating the note from create route
     router.get('/allUsers/allNotes', this.allNotes) // return all notes of all users
     router.get('/userNote', this.userNotes) // return first match of each notes of current user
+    router.get('/userNote/published', this.userNotesPublished) // return first match of each notes of current user, status publish
     router.get('/note/:id', this.getNPs) // current user's specific note with id
     router.get('/user/:userID/note/:noteID', this.getUserNote) // other user's spcific note with id
     return router;
@@ -226,7 +227,7 @@ class NoteAndPinRouter {
     }
   }
 
-  //    router.get('/allUser', this.allNotes) // return all notes of all users except current user
+  //    router.get('/allUsers/allNotes', this.allNotes) // return all notes of all users except current user
   private allNotes = (req: express.Request, res: express.Response) => {
     return knex.select("notes.id as noteID", "notes.status", "notes.note_title", "users.firstName", "users.lastName", "users.id as userID", "t1.imagelinks", "t2.tags")
       .from("notes")
@@ -261,6 +262,24 @@ class NoteAndPinRouter {
       .innerJoin("users", "notes.userID", "users.id")
       .leftJoin("tags", "notes.id", "tags.noteID")
       .groupBy("notes.id", "notes.created_at", "notes.userID", "notes.status", "notes.note_title", "users.firstName", "users.lastName")
+    return query.then((rows) => {
+      res.json(rows)
+    }).catch((err) => {
+      console.log(err)
+      res.json(err);
+    })
+  }
+
+  //    router.get('/userNote', this.userNotes) // return first match of each notes of current user
+  private userNotesPublished = (req: express.Request, res: express.Response) => {
+    let query = knex.select("notes.id", "notes.created_at", "notes.userID", "notes.status", "notes.note_title", "users.lastName", "users.firstName", knex.raw('array_agg(notesimage.imageurl) as imagelink'), knex.raw('array_agg(tags.notetags) as tags'))
+      .from("notes")
+      .where("userID", '=', (req.user) ? req.user.id : null)
+      .innerJoin("notesimage", "notes.id", "notesimage.noteID")
+      .innerJoin("users", "notes.userID", "users.id")
+      .leftJoin("tags", "notes.id", "tags.noteID")
+      .groupBy("notes.id", "notes.created_at", "notes.userID", "notes.status", "notes.note_title", "users.firstName", "users.lastName")
+      .whereNot("notes.status", "draft")
     return query.then((rows) => {
       res.json(rows)
     }).catch((err) => {
@@ -324,8 +343,8 @@ class NoteAndPinRouter {
                 top: rows[i].style_top,
                 left: rows[i].style_left,
                 height: rows[i].style_height,
-                width: rows[i].style_width,
-                border: rows[i].style_border,
+                width: `${rows[i].style_width}px`,
+                border: `${rows[i].style_border}px`,
               }],
             })
           }
