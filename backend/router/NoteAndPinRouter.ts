@@ -35,7 +35,7 @@ class NoteAndPinRouter {
                 offs_0: req.body.imageList[i].offs[0],
                 offs_1: req.body.imageList[i].offs[1],
                 imageurl: req.body.imageList[i].url,
-                style_top: req.body.imageList[i].style.height,
+                style_top: req.body.imageList[i].style.top,
                 style_left: req.body.imageList[i].style.left,
                 style_height: req.body.imageList[i].style.height,
                 style_width: req.body.imageList[i].style.width,
@@ -150,7 +150,7 @@ class NoteAndPinRouter {
                 offs_0: req.body.imageList[i].offs[0],
                 offs_1: req.body.imageList[i].offs[1],
                 imageurl: req.body.imageList[i].url,
-                style_top: req.body.imageList[i].style.height,
+                style_top: req.body.imageList[i].style.top,
                 style_left: req.body.imageList[i].style.left,
                 style_height: req.body.imageList[i].style.height,
                 style_width: req.body.imageList[i].style.width,
@@ -416,8 +416,8 @@ class NoteAndPinRouter {
                 style: {
                   top: rows[i].style_top, //
                   left: rows[i].style_left, //
-                  height: rows[i].style_height, //
-                  width: rows[i].style_width, //
+                  height: `${rows[i].style_height}px`, //
+                  width: `${rows[i].style_width}px`, //
                   border: rows[i].style_border, //
                 },
               })

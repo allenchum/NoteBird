@@ -1,6 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { Bookmark } from "../Bookmark";
 import { UserInformService } from "../user-inform.service";
+import { BookmarkService } from "../bookmark.service";
+import  swal  from "sweetalert2";
+
 
 @Component({
   selector: "app-profile-control-panel",
@@ -10,8 +13,10 @@ import { UserInformService } from "../user-inform.service";
 export class ProfileControlPanelComponent implements OnInit {
   User: any;
   bookmarks: Bookmark[] = [];
+  selectedBookmark: Bookmark;
+  
 
-  constructor(private userInformService: UserInformService) {}
+  constructor(private userInformService: UserInformService, private bookmarkService: BookmarkService) {}
 
   ngOnInit() {
     let english = new Bookmark("English");
@@ -22,5 +27,17 @@ export class ProfileControlPanelComponent implements OnInit {
       this.User = res[0];
       console.log(this.User);
     });
+
+    this.bookmarkService.BookmarkFormStyle = {
+      'display':'none',
+      'z-index':'-1'
+    }
   }
+
+  saveBookmarkName(e){
+    let newBM = new Bookmark(e);
+    this.bookmarks.push(newBM);
+  }
+
+
 }

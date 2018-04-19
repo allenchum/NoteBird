@@ -4,7 +4,7 @@
     <div class="user-icon">
       <img src={{User.profPicLink}}>
     </div>
-    
+
     <!-- <div class="social-stats">
       <div class="stats-item posts">
         <p>
@@ -31,23 +31,27 @@
       <div class="personal-publish selectors">
         <h5>Your Notes</h5>
         <ul>
-          <li><a>Draft</a></li>
-          <li><a>Published</a></li>
+          <li>
+            <a>Draft</a>
+          </li>
+          <li>
+            <a>Published</a>
+          </li>
         </ul>
       </div>
       <div class="bookmarks selectors">
-        <h5>Bookmarks</h5>
+        <div class="bookmark-head">
+          <h5>Bookmarks</h5>
+          <button class="add-btn" (click)="this.bookmarkService.showBookmarkForm()"></button>
+        </div>
         <ul *ngIf="bookmarks">
           <li *ngFor="let bookmark of bookmarks">
             <a>{{bookmark.name}}</a>
-          </li> 
+          </li>
         </ul>
-
       </div>
     </div>
-
   </div>
-
-
-
 </div>
+
+<app-bookmark-form class="bookmark-form" [ngStyle]="bookmarkService.BookmarkFormStyle"></app-bookmark-form>

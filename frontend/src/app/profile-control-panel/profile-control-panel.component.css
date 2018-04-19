@@ -68,3 +68,39 @@ h5{
     color: #000;
     cursor: pointer;
 }
+
+
+/* Bookmarks */
+
+.bookmark-head{
+    display: flex;
+    flex-flow: row;
+    padding-right: 20px;
+    justify-content: space-between;
+}
+.add-btn{
+    width: 2em;
+    height: 2em;
+    background: #1ecd97;;
+    border-radius: 30%;
+    cursor: pointer;
+    order: 99;
+}
+.add-btn:before {
+    width: 1em;
+    height: 0.4em;
+    content: '';
+    display: block;
+    position: absolute;
+    transform: rotate(90deg);
+    background: white;
+    border-radius: 1em;
+  }
+.add-btn:after {
+    width: 1em;
+    height: 0.4em;
+    content: '';
+    display: block;
+    background: white;
+    border-radius: 1em;
+  }

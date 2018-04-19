@@ -1,0 +1,19 @@
+<div class="form-container">
+  <div class="bookmark-form">
+    <div class="form-header">
+      <h2>Bookmark</h2>
+      <button class="x-btn right" (click)="this.bookmarkService.showBookmarkForm()"></button>
+    </div>
+    <form>
+      <label for="bookmark-title">Name of Bookmark: </label>
+      <input type="text" name="bookmark-title">
+
+      <ng-multiselect-dropdown name="note-list" [placeholder]="'select note(s)'" [data]="notesList" [(ngModel)]="selectedNotes" [settings]="dropdownSettings"
+        (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+      </ng-multiselect-dropdown>
+
+    </form>
+
+
+  </div>
+</div>

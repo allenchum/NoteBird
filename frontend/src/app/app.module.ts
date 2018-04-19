@@ -6,6 +6,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
+import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 // Import Components
 import { AppComponent } from './app.component';
@@ -41,6 +43,8 @@ import { NoteInitService } from './note-init.service';
 
 // Import Pipe
 import { SearchFilterPipe } from './search-filter.pipe';
+import { BookmarkService } from './bookmark.service';
+import { BookmarkFormComponent } from './bookmark-form/bookmark-form.component';
 
 
 
@@ -63,6 +67,7 @@ import { SearchFilterPipe } from './search-filter.pipe';
     SearchFilterPipe,
     SearchBarComponent,
     DisplayPageComponent,
+    BookmarkFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,7 +76,9 @@ import { SearchFilterPipe } from './search-filter.pipe';
     NgbModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SweetAlert2Module.forRoot(),
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [
     NoteImageService,
@@ -85,7 +92,8 @@ import { SearchFilterPipe } from './search-filter.pipe';
     NotesService,
     UploadService,
     UserInformService,
-    NoteInitService
+    NoteInitService,
+    BookmarkService
   ],
   bootstrap: [AppComponent]
 })
