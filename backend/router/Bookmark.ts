@@ -7,7 +7,8 @@ class Bookmark {
     router.post('/create', this.createBookmark); // create bookmark and insert note into bookmark, first creation
     router.post('/insertnote/:bookmarkid', this.insertNote); // create bookmark and insert note into bookmark, after bookmark created
     router.get('/user/:userid/bookmark/:bookmarkid', this.custombookmark) // show notes of the bookmark, custom bookmark
-    router.get('/user/:userid/bookmark/:notestatus', this.defaultbookmark) // show notes of the bookmark, default draft and published bookmark
+    router.get('/user/draft', this.draftbookmark) // show all draft notes of the user by clicking draft button
+    router.get('/user/publish', this.publishbookmark) // show all draft notes of the user by clicking draft button
     return router;
   }
 
@@ -64,64 +65,99 @@ class Bookmark {
   // router.get('/user/:userid/bookmark/:bookmarkid', this.custombookmark)
   // show notes of the bookmark, custom bookmark
   private custombookmark = (req: express.Request, res: express.Response) => {
-    // return knex.select("bookmark.id", "bookmark.userid")
-    //   .from("bookmark")
-    //   .where("bookmarkid", "=", req.params.bookmarkid)
-    //   .innerJoin(
-     // return knex.select("notes.id as noteID", "notes.status", "notes.note_title", "users.firstName", "users.lastName", "users.id as userID", "t1.imagelinks", "t2.tags")
-     //    .from("notes")
-     //    .innerJoin("users", "notes.userID", "users.id")
-     //    .innerJoin(knex.select("notes.id", knex.raw('array_agg(notesimage.imageurl) as imagelinks'))
-     //      .from("notes")
-     //      .innerJoin("notesimage", "notes.id", "notesimage.noteID")
-     //      .groupBy("notes.id")
-     //      .as("t1"), 'notes.id', 't1.id')
-     //    .leftJoin(knex.select("notes.id", knex.raw('array_agg(tags.notetags) as tags'))
-     //      .from("notes")
-     //      .innerJoin("tags", "notes.id", "tags.noteID")
-     //      .groupBy("notes.id")
-     //      .as("t2"), 'notes.id', 't2.id')
-     //    .groupBy("notes.id", "notes.status", "notes.note_title", "users.firstName", "users.lastName", "users.id", "t1.imagelinks", "t2.tags")
-     //    .whereNot("notes.status", "draft")
-     //    .where("users.id", req.params.userid)
-    //      .as("tcom"), ".id", "tcom.id")
-
-return knex.select("bookmark.id", "bookmark.bookmarkname", "bookmark.userID", knex.raw('array_agg(tcom.noteid) as noteids'), "tcom.imageslinks")
-            .from("bookmark")
-            .innerJoin("bookmarkrelation", "bookmark.id", "bookmarkrelation.bookmarkid")
-            .innerJoin(knex.select("notes.id as noteid", "notes.status", "notes.note_title", "t1.imagelinks as imageslinks", "t2.tags")
-               .from("notes")
-//               .innerJoin("users", "notes.userID", "users.id")
-               .innerJoin(knex.select("notes.id", knex.raw('array_agg(notesimage.imageurl) as imagelinks'))
-                 .from("notes")
-                 .innerJoin("notesimage", "notes.id", "notesimage.noteID")
-                 .groupBy("notes.id")
-                 .as("t1"), 'notes.id', 't1.id')
-               .leftJoin(knex.select("notes.id", knex.raw('array_agg(tags.notetags) as tags'))
-                 .from("notes")
-                 .innerJoin("tags", "notes.id", "tags.noteID")
-                 .groupBy("notes.id")
-                 .as("t2"), 'notes.id', 't2.id')
-               .groupBy("notes.id", "notes.status", "notes.note_title", "t1.imagelinks", "t2.tags")
-               .whereNot("notes.status", "draft")
-//               .where("users.id", req.params.userid)
-            .as("tcom"), "bookmarkrelation.noteid", "tcom.noteid")
-            .where("bookmark.userID", req.params.userid)
-            .groupBy("bookmark.id", "bookmark.bookmarkname", "bookmark.userID", "tcom.imageslinks")
+    return knex.select("bookmark.id as bookmardid", "bookmark.bookmarkname", "bookmark.userID", knex.raw('ARRAY_AGG(ROW_TO_JSON(tcom)) as notes'))
+      .from("bookmark")
+      .innerJoin("bookmarkrelation", "bookmark.id", "bookmarkrelation.bookmarkid")
+      .innerJoin(knex.select("notes.id as noteid", "notes.status", "notes.note_title", "t1.imagelinks as imageslinks", "t2.tags")
+        .from("notes")
+        .innerJoin(knex.select("notes.id", knex.raw('array_agg(notesimage.imageurl) as imagelinks'))
+          .from("notes")
+          .innerJoin("notesimage", "notes.id", "notesimage.noteID")
+          .groupBy("notes.id")
+          .as("t1"), 'notes.id', 't1.id')
+        .leftJoin(knex.select("notes.id", knex.raw('array_agg(tags.notetags) as tags'))
+          .from("notes")
+          .innerJoin("tags", "notes.id", "tags.noteID")
+          .groupBy("notes.id")
+          .as("t2"), 'notes.id', 't2.id')
+        .groupBy("notes.id", "notes.status", "notes.note_title", "t1.imagelinks", "t2.tags")
+        .whereNot("notes.status", "draft")
+        .as("tcom"), "bookmarkrelation.noteid", "tcom.noteid")
+      .where({
+        "bookmark.userID": req.params.userid,
+        "bookmark.id": req.params.bookmarkid
+      })
+      .groupBy("bookmark.id", "bookmark.bookmarkname", "bookmark.userID")
       .then((rows) => {
         res.json(rows)
-      }).catch((err) => {
+      })
+      .catch((err) => {
         console.log(err)
         res.json(err)
       })
   }
 
-  // router.get('/user/:userid/bookmark/:notestatus', this.defaultbookmark)
-  // show notes of the bookmark, default draft and published bookmark
-  private defaultbookmark = (req: express.Request, res: express.Response) => {
-
+  // router.get('/user/draft', this.defaultbookmark)
+  // show all draft notes of the user by clicking draft button
+  private draftbookmark = (req: express.Request, res: express.Response) => {
+    return knex.select("notes.id as noteID", "notes.status", "notes.note_title", "users.firstName", "users.lastName", "users.id as userID", "t1.imagelinks", "t2.tags")
+      .from("notes")
+      .innerJoin("users", "notes.userID", "users.id")
+      .innerJoin(knex.select("notes.id", knex.raw('array_agg(notesimage.imageurl) as imagelinks'))
+        .from("notes")
+        .innerJoin("notesimage", "notes.id", "notesimage.noteID")
+        .groupBy("notes.id")
+        .as("t1"), 'notes.id', 't1.id')
+      .leftJoin(knex.select("notes.id", knex.raw('array_agg(tags.notetags) as tags'))
+        .from("notes")
+        .innerJoin("tags", "notes.id", "tags.noteID")
+        .groupBy("notes.id")
+        .as("t2"), 'notes.id', 't2.id')
+      .groupBy("notes.id", "notes.status", "notes.note_title", "users.firstName", "users.lastName", "users.id", "t1.imagelinks", "t2.tags")
+      .where({
+        "notes.status": "draft",
+        "users.id": (req.user) ? req.user.id : null,
+      })
+      .orderBy("notes.id")
+      .then((rows) => {
+        res.json(rows)
+      })
+      .catch((err) => {
+        console.log(err)
+        res.json(err)
+      })
   }
 
+  // router.get('/user/publish', this.defaultbookmark)
+  // show all draft notes of the user by clicking draft button
+  private publishbookmark = (req: express.Request, res: express.Response) => {
+    return knex.select("notes.id as noteID", "notes.status", "notes.note_title", "users.firstName", "users.lastName", "users.id as userID", "t1.imagelinks", "t2.tags")
+      .from("notes")
+      .innerJoin("users", "notes.userID", "users.id")
+      .innerJoin(knex.select("notes.id", knex.raw('array_agg(notesimage.imageurl) as imagelinks'))
+        .from("notes")
+        .innerJoin("notesimage", "notes.id", "notesimage.noteID")
+        .groupBy("notes.id")
+        .as("t1"), 'notes.id', 't1.id')
+      .leftJoin(knex.select("notes.id", knex.raw('array_agg(tags.notetags) as tags'))
+        .from("notes")
+        .innerJoin("tags", "notes.id", "tags.noteID")
+        .groupBy("notes.id")
+        .as("t2"), 'notes.id', 't2.id')
+      .groupBy("notes.id", "notes.status", "notes.note_title", "users.firstName", "users.lastName", "users.id", "t1.imagelinks", "t2.tags")
+      .where({
+        "notes.status": "publish",
+        "users.id": (req.user) ? req.user.id : null,
+      })
+      .orderBy("notes.id")
+      .then((rows) => {
+        res.json(rows)
+      })
+      .catch((err) => {
+        console.log(err)
+        res.json(err)
+      })
+  }
 }
 
 export { Bookmark }
