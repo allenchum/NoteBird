@@ -50,7 +50,7 @@ export class BookmarkFormComponent implements OnInit {
 
   onBookmarkFormSubmit(f:any) {
     let newBM = new Bookmark(f.value['bookmark-title']);
-    newBM.elements = f.value['note-list'];
+    newBM.noteList = f.value['note-list'];
     console.log("New Bookmark created:",newBM);
     this.bookmarkService.postBookmark(newBM); //post new bookmark to server
     this.bookmarkService.showBookmarkForm(); //hide form

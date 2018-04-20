@@ -15,6 +15,7 @@ class Bookmark {
   // router.post('/create', this.createBookmark);
   // create bookmark and insert note into bookmark, first creation
   private createBookmark = (req: express.Request, res: express.Response) => {
+    console.log(req.body)
     return knex.transaction((trx) => {
       knex.insert({
         bookmarkname: req.body.bookmarkname,
@@ -22,6 +23,7 @@ class Bookmark {
       }, "id").into("bookmark")
         .transacting(trx)
         .then((ids) => {
+          console.log(ids);
           // create batchinsert array
           const noteListArray = [];
           const batchSize = 30;
@@ -29,9 +31,10 @@ class Bookmark {
           for (let i = 0; i < req.body.noteList.length; i++) { // noteList from req.body
             noteListArray.push({
               bookmarkid: ids[0],
-              noteid: req.body.noteList[i]
+              noteid: req.body.noteList[i].id
             })
           }
+          console.log(noteListArray)
           return knex.batchInsert("bookmarkrelation", noteListArray, batchSize)
             .transacting(trx).returning("bookmarkid")
         })

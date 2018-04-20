@@ -10,7 +10,7 @@
       <div class="form-inputs">
         <form #f="ngForm" (ngSubmit)="onBookmarkFormSubmit(f)" novalidate>
           <label for="bookmark-title">Name: </label>
-          <input type="text" name="bookmark-title" required ngModel>
+          <input type="text" name="bookmark-title" required ngModel [(ngModel)]="bookmarkTitle">
           <label for="note-list">Elements:</label>
           <ng-multiselect-dropdown name="note-list" [(ngModel)]="selectedNotes" [placeholder]="'select note(s)'" [data]="bookmarkService.notesList"
             [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">

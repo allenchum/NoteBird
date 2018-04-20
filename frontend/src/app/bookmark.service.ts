@@ -41,12 +41,12 @@ export class BookmarkService {
     });
     let options = { headers: headers };
     return this.http.get(
-      `${environment.apiServer}/api/noteAndPin/userNote/`,
+      `${environment.apiServer}/api/noteAndPin//userNote/published`,
       options
     );
   }
 
-  postBookmark(bookmark:Bookmark):Observable<Bookmark>{
+  postBookmark(bookmark:Bookmark){
     //Authentication
     let headers = new HttpHeaders({
       Authorization: "Bearer " + this.authService.token
@@ -55,6 +55,6 @@ export class BookmarkService {
     return this.http.post<Bookmark>(
       `${environment.apiServer}/api/bookmark/create/`,bookmark,
       options
-    );
+    ).subscribe();
   }
 }
