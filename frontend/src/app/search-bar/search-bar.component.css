@@ -5,15 +5,15 @@
     margin-right:10px; 
 }
 #search-bar{
-    border: #8FC357 5px solid;
+    border: var(--main) 5px solid;
     border-radius: 3px;
-    background-color:  #8FC357;
+    background-color:  var(--main);
 }
 #search-term{
     width: 50vw;
 }
 #search-button{
-    background-color:#8FC357;
+    background-color:var(--main);
     border: none;
     color: #fff;
     cursor: pointer;

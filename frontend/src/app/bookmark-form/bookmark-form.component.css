@@ -11,12 +11,31 @@
     margin: 15vh 30vw;
     height: 70vh;
     width: 40vw;
-    background-color: green;
+    background-color: var(--panel-bg);
+    color: #fff;
+    display: flex;
+    flex-flow: column;
 }
 .form-header{
+   align-self: flex-end;
+}
+.form-inner{
+    padding: 0 35px;
+}
+.form-title{
+    margin-bottom: 20px;
+}
+.form-inputs form{
     display: flex;
-    flex-flow: row;
-    justify-content: space-between;
+    flex-flow: column;
+}
+.form-inputs form input{
+    margin-bottom: 20px;
+}
+.button-container{
+    display: flex;
+    flex-flow:row;
+    justify-content: flex-end;
 }
 
 

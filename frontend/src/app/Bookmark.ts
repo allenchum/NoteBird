@@ -2,7 +2,7 @@ import {Note} from "./Note";
 
 export class Bookmark{
     name:string;
-    elements: Note[];
+    elements: any;
     constructor(name){
       this.name = name;
     }

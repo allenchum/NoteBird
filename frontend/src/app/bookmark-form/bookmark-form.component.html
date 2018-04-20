@@ -1,19 +1,26 @@
 <div class="form-container">
   <div class="bookmark-form">
     <div class="form-header">
-      <h2>Bookmark</h2>
       <button class="x-btn right" (click)="this.bookmarkService.showBookmarkForm()"></button>
     </div>
-    <form>
-      <label for="bookmark-title">Name of Bookmark: </label>
-      <input type="text" name="bookmark-title">
-
-      <ng-multiselect-dropdown name="note-list" [placeholder]="'select note(s)'" [data]="notesList" [(ngModel)]="selectedNotes" [settings]="dropdownSettings"
-        (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
-      </ng-multiselect-dropdown>
-
-    </form>
-
-
+    <div class="form-inner">
+      <div class="form-title">
+        <h2>New Bookmark</h2>
+      </div>
+      <div class="form-inputs">
+        <form #f="ngForm" (ngSubmit)="onBookmarkFormSubmit(f)" novalidate>
+          <label for="bookmark-title">Name: </label>
+          <input type="text" name="bookmark-title" required ngModel>
+          <label for="note-list">Elements:</label>
+          <ng-multiselect-dropdown name="note-list" [(ngModel)]="selectedNotes" [placeholder]="'select note(s)'" [data]="bookmarkService.notesList"
+            [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+          </ng-multiselect-dropdown>
+          <div class="button-container">
+            <button type="submit" name="ok" class="submit-btn">OK</button>
+            <div class="cancel-btn" (click)="this.bookmarkService.showBookmarkForm()">CANCEL</div>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 </div>
