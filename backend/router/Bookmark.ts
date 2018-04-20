@@ -5,6 +5,7 @@ class Bookmark {
   router = () => {
     const router = express.Router();
     router.post('/create', this.createBookmark); // create bookmark and insert note into bookmark, first creation
+    router.get('/show', this.showbookmark); // show bookmark
     router.post('/insertnote/:bookmarkid', this.insertNote); // create bookmark and insert note into bookmark, after bookmark created
     router.get('/user/:userid/bookmark/:bookmarkid', this.custombookmark) // show notes of the bookmark, custom bookmark
     router.get('/user/draft', this.draftbookmark) // show all draft notes of the user by clicking draft button
@@ -46,6 +47,17 @@ class Bookmark {
         bookmarkid: ids[0],
         bookmarkname: req.body.bookmarkname
       })
+    }).catch((err) => {
+      res.json(err)
+    })
+  }
+
+  // router.get('/bookmarks', this.showbookmark);
+  // show bookmark
+  private showbookmark = (req: express.Request, res: express.Response) => {
+    let query = knex.select("*").from("bookmark").where("userID", (req.user) ? req.user.id : null);
+    query.then((rows) => {
+        res.json(rows)
     }).catch((err) => {
       res.json(err)
     })
