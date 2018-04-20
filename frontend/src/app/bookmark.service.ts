@@ -14,6 +14,7 @@ import { NgForm } from '@angular/forms';
 export class BookmarkService {
   BookmarkFormStyle: { [s: string]: string };
   notesList:any;
+  existingBookmark:any;
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -55,6 +56,15 @@ export class BookmarkService {
     return this.http.post<Bookmark>(
       `${environment.apiServer}/api/bookmark/create/`,bookmark,
       options
-    ).subscribe();
+    ).subscribe(res=>console.log(res));
+  }
+
+  getBookmarks(){
+    //Authentication
+    let headers = new HttpHeaders({
+      Authentication: "Bearer" + this.authService.token
+    });
+    let options = { headers: headers };
+    return this.http.get(`${environment.apiServer}/api/bookmark`)
   }
 }
