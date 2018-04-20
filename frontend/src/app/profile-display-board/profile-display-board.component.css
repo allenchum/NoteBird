@@ -16,13 +16,12 @@ h1{
    display: flex;
    flex-flow: row wrap;
    margin: 0 auto;
-   
 }
 .single-item{
    width: 30%;
    margin: 5px 15px;
    border-radius: 5px;
-   background-color: var(--main-dark);
+   background-color: var(--main);
    box-shadow: 7px 7px 5px #555555;
 }
 .single-item .snapshot {
@@ -69,3 +68,5 @@ h1{
 #search-button i:hover{
     font-size: 5pt;
 }
+
+
