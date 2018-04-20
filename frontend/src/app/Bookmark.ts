@@ -1,9 +1,9 @@
 import {Note} from "./Note";
 
 export class Bookmark{
-    name:string;
-    elements: Note[];
+    bookmarkname:string;
+    noteList: any;
     constructor(name){
-      this.name = name;
+      this.bookmarkname = name;
     }
 }

@@ -3,12 +3,15 @@
     position: relative;
     top: 110px;
     padding-top: 20px;
+    height: 88vh;
+    background: var(--body-bg); 
 }
 
 /* Control Bar */
 #control-bar{
     float:left;
     width: 15vw;
+    background-color: var(--body-bg); 
 }
 .panel{
     margin-bottom:5px;
@@ -19,7 +22,7 @@
     border-top-right-radius: 5pt;
     border-top-left-radius: 5pt;
     padding-left: 5pt;
-    background: #71B238;
+    background: var(--main);
     color: #fff;
 }
 .panel-icon{
