@@ -4,6 +4,7 @@ import "rxjs/Rx";
 import { Observable } from "rxjs";
 import { NgForm } from "@angular/forms";
 import { Bookmark } from "../Bookmark";
+import swal from 'sweetalert2';
 
 @Component({
   selector: "app-bookmark-form",
@@ -11,15 +12,15 @@ import { Bookmark } from "../Bookmark";
   styleUrls: ["./bookmark-form.component.css"]
 })
 export class BookmarkFormComponent implements OnInit {
-  private selectedNotes:any = [];
+  private selectedNotes: any = [];
   private dropdownSettings = {};
-  private bookmarkTitle:string;
+  private bookmarkTitle: string;
   private notesListObservable: Observable<any>;
 
   constructor(private bookmarkService: BookmarkService) {}
 
   ngOnInit() {
-    this.notesListObservable = this.bookmarkService.getNotesList();
+    // this.notesListObservable = this.bookmarkService.getNotesList();
     this.bookmarkService.getNotesList().subscribe(notes => {
       this.bookmarkService.notesList = notes;
       console.log("NOTES:", notes);
@@ -42,18 +43,25 @@ export class BookmarkFormComponent implements OnInit {
     console.log(items);
   }
 
-  
-  clearFormData(){
+  clearFormData() {
     this.selectedNotes = null;
     this.bookmarkTitle = null;
   }
 
-  onBookmarkFormSubmit(f:any) {
-    let newBM = new Bookmark(f.value['bookmark-title']);
-    newBM.noteList = f.value['note-list'];
-    console.log("New Bookmark created:",newBM);
-    this.bookmarkService.postBookmark(newBM); //post new bookmark to server
-    this.bookmarkService.showBookmarkForm(); //hide form
-    this.clearFormData();  //clear form data
+  onBookmarkFormSubmit(f: any) {
+    if (f.value["bookmark-title"]) {
+      let newBM = new Bookmark(f.value["bookmark-title"]);
+      newBM.noteList = f.value["note-list"];
+      console.log("New Bookmark created:", newBM);
+      this.bookmarkService.postBookmark(newBM); //post new bookmark to server
+      this.bookmarkService.showBookmarkForm(); //hide form
+      this.clearFormData(); //clear form data
+    } else {
+      swal(
+        'You missed something...',
+        'Please enter the name of bookmark.',
+        'warning'
+      )
+    }
   }
 }

@@ -11,10 +11,10 @@
       <div class="personal-publish selectors">
         <h5>Your Notes</h5>
         <ul>
-          <li>
+          <li (click)="bookmarkService.getNotesBySelector('draft')">
             <a>Draft</a>
           </li>
-          <li>
+          <li (click)="bookmarkService.getNotesBySelector('published')">
             <a>Published</a>
           </li>
         </ul>
@@ -22,11 +22,11 @@
       <div class="bookmarks selectors">
         <div class="bookmark-head">
           <h5>Bookmarks</h5>
-          <button class="add-btn" (click)="this.bookmarkService.showBookmarkForm()"></button>
+          <button class="add-btn" (click)="bookmarkService.showBookmarkForm()"></button>
         </div>
         <ul *ngIf="bookmarks">
-          <li *ngFor="let bookmark of bookmarks">
-            <a>{{bookmark.bookmarkname}}</a>
+          <li *ngFor="let bookmark of bookmarkService.bookmarksList">
+            <a *ngIf="bookmark.bookmarkname" (click)="bookmarkService.getNotesBySelector(bookmark.id)">{{bookmark.bookmarkname}}</a>
           </li>
         </ul>
       </div>

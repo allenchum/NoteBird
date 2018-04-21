@@ -3,6 +3,9 @@ import { Bookmark } from "../Bookmark";
 import { UserInformService } from "../user-inform.service";
 import { BookmarkService } from "../bookmark.service";
 import  swal  from "sweetalert2";
+import "rxjs/Rx";
+import { Observable } from "rxjs";
+import { NgForm } from "@angular/forms";
 
 
 @Component({
@@ -12,8 +15,9 @@ import  swal  from "sweetalert2";
 })
 export class ProfileControlPanelComponent implements OnInit {
   User: any;
-  bookmarks: Bookmark[] = [];
-  selectedBookmark: Bookmark;
+  bookmarks:any =[];
+
+
   
 
   constructor(private userInformService: UserInformService, private bookmarkService: BookmarkService) {}
@@ -32,6 +36,13 @@ export class ProfileControlPanelComponent implements OnInit {
       'display':'none',
       'z-index':'-1'
     }
+
+    //get bookmarks list
+    this.bookmarkService.showBookmarksList().subscribe(bookmarks=>{
+      this.bookmarkService.bookmarksList = bookmarks;
+      console.log("Existing bookmarks:",this.bookmarkService.bookmarksList);
+    })
+
   }
 
   saveBookmarkName(e){

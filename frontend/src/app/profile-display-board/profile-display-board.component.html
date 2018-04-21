@@ -22,8 +22,8 @@
     </form>
   </div>
 
-  <div class="items-contianer" *ngIf="Notes">
-    <a *ngFor="let item of Notes | searchFilter:term:searchSelector" class="single-item" routerLink="/display/user/{{item.userID}}/note/{{item.noteID}}">
+  <div class="items-contianer" *ngIf="bookmarkService.Notes">
+    <a *ngFor="let item of bookmarkService.Notes | searchFilter:term:searchSelector" class="single-item" routerLink="/display/user/{{item.userID}}/note/{{item.noteID}}">
       <div class="snapshot">
         <img src={{item.imagelinks[0]}}>
       </div>
