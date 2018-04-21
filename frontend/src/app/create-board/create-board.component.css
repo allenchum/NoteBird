@@ -4,14 +4,14 @@
     top: 110px;
     padding-top: 20px;
     height: 88vh;
-    background: var(--body-bg); 
+    background: var(--body-bg);
 }
 
 /* Control Bar */
 #control-bar{
     float:left;
     width: 15vw;
-    background-color: var(--body-bg); 
+    background-color: var(--body-bg);
 }
 .panel{
     margin-bottom:5px;
@@ -37,15 +37,15 @@
     padding: 2px 8px;
 }
 #tags-panel .tags-input{
-   display: flex; 
-   flex-flow:row wrap; 
+   display: flex;
+   flex-flow:row wrap;
 }
 #tags-panel ul{
     width: 100%;
     padding: 0;
 }
 #tags-panel li{
-    list-style-type:none; 
+    list-style-type:none;
     display: inline-block;
     margin: 3px;
     padding: 3px;
@@ -275,7 +275,7 @@ img{
 .orange:hover {
     background-color: #f1c40f;
 }
-  
+
 /* Text Boxes */
 .text-container{
     border: solid rgba(255, 191, 128, 1) 1pt;
