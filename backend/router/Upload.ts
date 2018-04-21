@@ -10,7 +10,10 @@ const storage = multer.diskStorage({
   }
 });
 
-const upload = multer({ storage: storage }).single("avatar");
+const upload = multer({
+                storage: storage,
+                limits: { fileSize : 2000000 } // max upload size 2MB
+               }).single("avatar");
 
 
 class Upload {
@@ -23,16 +26,20 @@ class Upload {
   private uploadFn = (req: express.Request, res: express.Response) => {
     console.log(req.body)
     upload(req, res, function(err) {
+      // An error occurred when uploading
       if (err) {
-        // An error occurred when uploading
-        throw err;
+        res.json({
+          success: false,
+          error: "file size too large",
+        });
+      } else {
+      // response success message
+        res.json({
+          filePath: "/static/" + req.file.filename,
+          success: true,
+          message: 'Image was uploaded successfully'
+        });
       }
-      res.json({
-        filePath: "/static/" + req.file.filename,
-        success: true,
-        message: 'Image was uploaded successfully'
-      });
-      // Everything went fine
     })
   }
 }

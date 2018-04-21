@@ -77,13 +77,13 @@ class Bookmark {
     })
   }
 
-  // router.get('/user/:userid/bookmark/:bookmarkid', this.custombookmark)
+  // router.get('/user/bookmark/:bookmarkid', this.custombookmark)
   // show notes of the bookmark, custom bookmark
   private custombookmark = (req: express.Request, res: express.Response) => {
     return knex.select("bookmark.id as bookmarkid", "bookmark.bookmarkname", "bookmark.userID", knex.raw('ARRAY_AGG(ROW_TO_JSON(tcom)) as notes'))
       .from("bookmark")
       .innerJoin("bookmarkrelation", "bookmark.id", "bookmarkrelation.bookmarkid")
-      .innerJoin(knex.select("notes.id as noteid", "notes.status", "notes.note_title", "t1.imagelinks as imageslinks", "t2.tags")
+      .innerJoin(knex.select("notes.id as noteID", "notes.status", "notes.note_title", "users.firstName", "users.lastName", "t1.imagelinks as imagelinks", "t2.tags")
         .from("notes")
         .innerJoin(knex.select("notes.id", knex.raw('array_agg(notesimage.imageurl) as imagelinks'))
           .from("notes")
@@ -95,9 +95,10 @@ class Bookmark {
           .innerJoin("tags", "notes.id", "tags.noteID")
           .groupBy("notes.id")
           .as("t2"), 'notes.id', 't2.id')
-        .groupBy("notes.id", "notes.status", "notes.note_title", "t1.imagelinks", "t2.tags")
+        .innerJoin("users", "notes.userID", "users.id")
+        .groupBy("notes.id", "notes.status", "notes.note_title", "users.firstName", "users.lastName", "t1.imagelinks", "t2.tags")
         .whereNot("notes.status", "draft")
-        .as("tcom"), "bookmarkrelation.noteid", "tcom.noteid")
+        .as("tcom"), "bookmarkrelation.noteid", "tcom.noteID")
       .where({
         "bookmark.userID": (req.user) ? req.user.id : null,
         "bookmark.id": req.params.bookmarkid

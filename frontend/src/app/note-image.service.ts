@@ -5,6 +5,7 @@ import { UploadService } from './image-upload.service'
 import { environment } from "../environments/environment";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { AuthService } from "./auth.service";
+import swal from 'sweetalert2'
 
 @Injectable()
 export class NoteImageService {
@@ -12,7 +13,7 @@ export class NoteImageService {
     private uploadService: UploadService,
     private http: HttpClient,
     private authService: AuthService,
-  ) {}
+  ) { }
 
   //use imageList to store all the images
   imageList: NoteImage[] = [];
@@ -29,7 +30,18 @@ export class NoteImageService {
       let headers = new HttpHeaders({ 'Authorization': 'Bearer ' + this.authService.token });
       let options = { headers: headers };
       this.http.post(`${environment.apiServer}/multer`, formData, options)
-        .map((res:any) => this.addNew(`${environment.apiServer}${res.filePath}`))
+        .map((res: any) => {
+          event.srcElement.value = null;
+          if (res.success == true) {
+            this.addNew(`${environment.apiServer}${res.filePath}`)
+          } else {
+            swal(
+              'File size too large',
+              'Upload another image with size < 2MB.',
+              'warning'
+            )
+          }
+        })
         .catch(function(err) {
           throw err;
         }).subscribe()
@@ -60,7 +72,7 @@ export class NoteImageService {
       if (!this.selectedImage.dragging) {
         return;
       }
-        this.selectedImage.move(e);
+      this.selectedImage.move(e);
     }
   }
 
