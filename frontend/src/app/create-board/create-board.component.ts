@@ -50,8 +50,6 @@ export class CreateBoardComponent implements OnInit {
 
   ngOnInit() {
     this.currentService = this.noteInitService;
-    console.log("image list:", this.imageList);
-    console.log("pin list:", this.pinList)
   }
 
   switchService(s: string) {
@@ -159,8 +157,6 @@ export class CreateBoardComponent implements OnInit {
       "imageList": this.imageList,
       "tagsList": this.tagsList,
     };
-    console.log("draft pin list", this.pinList)
-    console.log("Draft image list", this.imageList)
     swal({
       title: 'Do you want to save your note as draft?',
       text: "Confirm and continue.",
@@ -208,8 +204,6 @@ export class CreateBoardComponent implements OnInit {
       "imageList": this.imageList,
       "tagsList": this.tagsList,
     };
-    console.log("Publish pin list", this.pinList)
-    console.log("Publish image list", this.imageList)
     swal({
       title: 'Do you want to publish your note?',
       text: "Confirm and continue.",
@@ -227,7 +221,6 @@ export class CreateBoardComponent implements OnInit {
             this.imageList = [];
             this.tagsList = [];
             this.status = "init";
-            console.log("image list:", this.imageList)
             swal(
               `'Published! NoteID ${res.noteID}`,
               'Going to your profile page.',
@@ -252,7 +245,6 @@ export class CreateBoardComponent implements OnInit {
     if (this.newTag) {
       this.tagsList.push(this.newTag.replace(/(^|\s)[a-z]/g, s => s.toUpperCase()).replace(/\s/g, ''));
       this.newTag = "";
-      console.log(this.tagsList)
     }
   }
 

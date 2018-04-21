@@ -1,11 +1,18 @@
 .navbar-brand{
-    height: 100px;
+    height: 80px;
     background-color: #efffcc;
     border: #efffcc 2pt solid;
     border-radius: 2pt;
     padding: 0px 8px;
     float: left;
 }
+
+@media(max-width:768px){
+  .navbar-brand{
+    height: 60px;
+  }
+}
+
 .navbar{
     background-color:  #122d42;
     z-index: 80;
@@ -20,7 +27,7 @@
     width: 70px;
     height: 70px;
     border-radius: 50%;
-    margin: 20px;
+    margin: 5px;
     object-fit: cover;
     object-position: center right;
     transition-duration: 0.4s;
@@ -38,7 +45,7 @@
     -webkit-transform: scale(1.15);
     -webkit-transition: .3s ease-in-out;
     transform: scale(1.15);
-    transition: .3s ease-in-out;   
+    transition: .3s ease-in-out;
 }
 
 .button-create {
@@ -92,4 +99,14 @@ li a{
 li a:hover{
     color: #008000;
     background-color: #efffcc;
+}
+
+.user-icon a, .user-icon a:hover {
+  background-color: transparent;
+}
+
+ul.navbar-nav.ml-auto {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

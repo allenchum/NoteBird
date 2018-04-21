@@ -23,6 +23,7 @@ export class NavbarComponent implements OnInit {
   token: string = null;
   userID: string = null;
   private User: Observable<any[]>;
+  public isCollapsed = true;
 
   constructor(
     private http: HttpClient,
@@ -55,12 +56,12 @@ export class NavbarComponent implements OnInit {
           })
         }
       }, 500)
-      
+
     })
   }
 
   ngOnInit() {
-    
+
     // if(this.token){
     //   this.userInformService.getUserInfo().subscribe(res=>{
     //     this.User = res[0];
@@ -70,11 +71,10 @@ export class NavbarComponent implements OnInit {
   }
 
 
-  
+
 
   onLogout() {
     this.authService.logOut();
     this.router.navigate(["/"]);
   }
 }
-

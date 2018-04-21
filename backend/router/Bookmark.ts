@@ -16,7 +16,6 @@ class Bookmark {
   // router.post('/create', this.createBookmark);
   // create bookmark and insert note into bookmark, first creation
   private createBookmark = (req: express.Request, res: express.Response) => {
-    console.log(req.body)
     return knex.transaction((trx) => {
       knex.insert({
         bookmarkname: req.body.bookmarkname,
