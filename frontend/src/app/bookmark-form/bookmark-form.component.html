@@ -15,7 +15,7 @@
           </div>
           <div class="form-group">
             <label for="note-list">Elements:</label>
-            <angular2-multiselect [data]="bookmarkService.notesList" [(ngModel)]="selectedItems" [settings]="dropdownSettings"                                   (onSelect)="onItemSelect($event)"
+            <angular2-multiselect [data]="bookmarkService.notesList" [(ngModel)]="selectedItems" [settings]="dropdownSettings" (onSelect)="onItemSelect($event)"
             (onDeSelect)="OnItemDeSelect($event)" 
             (onSelectAll)="onSelectAll($event)" 
             (onDeSelectAll)="onDeSelectAll($event)"

@@ -31,7 +31,7 @@ class Bookmark {
           for (let i = 0; i < req.body.noteList.length; i++) { // noteList from req.body
             noteListArray.push({
               bookmarkid: ids[0],
-              noteid: req.body.noteList[i].id
+              noteid: req.body.noteList[i].noteID
             })
           }
           console.log(noteListArray)

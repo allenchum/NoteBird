@@ -36,7 +36,8 @@ export class BookmarkFormComponent implements OnInit {
       unSelectAllText: "UnSelect All",
       enableSearchFilter: true,
       classes: "myclass custom-class",
-      labelKey: "note_title"
+      labelKey: "note_title",
+      primaryKey:"noteID"
     };
   }
 

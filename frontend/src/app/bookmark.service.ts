@@ -69,7 +69,9 @@ export class BookmarkService {
         console.log("Draft Note:", notes);
       });
     } else if (typeof selector === "number") {  //get Note by bookmarkID
+      
       this.getNotesByBookmark(selector).subscribe(bookmark => {
+        console.log("Get Note by Bookmark:",bookmark)
         this.Selector = bookmark[0].bookmarkname;
         this.Notes = bookmark[0].notes;
         console.log("Bookmarked Note:", this.Notes);
@@ -109,7 +111,7 @@ export class BookmarkService {
       Authorization: "Bearer " + this.authService.token
     });
     let options = { headers: headers };
-
+    
     return this.http
       .get(
         `${environment.apiServer}/api/bookmark/user/bookmark/${bookmarkID}`,
