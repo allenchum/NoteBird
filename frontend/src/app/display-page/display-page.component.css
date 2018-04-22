@@ -93,26 +93,33 @@ img{
     z-index: 21;
 }
 
+
 /* TextBox */
 .text-container{
     position: absolute;
-    min-width: 100px;
-    border: solid rgba(255, 191, 128, 1) 1pt;
+    min-width: 110px;
+    max-width: 220px;
+    border: solid rgba(18, 45, 66, 1) 1pt;
     border-radius: 3px;
-    background-color: rgba(255, 191, 128, 0.3);
+    background-color: rgba(28, 114, 147, 0.5);
+    color: #fff;
     z-index: 100;
-}
-.text-title{
-    font-size: 12pt;
+    opacity: 0.1;
+    transition: 0.4s;
+  }
+  .text-container:hover{
+    opacity: 1;
+  }
+  .text-title{
+    font-size: 14pt;
     font-weight: bold;
     padding: 0px 3px;
     margin: 1px 1px;
-}
-.text-content{
+  }
+  .text-content{
     padding: 0px 3px;
     margin: 1px 1px;
-}
-
+  }
 
 
 /* Input Area */
@@ -180,20 +187,4 @@ img{
     background-color: #f1c40f;
 }
 
-/* Text Boxes */
-.text-container{
-    border: solid rgba(255, 191, 128, 1) 1pt;
-    border-radius: 3px;
-    background-color: rgba(255, 191, 128, 0.3);
-    z-index: 100;
-}
-.text-title{
-    font-size: 12pt;
-    font-weight: bold;
-    padding: 0px 3px;
-    margin: 1px 1px;
-}
-.text-content{
-    padding: 0px 3px;
-    margin: 1px 1px;
-}
+

@@ -95,9 +95,9 @@
 
         <!-- Pin Note Template -->
         <div *ngIf="pinList" id="pinList" [ngStyle]="setPinLayer()" (mousedown)="currentService.select($event)" (mousedown)="onSelect()">
-          <div *ngFor='let pin of pinList' id="pins" [class.selected]="pin === selectedPin">
-            <div class="pin-point" [ngStyle]="pin.style">
-              <div class="pin-dot">
+          <div *ngFor='let pin of pinList' id="pins" >
+            <div class="pin-point" [ngStyle]="pin.style"> 
+              <div class="pin-dot" [class.selected]="pin === selectedPin">
               </div>
               <div class="pin-textbox" [ngStyle]="pin.textboxUpright">
                 <div class="text-container" [ngStyle]="pin.textboxPosition">

@@ -14,7 +14,7 @@
 
       <!-- Pin Note Template -->
       <div *ngIf="pinList" id="pinList">
-        <div *ngFor='let pin of pinList' id="pins" [class.selected]="pin === selectedPin">
+        <div *ngFor='let pin of pinList' id="pins" > 
           <div class="pin-point" [ngStyle]="pin.style">
             <div class="pin-dot">
             </div>

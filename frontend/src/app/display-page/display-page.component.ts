@@ -4,6 +4,7 @@ import { NoteImage } from '../NoteImage';
 import { NotePin } from '../NotePin';
 import { ActivatedRoute } from '@angular/router';
 import { NotesService } from '../notes.service';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-display-page',
