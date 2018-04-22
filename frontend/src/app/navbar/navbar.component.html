@@ -19,7 +19,7 @@
       </li>
       <li class="nav-item mx-0 mx-lg-1">
         <div class="user-icon zoom-in-1" (click)="isCollapsed = true">
-          <a routerLink="/profile" >
+          <a routerLink="/profile">
               <img *ngIf="User | async; let user" src="{{user.profPicLink}}">
           </a>
         </div>
