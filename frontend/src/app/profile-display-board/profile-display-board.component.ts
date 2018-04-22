@@ -21,7 +21,6 @@ export class ProfileDisplayBoardComponent implements OnInit {
   private notesObservable: Observable<any>;
   private bookmarkID: number;
   private selectedBookmark: any;
-  private selectedNotes: any;
 
   group = {
     name: "English",

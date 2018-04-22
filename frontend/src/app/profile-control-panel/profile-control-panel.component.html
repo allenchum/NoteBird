@@ -24,9 +24,9 @@
           <h5>Bookmarks</h5>
           <button class="add-btn" (click)="bookmarkService.showBookmarkForm()"></button>
         </div>
-        <ul *ngIf="bookmarks">
-          <li *ngFor="let bookmark of bookmarkService.bookmarksList">
-            <a *ngIf="bookmark.bookmarkname" (click)="bookmarkService.getNotesBySelector(bookmark.id)">{{bookmark.bookmarkname}}</a>
+        <ul *ngIf="bookmarkService.bookmarksList">
+          <li *ngFor="let bookmark of bookmarkService.bookmarksList" (click)="bookmarkService.getNotesBySelector(bookmark.id)">
+            <a *ngIf="bookmark.bookmarkname" >{{bookmark.bookmarkname}}</a>
           </li>
         </ul>
       </div>

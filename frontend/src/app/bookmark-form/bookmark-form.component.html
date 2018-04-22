@@ -8,17 +8,38 @@
         <h2>New Bookmark</h2>
       </div>
       <div class="form-inputs">
-        <form #f="ngForm" (ngSubmit)="onBookmarkFormSubmit(f)" novalidate>
-          <label for="bookmark-title">Name: </label>
+        <form #f="ngForm" (ngSubmit)="onBookmarkFormSubmit(f)">
+          <div class="form-group">
+            <label for="bookmark-title">Name:</label>
+            <input type="text" class="form-control" id="bookmark-title" required pattern="[a-zA-Z][a-zA-Z ]+" [(ngModel)]="bookmarkTitle" name="bookmark-title">
+          </div>
+          <div class="form-group">
+            <label for="note-list">Elements:</label>
+            <angular2-multiselect [data]="bookmarkService.notesList" [(ngModel)]="selectedItems" [settings]="dropdownSettings"                                   (onSelect)="onItemSelect($event)"
+            (onDeSelect)="OnItemDeSelect($event)" 
+            (onSelectAll)="onSelectAll($event)" 
+            (onDeSelectAll)="onDeSelectAll($event)"
+            name="note-list"
+            required>
+            </angular2-multiselect>
+          </div>
+          <div class="form-group buttons">
+              <button type="submit" name="ok" class="submit-btn">OK</button>
+              <div class="cancel-btn" (click)="this.bookmarkService.showBookmarkForm()">CANCEL</div>
+          </div>
+          <!-- <label for="bookmark-title">Name: </label>
           <input type="text" name="bookmark-title" required ngModel [(ngModel)]="bookmarkTitle">
           <label for="note-list">Elements:</label>
-          <ng-multiselect-dropdown name="note-list" [(ngModel)]="selectedNotes" [placeholder]="'select note(s)'" [data]="bookmarkService.notesList"
-            [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
-          </ng-multiselect-dropdown>
+          <angular2-multiselect [data]="bookmarkService.notesList" [(ngModel)]="selectedItems" name="note-list"
+          [settings]="dropdownSettings" 
+         (onSelect)="onItemSelect($event)" 
+         (onDeSelect)="OnItemDeSelect($event)"
+         (onSelectAll)="onSelectAll($event)"
+         (onDeSelectAll)="onDeSelectAll($event)"></angular2-multiselect>
           <div class="button-container">
             <button type="submit" name="ok" class="submit-btn">OK</button>
             <div class="cancel-btn" (click)="this.bookmarkService.showBookmarkForm()">CANCEL</div>
-          </div>
+          </div> -->
         </form>
       </div>
     </div>

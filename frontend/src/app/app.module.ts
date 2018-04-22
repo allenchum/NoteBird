@@ -7,7 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HttpClientModule } from '@angular/common/http';
 import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
-import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import {  AngularMultiSelectModule } from 'angular2-multiselect-dropdown/angular2-multiselect-dropdown'
 
 // Import Components
 import { AppComponent } from './app.component';
@@ -78,7 +78,7 @@ import { BookmarkFormComponent } from './bookmark-form/bookmark-form.component';
     HttpClientModule,
     ReactiveFormsModule,
     SweetAlert2Module.forRoot(),
-    NgMultiSelectDropDownModule.forRoot()
+    AngularMultiSelectModule
   ],
   providers: [
     NoteImageService,

@@ -72,12 +72,18 @@ h5{
 
 
 /* Bookmarks */
-
 .bookmark-head{
     display: flex;
     flex-flow: row;
     padding-right: 20px;
     justify-content: space-between;
+}
+.bookmarks ul{
+    height: 300px;
+    overflow-y: scroll;
+}
+.bookmarks ul::-webkit-scrollbar {
+    display: none;
 }
 .add-btn{
     width: 2em;
@@ -105,3 +111,4 @@ h5{
     background: white;
     border-radius: 1em;
   }
+

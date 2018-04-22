@@ -17,15 +17,15 @@ import { NgForm } from "@angular/forms";
 @Injectable()
 export class BookmarkService {
   BookmarkFormStyle: { [s: string]: string };
-  notesList: any;
+  notesList: any = [{"id":0,"note_title":"dummy"}];
   bookmarksList: any = [];
   selectedBookmark: Observable<any>;
   selectedBookmarkID: any;
   Notes:any;
+  Selector:any;
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  addNewBookmark() {}
 
   showBookmarkForm() {
     if (this.BookmarkFormStyle["display"] == "none") {
@@ -57,18 +57,20 @@ export class BookmarkService {
   getNotesBySelector(selector: any) {
     console.log(selector);
     if (selector === "published") {  //get published Note
+      this.Selector = "Published";
       this.getPublishedNotes().subscribe(notes => {
         this.Notes = notes;
         console.log("Published Note:", notes);
       });
     } else if (selector === "draft") {   //get Draft Note
+      this.Selector = "Draft";
       this.getDraftNotes().subscribe(notes => {
         this.Notes = notes;
         console.log("Draft Note:", notes);
       });
     } else if (typeof selector === "number") {  //get Note by bookmarkID
       this.getNotesByBookmark(selector).subscribe(bookmark => {
-        
+        this.Selector = bookmark[0].bookmarkname;
         this.Notes = bookmark[0].notes;
         console.log("Bookmarked Note:", this.Notes);
       });
@@ -87,10 +89,9 @@ export class BookmarkService {
         bookmark,
         options
       )
-      .subscribe(res => console.log(res));
   }
 
-  showBookmarksList() {
+  showBookmarksList():Observable<any>{
     //Authentication
     let headers = new HttpHeaders({
       Authorization: "Bearer " + this.authService.token
@@ -103,13 +104,6 @@ export class BookmarkService {
   }
 
   getNotesByBookmark(bookmarkID: number) {
-    console.log("hi mum!!!!");
-    // this.selectedBookmark = this.bookmarksList.filter(
-    //   bookmark => bookmark.id == bookmarkID
-    // )[0];
-    // console.log("selected BM:", this.selectedBookmark);
-
-    //Http get Notes from server
     //Authentication
     let headers = new HttpHeaders({
       Authorization: "Bearer " + this.authService.token
@@ -145,5 +139,12 @@ export class BookmarkService {
       `${environment.apiServer}/api/bookmark/user/publish/`,
       options
     );
+  }
+
+  updateBookmarkList(){
+    this.showBookmarksList().subscribe(bookmarks=>{
+      this.bookmarksList = bookmarks;
+      console.log("Existing bookmarks:",this.bookmarksList);
+    })
   }
 }

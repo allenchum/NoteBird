@@ -4,7 +4,7 @@ import "rxjs/Rx";
 import { Observable } from "rxjs";
 import { NgForm } from "@angular/forms";
 import { Bookmark } from "../Bookmark";
-import swal from 'sweetalert2';
+import swal from "sweetalert2";
 
 @Component({
   selector: "app-bookmark-form",
@@ -12,10 +12,11 @@ import swal from 'sweetalert2';
   styleUrls: ["./bookmark-form.component.css"]
 })
 export class BookmarkFormComponent implements OnInit {
-  private selectedNotes: any = [];
+  private selectedItems: any = [];
   private dropdownSettings = {};
   private bookmarkTitle: string;
   private notesListObservable: Observable<any>;
+  private submitted = false;
 
   constructor(private bookmarkService: BookmarkService) {}
 
@@ -25,43 +26,64 @@ export class BookmarkFormComponent implements OnInit {
       this.bookmarkService.notesList = notes;
       console.log("NOTES:", notes);
     });
+
+    this.selectedItems = [];
+
     this.dropdownSettings = {
       singleSelection: false,
-      idField: "id",
-      textField: "note_title",
+      text: "Select Note",
       selectAllText: "Select All",
       unSelectAllText: "UnSelect All",
-      itemsShowLimit: 3,
-      allowSearchFilter: true
+      enableSearchFilter: true,
+      classes: "myclass custom-class",
+      labelKey: "note_title"
     };
   }
 
   onItemSelect(item: any) {
     console.log(item);
+    console.log(this.selectedItems);
+  }
+  OnItemDeSelect(item: any) {
+    console.log(item);
+    console.log(this.selectedItems);
   }
   onSelectAll(items: any) {
     console.log(items);
   }
-
-  clearFormData() {
-    this.selectedNotes = null;
-    this.bookmarkTitle = null;
+  onDeSelectAll(items: any) {
+    console.log(items);
   }
 
   onBookmarkFormSubmit(f: any) {
-    if (f.value["bookmark-title"]) {
+    if (f.value["bookmark-title"] && f.value["note-list"]) {
+      console.log("Note-list", f.value["note-list"]);
       let newBM = new Bookmark(f.value["bookmark-title"]);
-      newBM.noteList = f.value["note-list"];
+      console.log("Selected", this.selectedItems);
+      newBM.noteList = this.selectedItems;
       console.log("New Bookmark created:", newBM);
-      this.bookmarkService.postBookmark(newBM); //post new bookmark to server
+
+      //this.bookmarkService.bookmarksList.push(newBM);
+
+      //Update Bookmarklist
+     // this.bookmarkService.updateBookmarkList();
+
+      this.submitted = true;
+      this.bookmarkService.postBookmark(newBM).subscribe(bookmark=>{this.bookmarkService.bookmarksList.push(bookmark)
+      console.log("BM res",this.bookmarkService.bookmarksList)}) ; //post new bookmark to server
       this.bookmarkService.showBookmarkForm(); //hide form
       this.clearFormData(); //clear form data
     } else {
       swal(
-        'You missed something...',
-        'Please enter the name of bookmark.',
-        'warning'
-      )
+        "You missed something...",
+        "Please enter the name of bookmark.",
+        "warning"
+      );
     }
+  }
+
+  clearFormData() {
+    this.selectedItems = null;
+    this.bookmarkTitle = null;
   }
 }

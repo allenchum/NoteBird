@@ -16,6 +16,13 @@
     flex-flow: row nowrap;
     justify-content: space-between;
 }
+.show{
+    display: flex;
+    flex-flow: column-reverse;
+}
+.navbar-collapse{
+  
+}
 .user-icon img{
     width: 70px;
     height: 70px;

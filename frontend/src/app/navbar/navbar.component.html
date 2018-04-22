@@ -5,28 +5,28 @@
   <div class="nav-container" *ngIf="authService.isAuthenticated()">
     <img class="navbar-brand js-scroll-trigger" src="/assets/img/noteJJ.png" height="100px">
     <button class="button-create" id="create-btn" routerLink="/create">Create</button>
-    <button class="navbar-toggler navbar-toggler-right text-uppercase bg-primary text-white rounded" type="button" data-toggle="collapse"
+    <button class="navbar-toggler navbar-toggler-right text-uppercase text-white rounded" type="button" data-toggle="collapse"
       data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       Menu
       <i class="fa fa-bars"></i>
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item mx-0 mx-lg-1">
+        <li class="nav-item mx-0">
           <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" routerLink="/explore" routerLinkActive="active">EXPLORE</a>
         </li>
         <!-- <li class="nav-item mx-0 mx-lg-1">
           <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">SAVE BOARD</a>
         </li> -->
-        <li class="nav-item mx-0 mx-lg-1">
+        <li class="nav-item mx-0">
           <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" (click)="onLogout()">Log Out</a>
         </li>
       </ul>
-    </div>
-    <div class="user-icon zoom-in-1">
-      <a routerLink="/profile">
-        <img *ngIf="User | async; let user" src="{{user.profPicLink}}">
-      </a>
+      <div class="user-icon zoom-in-1">
+        <a routerLink="/profile">
+          <img *ngIf="User | async; let user" src="{{user.profPicLink}}">
+        </a>
+      </div>  
     </div>
   </div>
 
