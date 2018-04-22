@@ -282,7 +282,7 @@ class NoteAndPinRouter {
 
   // router.get('/userNote/published', this.userNotesPublished)  // return first match of each notes of current user, status publish
   private userNotesPublished = (req: express.Request, res: express.Response) => {
-    let query = knex.select("notes.id", "notes.created_at", "notes.userID", "notes.status", "notes.note_title", "users.lastName", "users.firstName", knex.raw('array_agg(notesimage.imageurl) as imagelink'), knex.raw('array_agg(tags.notetags) as tags'))
+    let query = knex.select("notes.id as noteID", "notes.created_at", "notes.userID", "notes.status", "notes.note_title", "users.lastName", "users.firstName", knex.raw('array_agg(notesimage.imageurl) as imagelink'), knex.raw('array_agg(tags.notetags) as tags'))
       .from("notes")
       .where("userID", '=', (req.user) ? req.user.id : null)
       .innerJoin("notesimage", "notes.id", "notesimage.noteID")
