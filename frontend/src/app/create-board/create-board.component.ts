@@ -44,7 +44,7 @@ export class CreateBoardComponent implements OnInit {
   pinCollapsed: boolean = true;
   publishCollapsed: boolean = true;
   tagsCollapsed: boolean = true;
-  note = { "title": "Enter the title here" };
+  note = { "title": "Title.." };
   noteID: number = null;
   status = "init";
 

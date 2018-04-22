@@ -42,6 +42,10 @@
   padding: 2px 8px;
 }
 
+.title-input {
+  width:13vw;
+}
+
 #tags-panel .tags-input {
   display: flex;
   flex-flow: row wrap;
