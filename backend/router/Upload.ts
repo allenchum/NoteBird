@@ -24,7 +24,6 @@ class Upload {
   }
 
   private uploadFn = (req: express.Request, res: express.Response) => {
-    console.log(req.body)
     upload(req, res, function(err) {
       // An error occurred when uploading
       if (err) {

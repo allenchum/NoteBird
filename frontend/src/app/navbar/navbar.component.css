@@ -1,13 +1,25 @@
 .navbar-brand{
-    height: 100px;
+    height: 80px;
     background-color: #efffcc;
     border: #efffcc 2pt solid;
     border-radius: 2pt;
     padding: 0px 8px;
     float: left;
+    transition-duration: 0.2s;
 }
+
+@media(max-width:768px){
+  .navbar-brand{
+    height: 60px;
+  }
+  .hide-btn{
+    display: none;
+  }
+}
+
 .navbar{
     background-color:  #122d42;
+    height: 96px;
     z-index: 80;
 }
 .nav-container{
@@ -20,14 +32,15 @@
     display: flex;
     flex-flow: column-reverse;
 }
-.navbar-collapse{
-  
+.navbar-collapse ul{
+    background-color: var(--panel-bg-light);
+    padding: 0px 10px;
 }
 .user-icon img{
     width: 70px;
     height: 70px;
     border-radius: 50%;
-    margin: 20px;
+    margin: 5px;
     object-fit: cover;
     object-position: center right;
     transition-duration: 0.4s;
@@ -45,7 +58,7 @@
     -webkit-transform: scale(1.15);
     -webkit-transition: .3s ease-in-out;
     transform: scale(1.15);
-    transition: .3s ease-in-out;   
+    transition: .3s ease-in-out;
 }
 
 .button-create {
@@ -57,7 +70,7 @@
     background-color: #97EFCA;
     border: none;
     padding: 15px;
-    height: 50%;
+    height: 60px;
     width: 100px;
     border-radius: 5px;
     text-align: center;
@@ -92,6 +105,7 @@
     transition: 0s
 }
 
+
 li a{
     color:#fff;
     transition: all 0.8s ease;
@@ -99,4 +113,14 @@ li a{
 li a:hover{
     color: #008000;
     background-color: #efffcc;
+}
+
+.user-icon a, .user-icon a:hover {
+  background-color: transparent;
+}
+
+ul.navbar-nav.ml-auto {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

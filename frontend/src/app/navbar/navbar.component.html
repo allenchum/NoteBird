@@ -1,42 +1,30 @@
 <!-- Navigation -->
-
-<nav class="navbar navbar-expand-lg fixed-top text-uppercase" id="mainNav">
+<nav class="navbar navbar-expand-md fixed-top text-uppercase" id="mainNav">
   <!-- When User Logged In -->
-  <div class="nav-container" *ngIf="authService.isAuthenticated()">
-    <img class="navbar-brand js-scroll-trigger" src="/assets/img/noteJJ.png" height="100px">
-    <button class="button-create" id="create-btn" routerLink="/create">Create</button>
-    <button class="navbar-toggler navbar-toggler-right text-uppercase text-white rounded" type="button" data-toggle="collapse"
-      data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+  <img class="navbar-brand js-scroll-trigger" src="/assets/img/noteJJ.png" height="60px" routerLink="/create">
+  <button class="button-create mr-auto hide-btn" id="create-btn" routerLink="/create">Create</button>
+
+  <button class="navbar-toggler ml-auto navbar-toggler-right text-white rounded" type="button" (click)="isCollapsed = !isCollapsed" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" *ngIf="authService.isAuthenticated()">
       Menu
       <i class="fa fa-bars"></i>
     </button>
-    <div class="collapse navbar-collapse" id="navbarResponsive">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item mx-0">
-          <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" routerLink="/explore" routerLinkActive="active">EXPLORE</a>
-        </li>
-        <!-- <li class="nav-item mx-0 mx-lg-1">
-          <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="#about">SAVE BOARD</a>
-        </li> -->
-        <li class="nav-item mx-0">
-          <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" (click)="onLogout()">Log Out</a>
-        </li>
-      </ul>
-      <div class="user-icon zoom-in-1">
-        <a routerLink="/profile">
-          <img *ngIf="User | async; let user" src="{{user.profPicLink}}">
-        </a>
-      </div>  
-    </div>
+
+  <div class="collapse navbar-collapse" [ngbCollapse]="isCollapsed" id="navbarResponsive" *ngIf="authService.isAuthenticated()">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item mx-0 mx-lg-1">
+        <a class="nav-link rounded js-scroll-trigger" routerLink="/explore" routerLinkActive="active" (click)="isCollapsed = true">EXPLORE</a>
+      </li>
+      <li class="nav-item mx-0 mx-lg-1">
+        <a class="nav-link rounded js-scroll-trigger" (click)="onLogout()">LOG OUT</a>
+      </li>
+      <li class="nav-item mx-0 mx-lg-1">
+        <div class="user-icon zoom-in-1" (click)="isCollapsed = true">
+          <a routerLink="/profile" >
+              <img *ngIf="User | async; let user" src="{{user.profPicLink}}">
+          </a>
+        </div>
+      </li>
+    </ul>
   </div>
-
-
-  <!-- When User Logged Out -->
-  <div class="nav-container" *ngIf="!authService.isAuthenticated()">
-    <img class="navbar-brand js-scroll-trigger" src="/assets/img/noteJJ.png" height="100px">
-  </div>
-
-
-
 
 </nav>

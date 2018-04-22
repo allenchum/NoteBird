@@ -2,14 +2,14 @@
     position: relative;
     display: flex;
     flex-flow: column;
-    top: 100px;
+    top: 96px;
     padding-top: 40px;
 }
 
 /* Search Bar */
 #search-bar-container{
     align-self: center;
-    margin-right:10px; 
+    margin-right:10px;
 
 }
 #search-bar{

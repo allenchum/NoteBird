@@ -77,7 +77,7 @@ export class BookmarkService {
     }
   }
 
-  postBookmark(bookmark: Bookmark) {
+  postBookmark(bookmark: Bookmark):Observable<any>{
     //Authentication
     let headers = new HttpHeaders({
       Authorization: "Bearer " + this.authService.token

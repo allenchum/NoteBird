@@ -2,8 +2,8 @@
     position: relative;
     display: flex;
     flex-flow: column;
-    top: 110px;
-    padding-top: 20px;
+    top: 96px;
+    padding-top: 0px;
 
 }
 /* Canvas */
@@ -179,7 +179,7 @@ img{
 .orange:hover {
     background-color: #f1c40f;
 }
-  
+
 /* Text Boxes */
 .text-container{
     border: solid rgba(255, 191, 128, 1) 1pt;

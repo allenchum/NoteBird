@@ -18,10 +18,6 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  // onSubmit(formData){
-  //   this.authService.logIn(formData.email,formData.password);
-  // }
-
   onLoginWithFacebook(event){
     this.facebookAuthService.logIn();
   }
