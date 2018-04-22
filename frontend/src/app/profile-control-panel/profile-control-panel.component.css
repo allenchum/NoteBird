@@ -1,7 +1,7 @@
 .control-container{
     background-color: var(--panel-bg);
     top:0;
-    height: 87vh;
+    height: calc(100vh - 96px);
     width: 20vw;
     overflow: hidden;
 }
@@ -33,7 +33,7 @@
 }
 
 .stats-item{
-    width: 30%; 
+    width: 30%;
 }
 .stats-item p{
     margin: 0 0;
