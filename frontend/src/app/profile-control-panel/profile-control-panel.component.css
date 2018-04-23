@@ -9,7 +9,8 @@
 .inner{
     color: #fff;
     margin: 10px;
-    display:flex;
+    height: calc(100vh - 96px);
+    display: flex;
     flex-flow: column;
     align-items: center
 }
@@ -18,8 +19,8 @@
     padding-top: 10px;
 }
 .user-icon img{
-    height: 250px;
-    width: 250px;
+    height: 20vw;
+    width: 20vw;
     border: transparent solid;
     border-radius: 50% 50%;
 }
@@ -35,6 +36,8 @@ h5{
 .selectors-container{
     margin-top: 10px;
     width: 100%;
+    height: 40vh;
+    overflow: scroll;
 }
 .selectors-container h5{
     text-align: left;
@@ -65,7 +68,7 @@ h5{
     justify-content: space-between;
 }
 .bookmarks ul{
-    height: 300px;
+    height: 15vh;
     overflow-y: scroll;
 }
 .bookmarks ul::-webkit-scrollbar {
@@ -74,7 +77,8 @@ h5{
 .add-btn{
     width: 2em;
     height: 2em;
-    background: #1ecd97;;
+    background: #1ecd97;
+    color: white;
     border-radius: 30%;
     cursor: pointer;
     order: 99;
@@ -82,9 +86,9 @@ h5{
 .add-btn:before {
     width: 1em;
     height: 0.4em;
-    content: '';
+    /*content: '';*/
     display: block;
-    position: absolute;
+    /*position: absolute;*/
     transform: rotate(90deg);
     background: white;
     border-radius: 1em;
@@ -92,7 +96,7 @@ h5{
 .add-btn:after {
     width: 1em;
     height: 0.4em;
-    content: '';
+    /*content: '';*/
     display: block;
     background: white;
     border-radius: 1em;
