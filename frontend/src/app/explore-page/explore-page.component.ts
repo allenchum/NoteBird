@@ -31,6 +31,5 @@ export class ExplorePageComponent implements OnInit {
   searchByChange(args){
     let val = args.target.value;
     this.searchSelector = val;
-    console.log(this.searchSelector)
   }
 }

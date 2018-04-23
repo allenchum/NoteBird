@@ -39,7 +39,6 @@ export class BookmarkService {
         "z-index": "-1"
       };
     }
-    console.log(this.BookmarkFormStyle);
   }
 
   getNotesList() {
@@ -55,26 +54,21 @@ export class BookmarkService {
   }
 
   getNotesBySelector(selector: any) {
-    console.log(selector);
     if (selector === "published") {  //get published Note
       this.Selector = "Published";
       this.getPublishedNotes().subscribe(notes => {
         this.Notes = notes;
-        console.log("Published Note:", notes);
       });
     } else if (selector === "draft") {   //get Draft Note
       this.Selector = "Draft";
       this.getDraftNotes().subscribe(notes => {
         this.Notes = notes;
-        console.log("Draft Note:", notes);
       });
     } else if (typeof selector === "number") {  //get Note by bookmarkID
       
       this.getNotesByBookmark(selector).subscribe(bookmark => {
-        console.log("Get Note by Bookmark:",bookmark)
         this.Selector = bookmark[0].bookmarkname;
         this.Notes = bookmark[0].notes;
-        console.log("Bookmarked Note:", this.Notes);
       });
     }
   }
@@ -146,7 +140,6 @@ export class BookmarkService {
   updateBookmarkList(){
     this.showBookmarksList().subscribe(bookmarks=>{
       this.bookmarksList = bookmarks;
-      console.log("Existing bookmarks:",this.bookmarksList);
     })
   }
 }

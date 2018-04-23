@@ -24,7 +24,6 @@ export class BookmarkFormComponent implements OnInit {
     // this.notesListObservable = this.bookmarkService.getNotesList();
     this.bookmarkService.getNotesList().subscribe(notes => {
       this.bookmarkService.notesList = notes;
-      console.log("NOTES:", notes);
     });
 
     this.selectedItems = [];
@@ -58,11 +57,8 @@ export class BookmarkFormComponent implements OnInit {
 
   onBookmarkFormSubmit(f: any) {
     if (f.value["bookmark-title"] && f.value["note-list"]) {
-      console.log("Note-list", f.value["note-list"]);
       let newBM = new Bookmark(f.value["bookmark-title"]);
-      console.log("Selected", this.selectedItems);
       newBM.noteList = this.selectedItems;
-      console.log("New Bookmark created:", newBM);
 
       //this.bookmarkService.bookmarksList.push(newBM);
 
@@ -70,8 +66,7 @@ export class BookmarkFormComponent implements OnInit {
      // this.bookmarkService.updateBookmarkList();
 
       this.submitted = true;
-      this.bookmarkService.postBookmark(newBM).subscribe(bookmark=>{this.bookmarkService.bookmarksList.push(bookmark)
-      console.log("BM res",this.bookmarkService.bookmarksList)}) ; //post new bookmark to server
+      this.bookmarkService.postBookmark(newBM).subscribe(bookmark=>{this.bookmarkService.bookmarksList.push(bookmark)}) ; //post new bookmark to server
       this.bookmarkService.showBookmarkForm(); //hide form
       this.clearFormData(); //clear form data
     } else {
