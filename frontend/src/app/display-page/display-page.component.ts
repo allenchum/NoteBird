@@ -22,15 +22,11 @@ export class DisplayPageComponent implements OnInit {
     this.route.paramMap.subscribe(params=>{
       this.userID = +params.get('userID');
       this.noteID = +params.get('noteID');
-      console.log(params)
-      console.log(this.userID,this.noteID)
     });
     this.notesService.getOthersNoteByID(this.userID,this.noteID).subscribe(res=>{
        this.reqNote = res[0];
        this.imageList = this.reqNote.imageList;
        this.pinList = this.reqNote.pinList;
-       console.log("ImageList:",this.imageList)
-       console.log("PinList:",this.pinList)
        //this.tagsList = this.reqNote.t
       }
     );

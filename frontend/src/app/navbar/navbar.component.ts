@@ -33,24 +33,10 @@ export class NavbarComponent implements OnInit {
   ) {
     this.userID = localStorage.getItem("userID");
     this.token = localStorage.getItem("myToken");
-    // this.User = new Observable((observer) => {
-    //   console.log('hi')
-    //   setInterval(()=>{
-    //     console.log('HI')
-    //     if (this.token){
-    //       this.userInformService.getUserInfo().subscribe(res => {
-    //         observer.next(res[0]);
-    //         console.log(this.User);
-    //       });
-    //     }
-    //   },1000)
-    // })
     this.User = new Observable((observer) => {
       let a = setInterval(() => {
         if(localStorage.getItem("myToken")){
           this.userInformService.getUserInfo().subscribe(res=>{
-            // this.User = res[0];
-            // console.log(this.User);
             observer.next(res[0]);
             clearInterval(a);
           })
@@ -60,15 +46,7 @@ export class NavbarComponent implements OnInit {
     })
   }
 
-  ngOnInit() {
-
-    // if(this.token){
-    //   this.userInformService.getUserInfo().subscribe(res=>{
-    //     this.User = res[0];
-    //     console.log(this.User);
-    //   })
-    // }
-  }
+  ngOnInit() {}
 
 
 
