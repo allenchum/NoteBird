@@ -282,14 +282,23 @@ class NoteAndPinRouter {
 
   // router.get('/userNote/published', this.userNotesPublished)  // return first match of each notes of current user, status publish
   private userNotesPublished = (req: express.Request, res: express.Response) => {
-    let query = knex.select("notes.id as noteID", "notes.created_at", "notes.userID", "notes.status", "notes.note_title", "users.lastName", "users.firstName", knex.raw('array_agg(notesimage.imageurl) as imagelink'), knex.raw('array_agg(tags.notetags) as tags'))
+  let query = knex.select("notes.id as noteID", "notes.status", "notes.note_title", "users.firstName", "users.lastName", "users.id as userID", "t1.imagelinks", "t2.tags")
+    .from("notes")
+    .innerJoin("users", "notes.userID", "users.id")
+    .innerJoin(knex.select("notes.id", knex.raw('array_agg(notesimage.imageurl) as imagelinks'))
       .from("notes")
-      .where("userID", '=', (req.user) ? req.user.id : null)
       .innerJoin("notesimage", "notes.id", "notesimage.noteID")
-      .innerJoin("users", "notes.userID", "users.id")
-      .leftJoin("tags", "notes.id", "tags.noteID")
-      .groupBy("notes.id", "notes.created_at", "notes.userID", "notes.status", "notes.note_title", "users.firstName", "users.lastName")
+      .groupBy("notes.id")
+      .as("t1"), 'notes.id', 't1.id')
+    .leftJoin(knex.select("notes.id", knex.raw('array_agg(tags.notetags) as tags'))
+      .from("notes")
+      .innerJoin("tags", "notes.id", "tags.noteID")
+      .groupBy("notes.id")
+      .as("t2"), 'notes.id', 't2.id')
+    .groupBy("notes.id", "notes.status", "notes.note_title", "users.firstName", "users.lastName", "users.id", "t1.imagelinks", "t2.tags")
       .whereNot("notes.status", "draft")
+    .where("users.id", (req.user) ? req.user.id : null)
+    .orderBy("notes.id")
     return query.then((rows) => {
       res.json(rows)
     }).catch((err) => {
