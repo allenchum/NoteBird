@@ -14,6 +14,7 @@ class GetUserRouter {
       .then((rows) => {
         res.json(rows);
       }).catch((err) => {
+        console.log(err);
         res.json(err)
       })
   }
@@ -23,10 +24,10 @@ class GetUserRouter {
       .then((rows) => {
         res.json(rows);
       }).catch((err) => {
+        console.log(err);
         res.json(err)
       })
   }
-
 
 }
 

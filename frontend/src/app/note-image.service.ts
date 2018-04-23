@@ -31,7 +31,6 @@ export class NoteImageService {
       let options = { headers: headers };
       this.http.post(`${environment.apiServer}/multer`, formData, options)
         .map((res: any) => {
-          event.srcElement.value = null;
           if (res.success == true) {
             this.addNew(`${environment.apiServer}${res.filePath}`)
           } else {
@@ -77,7 +76,6 @@ export class NoteImageService {
   }
 
   drop(e) {
-    console.log(e);
     this.selectedImage.drop(e);
     this.selectedImage.dragging = false;
   }

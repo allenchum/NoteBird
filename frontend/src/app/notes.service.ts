@@ -41,9 +41,8 @@ export class NotesService {
         // For Authentication
         let headers = new HttpHeaders({ 'Authorization': 'Bearer ' + this.authService.token });
         let options = {headers:headers};
-        console.log(userID,noteID);
         return this.http.get(`${environment.apiServer}/api/noteAndPin/user/${userID}/note/${noteID}`, options)
-        
+
     }
 
     getUniversalNotes(){

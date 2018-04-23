@@ -23,7 +23,6 @@ class Bookmark {
       }, "id").into("bookmark")
         .transacting(trx)
         .then((ids) => {
-          console.log(ids);
           // create batchinsert array
           const noteListArray = [];
           const batchSize = 30;
@@ -34,7 +33,6 @@ class Bookmark {
               noteid: req.body.noteList[i].noteID
             })
           }
-          console.log(noteListArray)
           return knex.batchInsert("bookmarkrelation", noteListArray, batchSize)
             .transacting(trx).returning("bookmarkid")
         })
@@ -58,6 +56,7 @@ class Bookmark {
     query.then((rows) => {
         res.json(rows)
     }).catch((err) => {
+      console.log(err);
       res.json(err)
     })
   }
@@ -67,7 +66,6 @@ class Bookmark {
   private insertNote = (req: express.Request, res: express.Response) => {
     let query = knex.select("*").from("bookmark").where("id", req.params.bookmarkid);
     query.then((rows) => {
-      console.log(rows)
       if (rows.length == 0) {
         res.json({ err: "wrong handling..." })
       } else {

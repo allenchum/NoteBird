@@ -50,7 +50,6 @@ export class CreateBoardComponent implements OnInit {
 
   ngOnInit() {
     this.currentService = this.noteInitService;
-    console.log("ONINIT img:", this.imageList, "pin:", this.pinList, "tags:", this.tagsList)
   }
 
   switchService(s: string) {
@@ -175,7 +174,6 @@ export class CreateBoardComponent implements OnInit {
             this.imageList = [];
             this.tagsList = [];
             this.status = "init";
-            console.log("image list:", this.imageList)
             swal(
               `'Draft saved! NoteID ${res.noteID}`,
               'Going to your profile page.',
@@ -217,7 +215,6 @@ export class CreateBoardComponent implements OnInit {
       if (result.value) {
         if (this.pinList.length != 0 && this.imageList.length != 0) {
           this.notePinService.getNotePins(pinNoteObj).subscribe((res: any) => {
-            console.log("after written img:", this.imageList, "pin:", this.pinList, "tags:", this.tagsList)
             this.noteID = null;
             this.pinList = [];
             this.imageList = [];
