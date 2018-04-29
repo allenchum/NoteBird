@@ -169,16 +169,16 @@ export class CreateBoardComponent implements OnInit {
       if (result.value) {
         if (this.pinList.length != 0 && this.imageList.length != 0) {
           this.notePinService.getNotePins(pinNoteObj).subscribe((res: any) => {
-            this.noteID = null;
-            this.pinList = [];
-            this.imageList = [];
-            this.tagsList = [];
-            this.status = "init";
             swal(
               `'Draft saved! NoteID ${res.noteID}`,
               'Going to your profile page.',
               'success'
             ).then(() => {
+              this.status = "init";
+              this.noteID = null;
+              this.noteImageService.imageList = [];
+              this.notePinService.pinList = [];
+              this.tagsList = [];
               this.router.navigate(['profile'])
             })
           })
@@ -215,16 +215,16 @@ export class CreateBoardComponent implements OnInit {
       if (result.value) {
         if (this.pinList.length != 0 && this.imageList.length != 0) {
           this.notePinService.getNotePins(pinNoteObj).subscribe((res: any) => {
-            this.noteID = null;
-            this.pinList = [];
-            this.imageList = [];
-            this.tagsList = [];
-            this.status = "init";
             swal(
               `'Published! NoteID ${res.noteID}`,
               'Going to your profile page.',
               'success'
             ).then(() =>{
+              this.status = "init";
+              this.noteID = null;
+              this.noteImageService.imageList = [];
+              this.notePinService.pinList = [];
+              this.tagsList = [];
               this.router.navigate(['profile'])
             })
 

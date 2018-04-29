@@ -22,7 +22,7 @@
       <div class="bookmarks selectors">
         <div class="bookmark-head">
           <h5>Bookmarks</h5>
-          <button class="add-btn" (click)="bookmarkService.showBookmarkForm()">+</button>
+          <button class="add-btn" (click)="bookmarkService.showBookmarkForm()"></button>
         </div>
         <ul *ngIf="bookmarkService.bookmarksList">
           <li *ngFor="let bookmark of bookmarkService.bookmarksList" (click)="bookmarkService.getNotesBySelector(bookmark.id)">
